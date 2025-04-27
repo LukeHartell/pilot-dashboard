@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preflight</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <script defer src="assets/js/header.js"></script>
+    <!-- Injects header dynamically -->
+    <script defer src="assets/js/user-menu.js"></script>
+    <!-- Updates user menu -->
+  </head>
+  <body>
+    <div class="scaling-wrapper">
+      <!-- Header will be injected here -->
+
+      <main>
+        <section id="preflight">
+          <h2>Preflight Briefing</h2>
+          <div id="preflightGrid" class="widget-grid">
+            <!-- TILE: AIRBASE -->
+            <div class="widget" id="airbaseWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+
+              <h3>📍 Airbase</h3>
+              <form id="icaoForm">
+                <input
+                  type="text"
+                  id="icao"
+                  name="icao"
+                  placeholder="ICAO Code"
+                  required
+                  pattern="[A-Za-z]{4}"
+                  maxlength="4"
+                  style="text-transform: uppercase" />
+                <button type="submit">Select Airbase</button>
+              </form>
+              <div id="airbaseInfo"></div>
+              <div id="mapContainer" style="margin-top: 10px"></div>
+            </div>
+
+            <!-- TILE: METAR / TAF -->
+            <div class="widget" id="metarWidget" style="display: none">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+
+              <h3>🛰️ METAR / TAF</h3>
+              <div id="metarResult"></div>
+            </div>
+
+            <!-- TILE: Flight Assistant -->
+            <div class="widget" id="assistantWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <h3>🧠 Flight Assistant</h3>
+              <button id="getFlightAssistantBtn" disabled>
+                Get AI Summary
+              </button>
+              <div id="assistantOutputWrapper">
+                <div id="assistantOutput"></div>
+                <div class="fade-out"></div>
+              </div>
+            </div>
+
+            <!-- TILE: NOTAMs -->
+            <div class="widget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+
+              <h3>⚠️ NOTAMs</h3>
+              <p>Widget coming soon...</p>
+            </div>
+
+            <!-- TILE: Thermals -->
+            <div class="widget" id="thermalsWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <h3>🌤️ Thermals</h3>
+              <div class="iframe-container">
+                <iframe
+                  src="https://rasp.skyltdirect.se/scandinavia/"
+                  loading="lazy"
+                  frameborder="0"></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="widgetModal">
+      <div class="modal-content">
+        <button class="close-modal" id="closeModalBtn" title="Close">✕</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script> -->
+    <script src="assets/js/nav.js"></script>
+    <script src="assets/js/preflight.js"></script>
+    <script src="assets/js/darkmode.js"></script>
+  </body>
+</html>

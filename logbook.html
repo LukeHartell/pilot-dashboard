@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logbook</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+    <link rel="stylesheet" href="assets/css/table.css" />
+
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+    <script defer src="assets/js/logbook.js"></script>
+    <script defer src="assets/js/nav.js"></script>
+    <script defer src="assets/js/darkmode.js"></script>
+  </head>
+
+  <body>
+    <div class="scaling-wrapper">
+      <main>
+        <section id="logbook">
+          <h2 style="text-align: center">My Logbook</h2>
+          <!-- Flight details widget below (already set up) -->
+          <div id="flightDetail" class="detail-panel" style="display: none;">
+            <div class="detail-header">
+              <h3>Flight Details</h3>
+              <button id="closeDetailBtn" class="close-btn">✕</button>
+            </div>
+            <div id="flightDetailContent" class="detail-flex">
+              <!-- Sections will be injected dynamically -->
+            </div>
+          </div>
+          
+
+          
+          <div id="pager" style="text-align: center; margin-top: 20px; display: none;">
+            <button id="prevPage" style="margin-right: 10px;">⬅️ Prev</button>
+            <button id="nextPage">Next ➡️</button>
+          </div>
+          
+          <div style="overflow-x: auto;">
+            <table id="flightTable" class="logbook-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Date</th>
+                  <th>Plane</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Duration</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="flightTableBody">
+                <!-- Flights will be loaded dynamically -->
+              </tbody>
+            </table>
+          </div>
+          
+          
+          <div style="text-align: center; margin-bottom: 20px">
+            <a href="/add-flight" class="button-link">➕ Add New Flight</a>
+          </div>
+          
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

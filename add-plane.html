@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Plane</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+    <script defer src="assets/js/add-plane.js"></script>
+    <script defer src="assets/js/nav.js"></script>
+    <script defer src="assets/js/darkmode.js"></script>
+  </head>
+
+  <body>
+    <div class="scaling-wrapper">
+      <main>
+        <section id="user">
+          <h2 style="text-align: center">Add a New Plane</h2>
+
+          <form id="addPlaneForm">
+            <input
+              type="text"
+              id="displayName"
+              name="displayName"
+              placeholder="Display Name (e.g., Aske)"
+              required />
+
+            <input
+              type="text"
+              id="registration"
+              name="registration"
+              placeholder="Registration (e.g., OY-XZK)"
+              required />
+
+            <input
+              type="text"
+              id="type"
+              name="type"
+              placeholder="Type (e.g., Schleicher ASK 21)"
+              required />
+
+            <input
+              type="text"
+              id="competitionNumber"
+              name="competitionNumber"
+              placeholder="Competition Number (optional)" />
+
+            <select id="category" name="category" required>
+              <option value="">Select Category</option>
+              <option value="Aeroplane">Aeroplane</option>
+              <option value="Glider (no engine)">Glider (Pure)</option>
+              <option value="Glider (SSG)">Glider (Self-Sustaining)</option>
+              <option value="Glider (SLG)">Glider (Self-Launching)</option>
+              <option value="Helicopter">Helicopter</option>
+              <option value="Balloon">Balloon</option>
+            </select>
+
+            <input
+              type="number"
+              id="seats"
+              name="seats"
+              placeholder="Number of Seats (e.g., 2)"
+              min="1"
+              max="10"
+              required />
+
+            <textarea
+              id="note"
+              name="note"
+              placeholder="Note (optional)"
+              rows="3"
+              style="resize: vertical"></textarea>
+
+            <button type="submit">Add Plane</button>
+          </form>
+
+          <div class="link" style="margin-top: 20px">
+            <a href="/user">⬅️ Back to Profile</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

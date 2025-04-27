@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Flight</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+    <script defer src="assets/js/add-flight.js"></script>
+    <script defer src="assets/js/nav.js"></script>
+    <script defer src="assets/js/darkmode.js"></script>
+  </head>
+
+  <body>
+    <div class="scaling-wrapper">
+      <main>
+        <section id="flight">
+          <h2 style="text-align: center">Manually add a new flight</h2>
+
+          <form id="addFlightForm">
+            <!-- General -->
+            <fieldset>
+              <legend>General</legend>
+
+              <select id="plane" name="plane" required>
+                <option value="">Select Plane</option>
+                <!-- Planes will be loaded here -->
+                <option value="manual">Manual Entry</option>
+              </select>
+
+              <div id="manualPlaneFields" style="display: none">
+                <input
+                  type="text"
+                  id="manualDisplayName"
+                  name="manualDisplayName"
+                  placeholder="Display Name"
+                  required />
+
+                <input
+                  type="text"
+                  id="manualRegistration"
+                  name="manualRegistration"
+                  placeholder="Registration"
+                  required />
+
+                <input
+                  type="text"
+                  id="manualType"
+                  name="manualType"
+                  placeholder="Type (e.g., ASK-21)"
+                  required />
+
+                <select id="manualCategory" name="manualCategory" required>
+                  <option value="">Select Category</option>
+                  <option value="Aeroplane">Aeroplane</option>
+                  <option value="Glider (no engine)">Glider (Pure)</option>
+                  <option value="Glider (SSG)">Glider (Self-Sustaining)</option>
+                  <option value="Glider (SLG)">Glider (Self-Launching)</option>
+                  <option value="Helicopter">Helicopter</option>
+                  <option value="Balloon">Balloon</option>
+                </select>
+
+                <!-- ✅ New notice -->
+                <div
+                  class="manual-plane-tip"
+                  style="margin-top: 10px; font-size: 14px; color: #666">
+                  Tip: You can also
+                  <a
+                    href="/add-plane"
+                    style="color: #0056b3; text-decoration: underline">
+                    add a plane
+                  </a>
+                  to reuse it easily later.
+                </div>
+              </div>
+
+              <div id="launchTypeFields" style="display: none">
+                <select id="launchType" name="launchType">
+                  <option value="">Select Launch Type</option>
+                  <option value="Winch">Winch</option>
+                  <option value="Tow">Towplane</option>
+                  <option value="Self-launch">Self-launch</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- Start -->
+            <fieldset>
+              <legend>Start</legend>
+
+              <input
+                type="text"
+                id="startLocation"
+                name="startLocation"
+                placeholder="Start Location"
+                required />
+              <input
+                type="datetime-local"
+                id="takeoffTime"
+                name="takeoffTime"
+                required />
+            </fieldset>
+
+            <!-- End -->
+            <fieldset>
+              <legend>End</legend>
+
+              <input
+                type="text"
+                id="endLocation"
+                name="endLocation"
+                placeholder="End Location"
+                required />
+              <input
+                type="datetime-local"
+                id="landingTime"
+                name="landingTime"
+                required />
+            </fieldset>
+
+            <!-- Extra -->
+            <fieldset>
+              <legend>Extra</legend>
+
+              <div id="engineTimeFields" style="display: none">
+                <input
+                  type="number"
+                  id="engineTimeMinutes"
+                  name="engineTimeMinutes"
+                  placeholder="Engine Time (minutes)"
+                  min="0" />
+              </div>
+
+              <input
+                type="number"
+                id="crossCountryDistanceKm"
+                name="crossCountryDistanceKm"
+                placeholder="Cross-Country Distance (km)"
+                min="0" />
+
+              <textarea
+                id="notes"
+                name="notes"
+                placeholder="Notes (optional)"
+                rows="3"
+                style="resize: vertical"></textarea>
+            </fieldset>
+
+            <button type="submit">Save Flight</button>
+          </form>
+
+          <div class="link" style="margin-top: 20px">
+            <a href="/logbook">⬅️ Back to Logbook</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

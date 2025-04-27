@@ -1,0 +1,193 @@
+/* Shared form styles (signup, login, add-plane, add-flight, etc.) */
+form {
+  background: var(--form-background, white);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Make all inputs, selects, textarea full width */
+form input,
+form select,
+form textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  box-sizing: border-box; /* ✅ Super important: keeps padding inside width */
+}
+
+/* Form buttons */
+form button {
+  padding: 14px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+form button:hover {
+  background-color: #004494;
+}
+
+/* Link buttons (used for "Back to Logbook", etc.) */
+.button-link {
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.button-link:hover {
+  background-color: #004494;
+}
+
+/* Link section styling */
+.link {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.link a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+/* Error message styling */
+.error-message {
+  color: orangered;
+  font-size: 12px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+
+/* Fieldsets (for sectioning General, Start, End, Extra) */
+fieldset {
+  margin-bottom: 20px;
+  padding: 20px; /* Top, right, bottom, left all 20px */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Section titles inside fieldsets */
+legend {
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+/* Dark mode adjustment for forms */
+body.dark-mode form {
+  background: #1e1e1e;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: #2c2c2c;
+  color: white;
+  border: 1px solid #555;
+}
+
+body.dark-mode fieldset {
+  border: 1px solid #555;
+}
+
+.detail-panel {
+  background: var(--form-background, white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-width: 1000px;
+  width: 95%;
+  margin: 20px auto;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.detail-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+.detail-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.detail-section {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.detail-section h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+.detail-section p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* Dark mode */
+body.dark-mode .detail-panel {
+  background: #1e1e1e;
+}
+
+body.dark-mode .detail-header h3 {
+  color: white;
+}
+
+body.dark-mode .detail-section h4 {
+  border-bottom: 1px solid #555;
+  color: white;
+}
+
+body.dark-mode .detail-section p {
+  color: white;
+}
+
+body.dark-mode .close-btn {
+  color: #aaa;
+}
+
+body.dark-mode .close-btn:hover {
+  color: #fff;
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+    <script defer src="assets/js/signup.js"></script>
+    <script defer src="assets/js/nav.js"></script>
+  </head>
+
+  <body>
+    <div class="scaling-wrapper">
+      <!-- Header will be injected here -->
+
+      <main>
+        <section id="user">
+          <h2 style="text-align: center">Sign up</h2>
+
+          <form id="signupForm">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="First Name"
+              required />
+            <div id="nameError" class="error-message"></div>
+
+            <input
+              type="text"
+              id="surname"
+              name="surname"
+              placeholder="Last Name"
+              required />
+            <div id="surnameError" class="error-message"></div>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              required />
+            <div id="emailError" class="error-message"></div>
+
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Password"
+              required />
+
+            <div
+              id="passwordChecklist"
+              style="font-size: 14px; margin-top: 8px">
+              <p id="lengthCheck">☐ At least 8 characters</p>
+              <p id="caseCheck">☐ Upper and lowercase letters</p>
+              <p id="numberCheck">☐ Contains a number</p>
+              <p id="specialCheck">☐ Contains a special character</p>
+            </div>
+
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              required />
+
+            <button type="submit">Sign Up</button>
+
+            <div class="link">
+              Already have an account?
+              <a href="/login">Log in</a>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+    <script defer src="assets/js/darkmode.js"></script>
+  </body>
+</html>

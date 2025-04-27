@@ -1,0 +1,52 @@
+/* Basic table layout */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table header style */
+table th {
+  padding: 12px;
+  background-color: #0056b3;
+  color: white;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* Table body style */
+table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* Zebra stripes */
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover row highlight */
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Dark mode adjustments */
+body.dark-mode table th {
+  background-color: #003064;
+}
+
+body.dark-mode table td {
+  background-color: #1e1e1e;
+}
+
+/* Scroll wrapper for mobile */
+table {
+  overflow-x: auto;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  table {
+    font-size: 14px;
+  }
+}

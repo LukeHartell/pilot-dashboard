@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+  </head>
+  <body>
+    <div class="scaling-wrapper">
+      <!-- Header will be injected here -->
+
+      <main>
+        <section id="user">
+          <h2>User Profile</h2>
+          <div id="userGrid" class="widget-grid">
+            <!-- Widget: Basic Info -->
+            <div class="widget" id="userInfoWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <h3>👤 Basic Information</h3>
+              <p>
+                <strong>Name:</strong>
+                <span id="userName">Loading...</span>
+              </p>
+              <p>
+                <strong>Email:</strong>
+                <span id="userEmail">Loading...</span>
+              </p>
+            </div>
+
+            <!-- Widget: Planes -->
+            <div class="widget" id="planesWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <h3>🛩️ My Planes</h3>
+              <ul id="planeList">
+                <!-- Planes will be loaded here -->
+              </ul>
+              <details>
+                <summary>
+                  <a
+                    href="/add-plane"
+                    style="text-decoration: none; color: inherit">
+                    ➕ Add a New Plane
+                  </a>
+                </summary>
+              </details>
+            </div>
+
+            <!-- Widget: Stats (Placeholder) -->
+            <div class="widget" id="statsWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <h3>📈 Your Stats</h3>
+              <p>Coming soon...</p>
+            </div>
+
+            <!-- Widget: Log Out -->
+            <div class="widget" id="logoutWidget">
+              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <h3>🚪 Log Out</h3>
+              <button id="logoutButton" style="margin-top: 10px">
+                Log Out
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="widgetModal">
+      <div class="modal-content">
+        <button class="close-modal" id="closeModalBtn" title="Close">✕</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/user.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+  </body>
+</html>

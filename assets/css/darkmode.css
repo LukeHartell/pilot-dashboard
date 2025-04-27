@@ -1,0 +1,17 @@
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #003064;
+}
+
+body.dark-mode #navbar li:hover,
+body.dark-mode #navbar li.active {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode #toggleDarkMode {
+  border-color: #ccc;
+}

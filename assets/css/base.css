@@ -1,0 +1,28 @@
+body {
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #333;
+}
+
+body.transition {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.scaling-wrapper {
+  transform: scale(1.25);
+  transform-origin: top left;
+  width: 80vw;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+body.form-page .scaling-wrapper {
+  transform: none;
+  width: 100%;
+}

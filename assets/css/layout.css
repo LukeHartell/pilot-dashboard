@@ -1,0 +1,253 @@
+main {
+  padding: 20px;
+}
+
+.page.active {
+  display: block;
+}
+
+/* Widget grid */
+.widget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  align-items: stretch;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+#widgetModal iframe[src*="openstreetmap"] {
+  height: 60vh !important;
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--widget-bg);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  max-height: 420px;
+  overflow: hidden;
+}
+
+.iframe-container {
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.iframe-container iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Only scale in non-fullscreen (i.e., inside dashboard tile) */
+.widget .iframe-container iframe {
+  transform: scale(0.5);
+  transform-origin: top left;
+  width: 200%;
+  height: 200%;
+}
+
+/* Reset scaling when in fullscreen mode */
+#widgetModal.fullscreen-mode .iframe-container iframe {
+  transform: none;
+  width: 100%;
+  height: 100%;
+}
+
+.iframe-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.iframe-wrapper.scaled {
+  transform: scale(0.75);
+  transform-origin: top left;
+  width: calc(100% / 0.75);
+  height: calc(100% / 0.75);
+}
+
+#widgetModal.fullscreen-mode .iframe-wrapper.scaled {
+  transform: none;
+  width: 100%;
+  height: 100%;
+}
+
+#widgetModal.fullscreen-mode .modal-content {
+  height: 95vh;
+  padding: 30px;
+  overflow: auto;
+}
+
+#widgetModal.fullscreen-mode .widget {
+  height: 100%;
+  max-height: none;
+  overflow: auto;
+}
+
+#widgetModal.fullscreen-mode .widget > * {
+  flex-grow: 1;
+}
+
+#widgetModal.fullscreen-mode .iframe-container {
+  width: 100%;
+  height: 80vh;
+  overflow: hidden;
+  position: relative;
+}
+
+#widgetModal.fullscreen-mode .iframe-container iframe {
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.widget iframe {
+  flex-grow: 1;
+  min-height: 200px;
+}
+
+#widgetModal.fullscreen-mode .iframe-wrapper {
+  transform: none;
+  width: 100%;
+  height: 100%;
+}
+
+#widgetModal.fullscreen-mode .iframe-wrapper iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* Specific height limit for non-airbase widgets (set via JS) */
+.widget[data-limit] {
+  height: var(--airbase-height);
+}
+
+.widget h3 {
+  margin-top: 0;
+}
+
+.sortable-ghost {
+  opacity: 0.3;
+}
+
+.dark-mode .widget {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:root {
+  --widget-bg: rgba(0, 0, 0, 0.03); /* Light mode */
+}
+
+.dark-mode {
+  --widget-bg: rgba(255, 255, 255, 0.05); /* Dark mode */
+}
+
+#icaoForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+#icaoForm input[type="text"] {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#icaoForm button {
+  padding: 8px 12px;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+#result {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.fullscreen-btn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: inherit;
+  z-index: 2;
+}
+
+.widget {
+  position: relative;
+}
+
+/* Modal overlay */
+#widgetModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#widgetModal .modal-content {
+  width: min(90vw, max(60vw, 500px));
+  height: 90vh;
+  padding: 30px;
+  overflow-y: auto;
+  background: white;
+  color: black;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode #widgetModal .modal-content {
+  background: #121212;
+  color: white;
+}
+
+#widgetModal .close-modal {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.dark-mode #closeModalBtn {
+  color: white;
+}
+
+#icaoForm input[disabled],
+#icaoForm button[disabled] {
+  display: none;
+}
+
+#assistantOutputWrapper {
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 10px; /* space for scrollbar */
+}
+
+#assistantOutput {
+  font-size: 0.95em;
+  line-height: 1.4;
+}
