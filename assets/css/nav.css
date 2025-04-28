@@ -82,7 +82,7 @@ header {
   .hamburger {
     display: block;
     position: absolute;
-    top: 14px;
+    top: 5px;
     right: 20px;
     font-size: 36px;
     padding: 14px 18px;
