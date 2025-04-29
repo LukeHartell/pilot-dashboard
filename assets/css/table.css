@@ -1,3 +1,72 @@
+.detail-panel {
+  background: var(--form-background, white);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-width: 1000px;
+  margin: 20px auto;
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.detail-header h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.detail-flex {
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 20px; */
+}
+
+.detail-section {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.detail-section h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+.detail-section p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .detail-header h3 {
+    font-size: 18px;
+  }
+
+  .detail-header h4 {
+    font-size: 10px;
+  }
+
+  .detail-header p {
+    font-size: 5px;
+  }
+}
+
+.page-button {
+  margin-bottom: 10px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 /* Basic table layout */
 table {
   width: 100%;
@@ -30,13 +99,12 @@ table tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Dark mode adjustments */
-body.dark-mode table th {
-  background-color: #003064;
+table tr:nth-child(odd) {
+  background-color: #ffffff;
 }
 
-body.dark-mode table td {
-  background-color: #1e1e1e;
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 /* Scroll wrapper for mobile */
@@ -45,8 +113,32 @@ table {
 }
 
 /* Responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   table {
-    font-size: 14px;
+    font-size: 10px;
   }
+
+  table th {
+    padding: 5px;
+  }
+  table td {
+    padding: 0 5px;
+  }
+  .page-button {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode table th {
+  background-color: #003064;
+}
+
+body.dark-mode table tr:nth-child(odd) {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode table tr:nth-child(even) {
+  background-color: #383838;
 }

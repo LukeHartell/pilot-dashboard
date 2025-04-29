@@ -74,6 +74,20 @@
   color: #666;
 }
 
+@media (max-width: 768px) {
+  .plane-title {
+    font-size: 1.2em;
+  }
+
+  .plane-info p {
+    font-size: 0.7em;
+  }
+
+  .plane-details td {
+    font-size: 0.2em;
+  }
+}
+
 /* Fullscreen mode styles */
 #widgetModal.fullscreen-mode .plane-photo {
   width: 100%;

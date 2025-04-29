@@ -25,49 +25,6 @@ form textarea {
   box-sizing: border-box; /* ✅ Super important: keeps padding inside width */
 }
 
-/* Form buttons */
-form button {
-  padding: 14px;
-  background-color: #0056b3;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-}
-
-form button:hover {
-  background-color: #004494;
-}
-
-/* Link buttons (used for "Back to Logbook", etc.) */
-.button-link {
-  padding: 10px 20px;
-  background-color: #0056b3;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-  font-size: 16px;
-  display: inline-block;
-}
-
-.button-link:hover {
-  background-color: #004494;
-}
-
-/* Link section styling */
-.link {
-  margin-top: 10px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.link a {
-  color: #0056b3;
-  text-decoration: none;
-}
-
 /* Error message styling */
 .error-message {
   color: orangered;
@@ -108,27 +65,6 @@ body.dark-mode fieldset {
   border: 1px solid #555;
 }
 
-.detail-panel {
-  background: var(--form-background, white);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  max-width: 1000px;
-  margin: 20px auto;
-}
-
-.detail-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.detail-header h3 {
-  margin: 0;
-  font-size: 20px;
-}
-
 .close-btn {
   background: none;
   border: none;
@@ -139,29 +75,6 @@ body.dark-mode fieldset {
 
 .close-btn:hover {
   color: #000;
-}
-
-.detail-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.detail-section {
-  flex: 1 1 200px;
-  min-width: 200px;
-}
-
-.detail-section h4 {
-  font-size: 16px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 4px;
-}
-
-.detail-section p {
-  margin: 4px 0;
-  font-size: 14px;
 }
 
 /* Dark mode */

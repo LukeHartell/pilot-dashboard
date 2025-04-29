@@ -4,7 +4,7 @@ main {
 
 @media (max-width: 768px) {
   main {
-    padding: 5px;
+    padding: 8px;
   }
 }
 
@@ -19,6 +19,13 @@ main {
   align-items: stretch;
   gap: 20px;
   margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .widget-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
 }
 
 #widgetModal iframe[src*="openstreetmap"] {
