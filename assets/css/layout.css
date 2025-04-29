@@ -21,10 +21,9 @@ main {
   margin-top: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .widget-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
   }
 }
 
@@ -189,7 +188,6 @@ main {
 }
 
 .fullscreen-btn {
-  position: absolute;
   top: 8px;
   right: 10px;
   background: none;

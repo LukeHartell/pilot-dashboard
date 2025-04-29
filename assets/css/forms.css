@@ -102,3 +102,26 @@ body.dark-mode .close-btn {
 body.dark-mode .close-btn:hover {
   color: #fff;
 }
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2em;
+  gap: 5px;
+}
+
+.edit-form input {
+  font-size: 1em;
+  padding: 10px;
+}
+
+.edit-form button {
+  margin-top: 20px;
+}
