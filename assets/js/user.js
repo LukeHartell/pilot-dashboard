@@ -29,29 +29,10 @@ async function loadUserInfo() {
       "userName"
     ).textContent = `${data.name} ${data.surname}`;
     document.getElementById("userEmail").textContent = data.email;
-
-    // Fill planes list
-    const planeList = document.getElementById("planeList");
-    planeList.innerHTML = ""; // Clear any existing entries
-
-    if (Array.isArray(data.planes) && data.planes.length > 0) {
-      data.planes.forEach((plane) => {
-        const listItem = document.createElement("li");
-        const secondary = plane.competitionNumber
-          ? plane.competitionNumber
-          : plane.registration;
-        listItem.textContent = `${plane.displayName} (${secondary})`;
-        planeList.appendChild(listItem);
-      });
-    } else {
-      planeList.innerHTML = "<li>No planes added yet.</li>";
-    }
   } catch (err) {
     console.error("Error fetching user info:", err);
     document.getElementById("userName").textContent = "Guest";
     document.getElementById("userEmail").textContent = "Unknown";
-    const planeList = document.getElementById("planeList");
-    if (planeList) planeList.innerHTML = "<li>Could not load planes.</li>";
   }
 }
 
