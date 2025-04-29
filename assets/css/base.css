@@ -22,6 +22,14 @@ h2 {
   margin: 0;
 }
 
+@media (max-width: 768px) {
+  h1,
+  h2 {
+    margin: 0;
+    text-align: center;
+  }
+}
+
 body.form-page .scaling-wrapper {
   transform: none;
   width: 100%;

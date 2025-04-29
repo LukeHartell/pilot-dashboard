@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Planes</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/planes.css" />
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+  </head>
+  <body>
+    <div class="scaling-wrapper">
+      <!-- Header will be injected here -->
+
+      <main>
+        <section id="planes">
+          <h2>My Planes</h2>
+          <div id="planesGrid" class="widget-grid">
+            <!-- Planes will be injected dynamically here -->
+          </div>
+          <div style="margin-top: 20px; text-align: center">
+            <a href="/add-plane" class="button" style="text-decoration: none">
+              ➕ Add a New Plane
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="widgetModal">
+      <div class="modal-content">
+        <button class="close-modal" id="closeModalBtn" title="Close">✕</button>
+        <div id="modalContent"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/nav.js" defer></script>
+    <script src="assets/js/planes.js" defer></script>
+    <script src="assets/js/darkmode.js" defer></script>
+  </body>
+</html>

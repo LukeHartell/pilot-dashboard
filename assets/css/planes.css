@@ -1,0 +1,106 @@
+.plane-photo {
+  width: 150px;
+  height: 150px;
+  background: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* Wrap the widget's layout (small grid view) */
+.plane-widget {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Fullscreen layout wrapper */
+.fullscreen-layout {
+  text-align: center;
+  padding: 0 10px;
+}
+
+.plane-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plane-photo span {
+  color: #888;
+  font-size: 0.9em;
+}
+
+.widget .plane-photo {
+  width: 120px;
+  height: 120px;
+}
+
+.plane-title {
+  margin: 10px 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.plane-info p {
+  margin: 0;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.plane-details {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.plane-details table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.plane-details td {
+  padding: 8px;
+  font-size: 1em;
+  vertical-align: top;
+}
+
+.plane-details td:first-child {
+  font-weight: bold;
+  width: 40%;
+  color: #666;
+}
+
+/* Fullscreen mode styles */
+#widgetModal.fullscreen-mode .plane-photo {
+  width: 100%;
+  height: 400px;
+}
+
+#widgetModal.fullscreen-mode .plane-photo img {
+  object-fit: cover;
+}
+
+#widgetModal.fullscreen-mode .plane-title {
+  margin: 10px 0;
+  font-size: 1.9em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+#widgetModal.fullscreen-mode tr > td {
+  font-size: 1.4em;
+  padding: 12px;
+  color: #333;
+}
+
+#widgetModal.fullscreen-mode tr > td:nth-child(1) {
+  text-align: left;
+}
+
+#widgetModal.fullscreen-mode tr > td:nth-child(2) {
+  text-align: right;
+}

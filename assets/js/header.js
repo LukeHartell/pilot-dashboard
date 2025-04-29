@@ -9,24 +9,25 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.getItem("darkMode") === "enabled" ? "☀️" : "🌙";
 
   const headerHTML = `
-      <header>
-        <div class="header-left">
-          <h1>Pilot Dashboard (Beta)</h1>
-        </div>
-        <button id="navToggle" class="hamburger">☰</button>
-        <nav id="mainNav">
-          <ul id="navbar">
-            <li data-page="preflight">Preflight</li>
-            <li data-page="flight">Flight</li>
-            <li data-page="logbook">Logbook</li>
-            <li id="userNavItem" data-page="user">
-              <a id="userMenuLink" href="/login">Login</a>
-            </li>
-          </ul>
-          <button id="toggleDarkMode">${initialIcon}</button>
-        </nav>
-      </header>
-    `;
+    <header>
+      <div class="header-left">
+        <h1>Pilot Dashboard (Beta)</h1>
+      </div>
+      <button id="navToggle" class="hamburger">☰</button>
+      <nav id="mainNav">
+        <ul id="navbar">
+          <li data-page="preflight">Preflight</li>
+          <li data-page="flight">Flight</li>
+          <li data-page="logbook">Logbook</li>
+          <li data-page="planes">Planes</li> <!-- ✅ NEW LINE -->
+          <li id="userNavItem" data-page="user">
+            <a id="userMenuLink" href="/login">Login</a>
+          </li>
+        </ul>
+        <button id="toggleDarkMode">${initialIcon}</button>
+      </nav>
+    </header>
+  `;
 
   const wrapper = document.querySelector(".scaling-wrapper");
   if (wrapper) {
