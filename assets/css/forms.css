@@ -1,4 +1,6 @@
-/* Shared form styles (signup, login, add-plane, add-flight, etc.) */
+/* ─────────────────────────────────────────────────────────────── */
+/* Base Form Layout (used for signup, login, etc.) */
+/* ─────────────────────────────────────────────────────────────── */
 form {
   background: var(--form-background, white);
   padding: 30px;
@@ -11,7 +13,10 @@ form {
   gap: 20px;
 }
 
-/* Make all inputs, selects, textarea full width */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Input, Select, Textarea Elements */
+/* ─────────────────────────────────────────────────────────────── */
 form input,
 form select,
 form textarea {
@@ -25,7 +30,10 @@ form textarea {
   box-sizing: border-box;
 }
 
-/* Error message styling */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Error Message Styling */
+/* ─────────────────────────────────────────────────────────────── */
 .error-message {
   color: orangered;
   font-size: 12px;
@@ -33,22 +41,27 @@ form textarea {
   margin-bottom: 8px;
 }
 
-/* Fieldsets (for sectioning General, Start, End, Extra) */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Fieldsets and Section Labels */
+/* ─────────────────────────────────────────────────────────────── */
 fieldset {
   margin-bottom: 20px;
-  padding: 20px; /* Top, right, bottom, left all 20px */
+  padding: 20px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-/* Section titles inside fieldsets */
 legend {
   font-size: 1.2em;
   font-weight: bold;
   padding: 0 10px;
 }
 
-/* Dark mode adjustment for forms */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Dark Mode for Forms and Details */
+/* ─────────────────────────────────────────────────────────────── */
 body.dark-mode form {
   background: #1e1e1e;
 }
@@ -65,6 +78,31 @@ body.dark-mode fieldset {
   border: 1px solid #555;
 }
 
+body.dark-mode .detail-panel {
+  background: #1e1e1e;
+}
+
+body.dark-mode .detail-header h3,
+body.dark-mode .detail-section h4,
+body.dark-mode .detail-section p {
+  color: white;
+}
+
+body.dark-mode .detail-section h4 {
+  border-bottom: 1px solid #555;
+}
+
+body.dark-mode .close-btn {
+  color: #aaa;
+}
+body.dark-mode .close-btn:hover {
+  color: #fff;
+}
+
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Close Button (used in modals/panels) */
+/* ─────────────────────────────────────────────────────────────── */
 .close-btn {
   background: none;
   border: none;
@@ -72,37 +110,14 @@ body.dark-mode fieldset {
   cursor: pointer;
   color: #888;
 }
-
 .close-btn:hover {
   color: #000;
 }
 
-/* Dark mode */
-body.dark-mode .detail-panel {
-  background: #1e1e1e;
-}
 
-body.dark-mode .detail-header h3 {
-  color: white;
-}
-
-body.dark-mode .detail-section h4 {
-  border-bottom: 1px solid #555;
-  color: white;
-}
-
-body.dark-mode .detail-section p {
-  color: white;
-}
-
-body.dark-mode .close-btn {
-  color: #aaa;
-}
-
-body.dark-mode .close-btn:hover {
-  color: #fff;
-}
-
+/* ─────────────────────────────────────────────────────────────── */
+/* Edit Form Layouts (used for profile, plane, etc.) */
+/* ─────────────────────────────────────────────────────────────── */
 .edit-form {
   display: flex;
   flex-direction: column;

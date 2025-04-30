@@ -1,0 +1,132 @@
+/* ─────────────────────────────────────────────────────────────── */
+/* Embedded Iframe Styles */
+/* ─────────────────────────────────────────────────────────────── */
+
+/* OpenStreetMap fullscreen iframe height */
+#widgetModal iframe[src*="openstreetmap"] {
+    height: 60vh !important;
+  }
+  
+  /* METAR Panel fullscreen */
+  #widgetModal.fullscreen-mode #metarIframeFullscreen {
+    display: block;
+    height: 85vh;
+  }
+  
+  #metarIframeFullscreen {
+    display: none;
+    height: 80vh;
+  }
+  
+  #metarIframeFullscreen iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  
+  
+  /* ─────────────────────────────────────────────────────────────── */
+  /* Per-widget height control (via JS) */
+  /* ─────────────────────────────────────────────────────────────── */
+  .widget[data-limit] {
+    height: var(--airbase-height);
+  }
+  
+  
+  /* ─────────────────────────────────────────────────────────────── */
+  /* ICAO Form Styles */
+  /* ─────────────────────────────────────────────────────────────── */
+  #icaoForm {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  #icaoForm input[type="text"] {
+    flex: 1;
+    min-width: 100px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  #icaoForm button {
+    padding: 8px 12px;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  
+  #result {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  #airbaseInfo {
+    line-height: 5px;
+  }
+  
+  /* ─────────────────────────────────────────────────────────────── */
+  /* Fullscreen Widget Adjustments */
+  /* ─────────────────────────────────────────────────────────────── */
+  .fullscreen-mode h3 {
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  #widgetModal.fullscreen-mode #thermalsWidget {
+    height: 100%;
+    max-height: none;
+  }
+  
+  #widgetModal.fullscreen-mode #thermalsWidget .map-lock {
+    height: 80vh;
+    max-height: none;
+    overflow: hidden;
+    pointer-events: auto;
+    box-shadow: none;
+  }
+  
+  #widgetModal.fullscreen-mode .map-lock {
+    pointer-events: auto;
+  }
+  
+  #widgetModal.fullscreen-mode .map-lock iframe {
+    pointer-events: auto;
+  }
+  
+
+  #widgetModal.fullscreen-mode #thermalsWidget .map-lock::before {
+    display: none !important;
+  }
+  
+  #widgetModal.fullscreen-mode .map-lock iframe {
+    transform: none;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+  }
+  
+  .fullscreen-mode .map-lock::before {
+    display: none !important;
+  }
+  
+  .fullscreen-mode .map-lock,
+  .fullscreen-mode .map-lock iframe {
+    pointer-events: auto !important;
+  }
+  
+  
+  /* ─────────────────────────────────────────────────────────────── */
+  /* Dark Mode Support for Toggles */
+  /* ─────────────────────────────────────────────────────────────── */
+  .dark-mode .metar-toggle {
+    background-color: #222;
+    color: #fff;
+    border-color: #555;
+  }
+  
+  .dark-mode .metar-toggle:disabled {
+    background-color: #444;
+  }
+  
+  

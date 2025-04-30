@@ -1,3 +1,6 @@
+/* ─────────────────────────────────────────────────────────────── */
+/* Global Page Styles */
+/* ─────────────────────────────────────────────────────────────── */
 body {
   overflow-x: hidden;
   font-family: Arial, sans-serif;
@@ -11,31 +14,39 @@ body.transition {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+body.form-page .scaling-wrapper {
+  transform: none;
+  width: 100%;
+}
+
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Typography */
+/* ─────────────────────────────────────────────────────────────── */
+h1, h2 {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  h1, h2 {
+    text-align: center;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Layout Scaling Wrapper (for zoomed-in layout) */
+/* ─────────────────────────────────────────────────────────────── */
 .scaling-wrapper {
   transform: scale(1.25);
   transform-origin: top left;
   width: 80vw;
 }
 
-h1,
-h2 {
-  margin: 0;
-}
 
-@media (max-width: 768px) {
-  h1,
-  h2 {
-    margin: 0;
-    text-align: center;
-  }
-}
-
-body.form-page .scaling-wrapper {
-  transform: none;
-  width: 100%;
-}
-
-/* Form buttons */
+/* ─────────────────────────────────────────────────────────────── */
+/* Form Button Styling */
+/* ─────────────────────────────────────────────────────────────── */
 form button {
   padding: 14px;
   background-color: #0056b3;
@@ -51,7 +62,10 @@ form button:hover {
   background-color: #004494;
 }
 
-/* Link buttons (used for "Back to Logbook", etc.) */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Button-like Links (e.g. “Back to logbook”) */
+/* ─────────────────────────────────────────────────────────────── */
 .button-link {
   margin-top: 10px;
   padding: 10px 20px;
@@ -67,7 +81,10 @@ form button:hover {
   background-color: #004494;
 }
 
-/* Link section styling */
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Link Text Styling */
+/* ─────────────────────────────────────────────────────────────── */
 .link {
   margin-top: 10px;
   text-align: center;
@@ -80,17 +97,23 @@ form button:hover {
 }
 
 
+/* ─────────────────────────────────────────────────────────────── */
+/* Widget Button Area (top-right corner) */
+/* ─────────────────────────────────────────────────────────────── */
 .widget-buttons {
   position: absolute;
-  display: flex;
   top: 8px;
   right: 10px;
   display: flex;
   z-index: 2;
 }
 
-/* Edit button matches fullscreen button */
-.edit-btn {
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Edit & Fullscreen Button Styling */
+/* ─────────────────────────────────────────────────────────────── */
+.edit-btn,
+.fullscreen-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -98,7 +121,6 @@ form button:hover {
   z-index: 2;
 }
 
-/* Hover effect same as fullscreen button */
 .edit-btn:hover,
 .fullscreen-btn:hover {
   opacity: 0.7;

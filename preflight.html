@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="assets/css/layout.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/widgets.css" />
+    <link rel="stylesheet" href="assets/css/preflight.css" />
     <script defer src="assets/js/header.js"></script>
     <!-- Injects header dynamically -->
     <script defer src="assets/js/user-menu.js"></script>
@@ -44,7 +46,7 @@
                 <button type="submit">Select Airbase</button>
               </form>
               <div id="airbaseInfo"></div>
-              <div id="mapContainer" style="margin-top: 10px"></div>
+              <div id="mapContainer"></div>
             </div>
 
             <!-- TILE: METAR / TAF -->
@@ -111,13 +113,16 @@
                 <button class="fullscreen-btn" title="Fullscreen">⛶</button>
               </div>
               <h3>🌤️ Thermals</h3>
-              <div class="iframe-container">
-                <iframe class="disable-touch"
+              <div class="map-lock">
+                <iframe
+                  id="thermalsMap"
                   src="https://rasp.skyltdirect.se/scandinavia/"
                   loading="lazy"
-                  frameborder="0"></iframe>
+                  frameborder="0"
+                  allowfullscreen></iframe>
               </div>
             </div>
+
           </div>
         </section>
       </main>

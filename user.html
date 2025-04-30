@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/layout.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/widgets.css" />
     <script defer src="assets/js/header.js"></script>
     <script defer src="assets/js/user-menu.js"></script>
   </head>
@@ -21,7 +22,10 @@
           <div id="userGrid" class="widget-grid">
             <!-- Widget: Basic Info -->
             <div class="widget" id="userInfoWidget">
-              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <div class="widget-buttons">
+                <!-- <button class="edit-btn" title="Edit">✏️</button> -->
+                <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              </div>
               <h3>👤 Basic Information</h3>
               <p>
                 <strong>Name:</strong>
@@ -35,14 +39,16 @@
 
             <!-- Widget: Stats (Placeholder) -->
             <div class="widget" id="statsWidget">
-              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              <div class="widget-buttons">
+                <!-- <button class="edit-btn" title="Edit">✏️</button> -->
+                <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              </div>
               <h3>📈 Your Stats</h3>
               <p>Coming soon...</p>
             </div>
 
             <!-- Widget: Log Out -->
             <div class="widget" id="logoutWidget">
-              <button class="fullscreen-btn" title="Fullscreen">⛶</button>
               <h3>🚪 Log Out</h3>
               <button
                 id="logoutButton"

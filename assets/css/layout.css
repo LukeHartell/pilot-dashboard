@@ -12,71 +12,6 @@ main {
   display: block;
 }
 
-/* Widget grid */
-.widget-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  align-items: stretch;
-  gap: 20px;
-  margin-top: 10px;
-}
-
-@media (max-width: 500px) {
-  .widget-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-}
-
-#widgetModal iframe[src*="openstreetmap"] {
-  height: 60vh !important;
-}
-
-@media (max-width: 768px) {
-  .widget iframe.disable-touch {
-    pointer-events: none;
-  }
-}
-
-#widgetModal.fullscreen-mode .widget iframe.disable-touch {
-  pointer-events: auto;
-}
-
-
-#widgetModal.fullscreen-mode #metarIframeFullscreen {
-  display: block;
-  height: 85vh;
-}
-
-#metarIframeFullscreen iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-#metarIframeFullscreen {
-  display: none;
-  height: 80vh;
-}
-
-#metarIframeFullscreen iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-
-.widget {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  background: var(--widget-bg);
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  max-height: 420px;
-  overflow: hidden;
-}
-
 .iframe-container {
   width: 100%;
   height: 80vh;
@@ -125,22 +60,6 @@ main {
   height: 100%;
 }
 
-#widgetModal.fullscreen-mode .modal-content {
-  height: 95vh;
-  padding: 30px;
-  overflow: auto;
-}
-
-#widgetModal.fullscreen-mode .widget {
-  height: 100%;
-  max-height: none;
-  overflow: auto;
-}
-
-#widgetModal.fullscreen-mode .widget > * {
-  flex-grow: 1;
-}
-
 #widgetModal.fullscreen-mode .iframe-container {
   width: 100%;
   height: 80vh;
@@ -170,183 +89,97 @@ main {
   height: 100%;
 }
 
-/* Specific height limit for non-airbase widgets (set via JS) */
-.widget[data-limit] {
-  height: var(--airbase-height);
-}
-
 .widget h3 {
   margin-top: 0;
 }
 
-.sortable-ghost {
-  opacity: 0.3;
+#mapContainer {
+  height: 500px;
 }
 
-.dark-mode .widget {
-  background: rgba(255, 255, 255, 0.05);
+.map-lock {
+  height: 80vh;
 }
 
-:root {
-  --widget-bg: rgba(0, 0, 0, 0.03); /* Light mode */
+/* Mobile tap-to-unlock logic */
+@media (hover: none) and (pointer: coarse) {
+  .map-lock {
+    position: relative;
+    max-width: 100%;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
+  }
+
+  #mapContainer {
+    height: auto;
+  }
+
+  #thermalsWidget .map-lock {
+    height: 300px;  /* matches the scaled result */
+    overflow: hidden;
+  }
+  
+  .map-lock iframe {
+    width: 100%;
+    height: 250px;
+    border: 0;
+    border-radius: 6px;
+    display: block;
+    pointer-events: none; /* locked by default */
+  }
+
+  #thermalsMap {
+    transform: scale(0.5);
+    transform-origin: top left;
+    width: 200%;
+    height: 600px;
+  }
+
+  .map-lock::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    pointer-events: auto;
+    cursor: pointer;
+    border-radius: inherit;
+  }
+
+  .map-lock.active {
+    box-shadow: 0 0 0 2px #2196f3; /* blue outline */
+  }
+
+  .map-lock.active iframe {
+    pointer-events: auto; /* iframe now receives input */
+  }
+
+  .map-lock.active::before {
+    display: none; /* remove shield */
+  }
 }
 
-.dark-mode {
-  --widget-bg: rgba(255, 255, 255, 0.05); /* Dark mode */
+/* Desktop: always unlocked */
+@media (hover: hover) and (pointer: fine) {
+  .map-lock::before {
+    display: none;
+  }
+
+  .map-lock {
+    box-shadow: none;
+  }
+
+  .map-lock iframe {
+    pointer-events: auto;
+  }
+  
+  /* Only scale thermals when inside dashboard (not fullscreen) */
+  .widget .map-lock iframe {
+    transform: scale(0.5);
+    transform-origin: top left;
+    width: 200%;
+    height: 200%;
+  }
+  
 }
 
-#icaoForm {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-#icaoForm input[type="text"] {
-  flex: 1;
-  min-width: 100px;
-  padding: 8px;
-  font-size: 16px;
-}
-
-#icaoForm button {
-  padding: 8px 12px;
-  font-size: 14px;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-#result {
-  margin-top: 10px;
-  font-size: 14px;
-}
-
-.fullscreen-btn {
-  top: 8px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: inherit;
-  z-index: 2;
-}
-
-.widget {
-  position: relative;
-}
-
-/* Modal overlay */
-#widgetModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-#widgetModal .modal-content {
-  width: min(90vw, max(60vw, 500px));
-  /* height: 90vh; */
-  padding: 30px;
-  overflow-y: auto;
-  background: white;
-  color: black;
-  position: relative;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-}
-
-.dark-mode #widgetModal .modal-content {
-  background: #121212;
-  color: white;
-}
-
-#widgetModal .close-modal {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  font-size: 24px;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-.dark-mode #closeModalBtn {
-  color: white;
-}
-
-#icaoForm input[disabled],
-#icaoForm button[disabled] {
-  display: none;
-}
-
-#assistantOutputWrapper {
-  overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 10px; /* space for scrollbar */
-}
-
-#assistantOutput {
-  font-size: 0.95em;
-  line-height: 1.4;
-}
-
-/* METAR embed link styling */
-.metar-embed-link {
-  font-size: 18px;
-  font-weight: 500;
-  color: #000;
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.toggle-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-  /* justify-content: center; */
-}
-
-.metar-toggle {
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  border: 1px solid #aaa;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-}
-
-.metar-toggle:disabled {
-  background-color: #ddd;
-  cursor: default;
-}
-
-#widgetModal .in-fullscreen .toggle-buttons {
-  display: none;
-}
-
-#widgetModal .in-fullscreen #metarResult {
-  display: none;
-}
-
-.in-fullscreen h3 {
-  font-size: 30px;
-  text-align: center;
-}
-
-.dark-mode .metar-toggle {
-  background-color: #222;
-  color: #fff;
-  border-color: #555;
-}
-
-.dark-mode .metar-toggle:disabled {
-  background-color: #444;
-}
+  

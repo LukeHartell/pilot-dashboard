@@ -1,3 +1,5 @@
+
+
 let activeIcao = null;
 
 // Auto-load saved ICAO from localStorage
@@ -59,19 +61,24 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
     `;
 
     mapContainer.innerHTML = `
-      <iframe class="disable-touch"
-        width="100%"
-        height="250"
-        frameborder="0"
-        scrolling="no"
-        style="border:0; border-radius: 6px;"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=${
-          info.location.lon - 0.02
-        },${info.location.lat - 0.01},${info.location.lon + 0.02},${
-      info.location.lat + 0.01
-    }&layer=mapnik&marker=${info.location.lat},${info.location.lon}">
-      </iframe>
+      <div class="map-lock">
+        <iframe
+          id="airbaseMap"
+          width="100%"
+          height="100%"
+          frameborder="0"
+          scrolling="no"
+          style="border-radius: 6px;"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=${
+            info.location.lon - 0.02
+          },${info.location.lat - 0.01},${info.location.lon + 0.02},${
+            info.location.lat + 0.01
+          }&layer=mapnik&marker=${info.location.lat},${info.location.lon}">
+        </iframe>
+      </div>
     `;
+
+    setupMapLocks();
 
     metarResult.innerHTML = `
       <p><strong>METAR:</strong> ${info.rawOb}</p>
@@ -118,6 +125,7 @@ document.querySelectorAll(".metar-toggle").forEach((btn) => {
 });
 
 // Fullscreen handler with METAR iframe swap
+// This is what vibecoding does to a huamn being.
 document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const widget = e.target.closest(".widget");
@@ -127,15 +135,20 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     // Inject widget content
     modalContent.innerHTML = widget.innerHTML;
     modalContent.querySelector(".fullscreen-btn")?.remove();
-    modalContent.classList.add("in-fullscreen"); // ✅ Add class for fullscreen styles
+
+    // Apply fullscreen mode to both modal AND modalContent
+    modal.classList.add("fullscreen-mode");
+    modalContent.classList.add("fullscreen-mode");
+
+    // Display modal
     modal.style.display = "flex";
 
-    // Re-apply dark mode
+    // Re-apply dark mode inside modalContent
     if (document.body.classList.contains("dark-mode")) {
       modalContent.classList.add("dark-mode");
     }
 
-    // Disable form if present
+    // Disable ICAO form in fullscreen
     const icaoInput = modalContent.querySelector("#icao");
     const submitBtn = modalContent.querySelector('button[type="submit"]');
     if (icaoInput) icaoInput.disabled = true;
@@ -162,18 +175,26 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
 });
 
 
+
+
 // Modal close behavior
 document.getElementById("closeModalBtn").addEventListener("click", () => {
   document.getElementById("widgetModal").style.display = "none";
+  modal.classList.remove("fullscreen-mode");
+
 });
 document.getElementById("widgetModal").addEventListener("click", (e) => {
   if (e.target.id === "widgetModal") {
     document.getElementById("widgetModal").style.display = "none";
+    modal.classList.remove("fullscreen-mode");
+
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     document.getElementById("widgetModal").style.display = "none";
+    modal.classList.remove("fullscreen-mode");
+
   }
 });
 
@@ -210,7 +231,7 @@ document.getElementById("getFlightAssistantBtn")?.addEventListener("click", asyn
   }
 });
 
-// ✅ FIX: Wait for dark mode button injected via header
+// Wait for dark mode button injected via header
 document.addEventListener("DOMContentLoaded", () => {
   const maxAttempts = 50;
   let attempts = 0;
@@ -239,3 +260,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, 100);
 });
+
+// Mobile iframe locking using map-lock strategy
+function setupMapLocks() {
+  const isTouch = matchMedia('(hover:none) and (pointer:coarse)').matches;
+  if (!isTouch) return;
+
+  const locks = document.querySelectorAll('.map-lock');
+
+  locks.forEach(lock => {
+    lock.addEventListener('click', e => {
+      if (!lock.classList.contains('active')) {
+        document.querySelectorAll('.map-lock.active').forEach(l => l.classList.remove('active'));
+        lock.classList.add('active');
+        e.stopPropagation();
+      }
+    }, true);
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.map-lock')) {
+      document.querySelectorAll('.map-lock.active').forEach(l => l.classList.remove('active'));
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", setupMapLocks);

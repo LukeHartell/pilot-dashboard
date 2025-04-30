@@ -13,7 +13,7 @@
 /* Wrap the widget's layout (small grid view) */
 .plane-widget {
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
   align-items: center;
   gap: 15px;
 }
