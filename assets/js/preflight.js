@@ -1,5 +1,18 @@
 let activeIcao = null;
 
+// Auto-load saved ICAO from localStorage
+document.addEventListener("DOMContentLoaded", () => {
+  const savedIcao = localStorage.getItem("selectedIcao");
+  if (savedIcao) {
+    const icaoInput = document.getElementById("icao");
+    if (icaoInput) {
+      icaoInput.value = savedIcao;
+      document.getElementById("icaoForm").dispatchEvent(new Event("submit"));
+    }
+  }
+});
+
+
 // Unified ICAO form handler
 document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -10,6 +23,8 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
   if (!icao) return;
 
   activeIcao = icao;
+  localStorage.setItem("selectedIcao", icao);
+
 
   const container = form.closest(".widget");
   const airbaseInfo = container.querySelector("#airbaseInfo");
