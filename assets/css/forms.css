@@ -22,7 +22,7 @@ form textarea {
   border-radius: 6px;
   border: 1px solid #ccc;
   font-family: inherit;
-  box-sizing: border-box; /* ✅ Super important: keeps padding inside width */
+  box-sizing: border-box;
 }
 
 /* Error message styling */

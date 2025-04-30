@@ -25,4 +25,20 @@ function setupDarkModeButton() {
 }
 
 // Check every 100ms until the button exists
-const intervalId = setInterval(setupDarkModeButton, 100);
+const maxAttempts = 50;
+let attempts = 0;
+
+const intervalId = setInterval(() => {
+  const buttonExists = document.getElementById("toggleDarkMode");
+  if (buttonExists) {
+    setupDarkModeButton();
+    clearInterval(intervalId);
+  }
+
+  attempts++;
+  if (attempts >= maxAttempts) {
+    console.warn("Dark mode toggle button not found.");
+    clearInterval(intervalId);
+  }
+}, 100);
+
