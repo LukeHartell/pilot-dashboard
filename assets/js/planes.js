@@ -33,7 +33,7 @@ async function loadPlanes() {
         const imgUrl = plane.photoUrl || "";
 
         widget.innerHTML = `
-          <div class="plane-controls">
+          <div class="widget-buttons">
             <button class="edit-btn" title="Edit Plane">✏️</button>
             <button class="fullscreen-btn" title="Fullscreen">⛶</button>
           </div>
