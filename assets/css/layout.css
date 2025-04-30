@@ -31,6 +31,17 @@ main {
   height: 60vh !important;
 }
 
+@media (max-width: 768px) {
+  .widget iframe.disable-touch {
+    pointer-events: none;
+  }
+}
+
+#widgetModal.fullscreen-mode .widget iframe.disable-touch {
+  pointer-events: auto;
+}
+
+
 #widgetModal.fullscreen-mode #metarIframeFullscreen {
   display: block;
   height: 85vh;

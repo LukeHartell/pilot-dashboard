@@ -59,7 +59,7 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
     `;
 
     mapContainer.innerHTML = `
-      <iframe
+      <iframe class="disable-touch"
         width="100%"
         height="250"
         frameborder="0"
