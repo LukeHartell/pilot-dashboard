@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Pilot Dashboard</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/about.css" />
+    <script defer src="assets/js/header.js"></script>
+    
+  </head>
+  <body>
+    <div class="scaling-wrapper">
+      <main>
+        <h1>About Pilot Dashboard</h1>
+        <div id="versionRow">
+          Last updated:
+          <span id="lastUpdated">...</span>
+        </div>
+
+        <p>
+            Pilot Dashboard is a free, open-source web app designed to help
+            pilots plan, log, and analyze their flights. It is built with a focus
+            on simplicity, usability, and data privacy.
+        </p>
+
+        <div class="about-section">
+          <h2>Vision</h2>
+          <p>
+            A world where every pilot - glider, powered, or ultralight - can
+            confidently plan, fly, and log their journeys using one userfriendly
+            platform that works with them, not against them.
+          </p>
+        </div>
+
+        <div class="about-section">
+          <h2>Mission</h2>
+          <p>
+            To empower pilots with a seamless, modern platform that simplifies
+            every step of flying - before, during, and after - through trusted
+            tools, intelligent insights, and total data ownership.
+          </p>
+        </div>
+
+        <div class="about-section">
+          <h2>Data & Privacy</h2>
+          <p>
+            <strong>
+              Pilot Dashboard respects your privacy and security above all else.
+            </strong>
+            <br />
+            All personal data is stored exclusively on secure, in-house Danish
+            servers. No personal or flight information is ever shared with third
+            parties, unless you explicitly choose to do so (for example,
+            exporting your logbook or backup to Google Drive).
+            <br />
+            Your data remains
+            <em>your data:</em>
+            always exportable, always under your control, never held hostage
+            or sold.
+          </p>
+        </div>
+
+        <div class="about-section">
+          <h2>Core Values</h2>
+          <table>
+            <tr>
+              <th>Value</th>
+              <th>What It Means for the Platform</th>
+            </tr>
+            <tr>
+              <td>Pilot First</td>
+              <td>
+                Every feature is useful in the cockpit, on the field, or at
+                home.
+              </td>
+            </tr>
+            <tr>
+              <td>Simplicity by Design</td>
+              <td>
+                Clean UI, no ads, no unnecessary clicks. You get what you
+                need.
+              </td>
+            </tr>
+            <tr>
+              <td>Transparency & Trust</td>
+              <td>Your data is yours. Always exportable, with possibillity for local backup.
+                So if Pilot Dashboardm ever disappears, at least your logbook didn't go down with it. </td>
+            </tr>
+            <tr>
+              <td>AI as a Co-Pilot</td>
+              <td>
+                Smart insights enhance your judgment. You stay in control.
+              </td>
+            </tr>
+            <tr>
+              <td>Inclusive</td>
+              <td>Designed for SPLs, PPLs, UL pilots, and students alike.</td>
+            </tr>
+            <tr>
+              <td>Sustainable Freemium</td>
+              <td>
+                Pilot Dashboard will forever remain completely usable completely for free with many preflight features not even requireting a login.
+                Pilot Dashboard is a passion project, not a business.
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="about-section">
+          <h2>Roadmap</h2>
+          <p>
+            Pilot Dashboard is a work in progress and is currently in early stage of development. I am often adding new
+            features and improving existing ones.
+          </p>
+
+
+          <div class="about-section">
+            <h2>Credits & Data Sources</h2>
+            <ul>
+              <li>
+                <strong>Weather (METAR/TAF):</strong>
+                <a
+                  href="https://aviationweather.gov"
+                  target="_blank"
+                  rel="noopener">
+                  https://aviationweather.gov
+                </a>
+              </li>
+              <li>
+                <strong>Airfield Data:</strong>
+                ICAO information, municipality, and coordinates from
+                <a href="https://aerodatabox.com/" target="_blank" rel="noopener">
+                  https://aerodatabox.com/
+                </a>
+                .
+              </li>
+              <li>
+                <strong>Thermal Forecasts:</strong>
+                <a
+                  href="https://rasp.skyltdirect.se/scandinavia/"
+                  target="_blank"
+                  rel="noopener">
+                  RASP Scandinavia
+                </a>
+                (embedded via iframe).
+              </li>
+                <li>
+                <strong>Visual Metar:</strong>
+                <a
+                  href="https://metar-taf.com/"
+                  target="_blank"
+                  rel="noopener">
+                  https://metar-taf.com/
+                </a>
+                (embedded via iframe).
+              </li>
+              <li>
+                <strong>AI Flight Assistant:</strong>
+                Based on OpenAI's GPT models.
+              </li>
+            </ul>
+          </div>
+
+        <div class="about-section">
+          <h2>Technical Details</h2>
+          <div id="commitInfo">
+            Latest commit:
+            <span id="commitSha">...</span>
+            on
+            <span id="commitDate">...</span>
+          </div>
+          <a
+            class="gh-link"
+            href="https://github.com/LukeHartell/pilot-dashboard"
+            target="_blank"
+            rel="noopener">
+            See the project on GitHub →
+          </a>
+        </div>
+
+      </main>
+    </div>
+    <script src="assets/js/about.js"></script>
+  </body>
+</html>

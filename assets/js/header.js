@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const headerHTML = `
     <header>
       <div class="header-left">
-        <h1>Pilot Dashboard (Beta)</h1>
+        <h1 id="aboutNavTitle" style="cursor:pointer;">Pilot Dashboard (Beta)</h1>
       </div>
       <button id="navToggle" class="hamburger">☰</button>
       <nav id="mainNav">
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <li data-page="preflight">Preflight</li>
           <li data-page="flight">Flight</li>
           <li data-page="logbook">Logbook</li>
-          <li data-page="planes">Planes</li> <!-- ✅ NEW LINE -->
+          <li data-page="planes">Planes</li>
           <li id="userNavItem" data-page="user">
             <a id="userMenuLink" href="/login">Login</a>
           </li>
@@ -32,6 +32,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const wrapper = document.querySelector(".scaling-wrapper");
   if (wrapper) {
     wrapper.insertAdjacentHTML("afterbegin", headerHTML);
+
+    // ADD THE HANDLER HERE, after header is in DOM:
+    const aboutTitle = document.getElementById("aboutNavTitle");
+    if (aboutTitle) {
+      aboutTitle.addEventListener("click", () => {
+        window.location.href = "/about"; // or "about.html" for static
+      });
+    }
 
     // Hamburger menu toggle
     const navToggle = document.getElementById("navToggle");
