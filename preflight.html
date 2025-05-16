@@ -14,7 +14,6 @@
     <!-- Injects header dynamically -->
     <script defer src="assets/js/user-menu.js"></script>
     <!-- Updates user menu -->
-
   </head>
   <body>
     <div class="scaling-wrapper">
@@ -26,14 +25,13 @@
           <div id="preflightGrid" class="widget-grid">
             <!-- TILE: AIRBASE -->
             <div class="widget" id="airbaseWidget">
-
               <div class="widget-buttons">
                 <!-- <button class="edit-btn" title="Edit">✏️</button> -->
                 <button class="fullscreen-btn" title="Fullscreen">⛶</button>
               </div>
 
               <h3>📍 Airbase</h3>
-              <form id="icaoForm">
+              <form id="icaoForm" action="#" autocomplete="off">
                 <input
                   type="text"
                   id="icao"
@@ -50,7 +48,7 @@
             </div>
 
             <!-- TILE: METAR / TAF -->
-            <div class="widget" id="metarWidget" style="display: none;">
+            <div class="widget" id="metarWidget" style="display: none">
               <div class="widget-buttons">
                 <button class="fullscreen-btn" title="Fullscreen">⛶</button>
               </div>
@@ -58,8 +56,16 @@
               <h3>🛰️ METAR / TAF</h3>
 
               <div class="toggle-buttons">
-                <button type="button" class="metar-toggle" data-target="visual" disabled>Visual</button>
-                <button type="button" class="metar-toggle" data-target="raw">Raw</button>
+                <button
+                  type="button"
+                  class="metar-toggle"
+                  data-target="visual"
+                  disabled>
+                  Visual
+                </button>
+                <button type="button" class="metar-toggle" data-target="raw">
+                  Raw
+                </button>
               </div>
 
               <div id="metarRawSection" style="display: none">
@@ -67,14 +73,21 @@
               </div>
 
               <div id="metarVisualSection">
-                <a href="https://metar-taf.com/EKSP" id="metartaf-v7exxgfd" class="metar-embed-link">
+                <a
+                  href="https://metar-taf.com/EKSP"
+                  id="metartaf-v7exxgfd"
+                  class="metar-embed-link">
                   METAR Skrydstrup Air Base
                 </a>
               </div>
 
-              <div id="metarIframeFullscreen" style="display: none;">
+              <div id="metarIframeFullscreen" style="display: none">
                 <div class="iframe-container">
-                  <iframe id="metarIframe" src="" loading="lazy" frameborder="0"></iframe>
+                  <iframe
+                    id="metarIframe"
+                    src=""
+                    loading="lazy"
+                    frameborder="0"></iframe>
                 </div>
               </div>
             </div>
@@ -96,7 +109,7 @@
             </div>
 
             <!-- TILE: NOTAMs -->
-            <div class="widget" style="display: none;">
+            <div class="widget" style="display: none">
               <div class="widget-buttons">
                 <!-- <button class="edit-btn" title="Edit">✏️</button> -->
                 <button class="fullscreen-btn" title="Fullscreen">⛶</button>
@@ -122,7 +135,6 @@
                   allowfullscreen></iframe>
               </div>
             </div>
-
           </div>
         </section>
       </main>
@@ -136,13 +148,14 @@
       </div>
     </div>
 
-
-    
-
     <!-- Scripts -->
     <script src="assets/js/nav.js"></script>
     <script src="assets/js/preflight.js"></script>
     <!-- <script src="assets/js/darkmode.js"></script> -->
-    <script async defer crossorigin="anonymous" src="https://metar-taf.com/embed-js/EKSP?layout=landscape&qnh=hPa&rh=rh&target=IKYQpZ7R"></script>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://metar-taf.com/embed-js/EKSP?layout=landscape&qnh=hPa&rh=rh&target=IKYQpZ7R"></script>
   </body>
 </html>

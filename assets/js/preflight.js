@@ -1,19 +1,21 @@
-
-
 let activeIcao = null;
 
-// Auto-load saved ICAO from localStorage
+// Auto-load saved ICAO from localStorage (run only once per load)
+let alreadyAutoSubmitted = false;
 document.addEventListener("DOMContentLoaded", () => {
   const savedIcao = localStorage.getItem("selectedIcao");
-  if (savedIcao) {
-    const icaoInput = document.getElementById("icao");
-    if (icaoInput) {
-      icaoInput.value = savedIcao;
-      document.getElementById("icaoForm").dispatchEvent(new Event("submit"));
-    }
+  const icaoInput = document.getElementById("icao");
+  if (
+    savedIcao &&
+    icaoInput &&
+    icaoInput.value !== savedIcao &&
+    !alreadyAutoSubmitted
+  ) {
+    alreadyAutoSubmitted = true;
+    icaoInput.value = savedIcao;
+    document.getElementById("icaoForm").dispatchEvent(new Event("submit"));
   }
 });
-
 
 // Unified ICAO form handler
 document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
@@ -26,7 +28,6 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
 
   activeIcao = icao;
   localStorage.setItem("selectedIcao", icao);
-
 
   const container = form.closest(".widget");
   const airbaseInfo = container.querySelector("#airbaseInfo");
@@ -72,8 +73,8 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
           src="https://www.openstreetmap.org/export/embed.html?bbox=${
             info.location.lon - 0.02
           },${info.location.lat - 0.01},${info.location.lon + 0.02},${
-            info.location.lat + 0.01
-          }&layer=mapnik&marker=${info.location.lat},${info.location.lon}">
+      info.location.lat + 0.01
+    }&layer=mapnik&marker=${info.location.lat},${info.location.lon}">
         </iframe>
       </div>
     `;
@@ -87,15 +88,20 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
 
     metarWidget.style.display = "block";
 
+    // Update METAR/TAF embed anchor
     const metarEmbedAnchor = document.getElementById("metartaf-v7exxgfd");
     if (metarEmbedAnchor) {
       metarEmbedAnchor.href = `https://metar-taf.com/${icao}`;
       metarEmbedAnchor.textContent = `METAR ${icao}`;
     }
 
-    const existingScript = document.querySelector('script[src*="metar-taf.com/embed-js/"]');
+    // Remove existing metar-taf script, if any
+    const existingScript = document.querySelector(
+      'script[src*="metar-taf.com/embed-js/"]'
+    );
     if (existingScript) existingScript.remove();
 
+    // Add new metar-taf script
     const newScript = document.createElement("script");
     newScript.async = true;
     newScript.defer = true;
@@ -125,7 +131,6 @@ document.querySelectorAll(".metar-toggle").forEach((btn) => {
 });
 
 // Fullscreen handler with METAR iframe swap
-// This is what vibecoding does to a huamn being.
 document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const widget = e.target.closest(".widget");
@@ -158,7 +163,9 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     const isMetarWidget = widget.id === "metarWidget";
     if (isMetarWidget) {
       const modalICAO = activeIcao || "EKSP";
-      const iframeWrapper = modalContent.querySelector("#metarIframeFullscreen");
+      const iframeWrapper = modalContent.querySelector(
+        "#metarIframeFullscreen"
+      );
       const iframe = modalContent.querySelector("#metarIframe");
 
       if (iframeWrapper && iframe) {
@@ -174,62 +181,58 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
   });
 });
 
-
-
-
 // Modal close behavior
 document.getElementById("closeModalBtn").addEventListener("click", () => {
   document.getElementById("widgetModal").style.display = "none";
   modal.classList.remove("fullscreen-mode");
-
 });
 document.getElementById("widgetModal").addEventListener("click", (e) => {
   if (e.target.id === "widgetModal") {
     document.getElementById("widgetModal").style.display = "none";
     modal.classList.remove("fullscreen-mode");
-
   }
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     document.getElementById("widgetModal").style.display = "none";
     modal.classList.remove("fullscreen-mode");
-
   }
 });
 
 // Fetch AI summary and render markdown
-document.getElementById("getFlightAssistantBtn")?.addEventListener("click", async () => {
-  const btn = document.getElementById("getFlightAssistantBtn");
-  const output = document.getElementById("assistantOutput");
+document
+  .getElementById("getFlightAssistantBtn")
+  ?.addEventListener("click", async () => {
+    const btn = document.getElementById("getFlightAssistantBtn");
+    const output = document.getElementById("assistantOutput");
 
-  if (!activeIcao || !btn || !output) return;
+    if (!activeIcao || !btn || !output) return;
 
-  btn.style.display = "none";
-  output.innerHTML = "Loading...";
+    btn.style.display = "none";
+    output.innerHTML = "Loading...";
 
-  try {
-    const response = await fetch(
-      `https://n8n.e57.dk/webhook/pilot-dashboard/flight-assiatant?icao_id=${activeIcao}`
-    );
-    if (!response.ok) throw new Error("Failed to fetch summary");
+    try {
+      const response = await fetch(
+        `https://n8n.e57.dk/webhook/pilot-dashboard/flight-assiatant?icao_id=${activeIcao}`
+      );
+      if (!response.ok) throw new Error("Failed to fetch summary");
 
-    const text = await response.text();
-    const html = text
-      .replace(/^### (.*$)/gim, "<h3>$1</h3>")
-      .replace(/^## (.*$)/gim, "<h2>$1</h2>")
-      .replace(/^# (.*$)/gim, "<h1>$1</h1>")
-      .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
-      .replace(/\*(.*?)\*/gim, "<em>$1</em>")
-      .replace(/`([^`]+)`/g, "<code>$1</code>")
-      .replace(/\n/g, "<br />");
+      const text = await response.text();
+      const html = text
+        .replace(/^### (.*$)/gim, "<h3>$1</h3>")
+        .replace(/^## (.*$)/gim, "<h2>$1</h2>")
+        .replace(/^# (.*$)/gim, "<h1>$1</h1>")
+        .replace(/\*\*(.*?)\*\*/gim, "<strong>$1</strong>")
+        .replace(/\*(.*?)\*/gim, "<em>$1</em>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>")
+        .replace(/\n/g, "<br />");
 
-    output.innerHTML = html;
-  } catch (err) {
-    output.innerHTML = `<p style="color: red;">Error fetching summary</p>`;
-    console.error(err);
-  }
-});
+      output.innerHTML = html;
+    } catch (err) {
+      output.innerHTML = `<p style="color: red;">Error fetching summary</p>`;
+      console.error(err);
+    }
+  });
 
 // Wait for dark mode button injected via header
 document.addEventListener("DOMContentLoaded", () => {
@@ -263,24 +266,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Mobile iframe locking using map-lock strategy
 function setupMapLocks() {
-  const isTouch = matchMedia('(hover:none) and (pointer:coarse)').matches;
+  const isTouch = matchMedia("(hover:none) and (pointer:coarse)").matches;
   if (!isTouch) return;
 
-  const locks = document.querySelectorAll('.map-lock');
+  const locks = document.querySelectorAll(".map-lock");
 
-  locks.forEach(lock => {
-    lock.addEventListener('click', e => {
-      if (!lock.classList.contains('active')) {
-        document.querySelectorAll('.map-lock.active').forEach(l => l.classList.remove('active'));
-        lock.classList.add('active');
-        e.stopPropagation();
-      }
-    }, true);
+  locks.forEach((lock) => {
+    lock.addEventListener(
+      "click",
+      (e) => {
+        if (!lock.classList.contains("active")) {
+          document
+            .querySelectorAll(".map-lock.active")
+            .forEach((l) => l.classList.remove("active"));
+          lock.classList.add("active");
+          e.stopPropagation();
+        }
+      },
+      true
+    );
   });
 
-  document.addEventListener('click', e => {
-    if (!e.target.closest('.map-lock')) {
-      document.querySelectorAll('.map-lock.active').forEach(l => l.classList.remove('active'));
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".map-lock")) {
+      document
+        .querySelectorAll(".map-lock.active")
+        .forEach((l) => l.classList.remove("active"));
     }
   });
 }
