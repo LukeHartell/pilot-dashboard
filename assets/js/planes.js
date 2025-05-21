@@ -44,7 +44,7 @@ async function loadPlanes() {
                 : `<span>No Image</span>`
             }
           </div>
-          <div class="plane-info" data-id="${plane._id}">
+          <div class="plane-info" data-id="${plane._id}" data-note="${plane.note ? encodeURIComponent(plane.note) : ''}">
             <h3 class="plane-title">${plane.displayName}</h3>
             <p><strong>Registration:</strong> ${
               plane.registration || "Unknown"
@@ -86,9 +86,13 @@ document.addEventListener("click", (e) => {
     const planeName =
       widget.querySelector(".plane-title")?.innerText || "Unknown Plane";
     const img = widget.querySelector(".plane-photo img")?.src;
-    const detailLines = Array.from(
-      widget.querySelectorAll(".plane-info p")
-    ).map((p) => p.innerText);
+    const planeInfo = widget.querySelector(".plane-info");
+    const detailLines = Array.from(planeInfo.querySelectorAll("p")).map((p) =>
+      p.innerText
+    );
+    const planeNote = planeInfo.dataset.note
+      ? decodeURIComponent(planeInfo.dataset.note)
+      : "";
 
     modalContent.innerHTML = `
       <div class="plane-widget-content fullscreen-layout">
@@ -116,9 +120,13 @@ document.addEventListener("click", (e) => {
                 .join("")}
             </tbody>
           </table>
+          ${planeNote ? '<p class="plane-note"></p>' : ''}
         </div>
       </div>
     `;
+    if (planeNote) {
+      modalContent.querySelector(".plane-note").textContent = planeNote;
+    }
 
     modal.style.display = "flex";
   }
