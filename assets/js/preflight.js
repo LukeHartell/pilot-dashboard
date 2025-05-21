@@ -213,7 +213,7 @@ document
 
     try {
       const response = await fetch(
-        `https://n8n.e57.dk/webhook/pilot-dashboard/flight-assiatant?icao_id=${activeIcao}`
+        `https://n8n.e57.dk/webhook/pilot-dashboard/flight-assistant?icao_id=${activeIcao}`
       );
       if (!response.ok) throw new Error("Failed to fetch summary");
 
