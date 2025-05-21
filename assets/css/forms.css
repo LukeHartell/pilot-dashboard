@@ -140,3 +140,9 @@ body.dark-mode .close-btn:hover {
 .edit-form button {
   margin-top: 20px;
 }
+
+#nameFields input,
+#passwordFields input {
+  margin-bottom: 20px;
+}
+
