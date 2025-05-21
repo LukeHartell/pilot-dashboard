@@ -8,6 +8,8 @@ if (!token) {
 const editUserForm = document.getElementById("editUserForm");
 const nameInput = document.getElementById("name");
 const surnameInput = document.getElementById("surname");
+let originalName = "";
+let originalSurname = "";
 const currentPasswordInput = document.getElementById("currentPassword");
 const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
@@ -44,6 +46,8 @@ async function loadUserInfo() {
 
     nameInput.value = data.name;
     surnameInput.value = data.surname;
+    originalName = data.name;
+    originalSurname = data.surname;
   } catch (err) {
     console.error(err);
   }
@@ -132,6 +136,10 @@ editUserForm?.addEventListener("submit", async (e) => {
   const password = passwordInput.value;
   const confirmPassword = confirmPasswordInput.value;
 
+  const updates = {};
+  if (name !== originalName) updates.name = name;
+  if (surname !== originalSurname) updates.surname = surname;
+
   // Final blocking checks
   if (!nameRegex.test(name)) {
     alert("Please enter a valid first name.");
@@ -171,27 +179,38 @@ editUserForm?.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch(
-      "https://n8n.e57.dk/webhook/pilot-dashboard/update-user",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token,
-          updates: Object.assign(
-            { name, surname },
-            wantsPasswordChange
-              ? { currentPassword, newPassword: password }
-              : {}
-          ),
-        }),
-      }
-    );
+    if (Object.keys(updates).length > 0) {
+      const respUser = await fetch(
+        "https://n8n.e57.dk/webhook/pilot-dashboard/update-user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, updates }),
+        }
+      );
 
-    if (!response.ok) {
-      throw new Error("Server returned an error");
+      const userData = await respUser.json();
+      if (!respUser.ok || !userData.success) {
+        alert(userData.message || "Failed to update profile.");
+        return;
+      }
+    }
+
+    if (wantsPasswordChange) {
+      const respPass = await fetch(
+        "https://n8n.e57.dk/webhook/pilot-dashboard/update-password",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, currentPassword, password }),
+        }
+      );
+
+      const passData = await respPass.json();
+      if (!respPass.ok || !passData.success) {
+        alert(passData.message || "Failed to update password.");
+        return;
+      }
     }
 
     // Redirect back to profile on success
