@@ -180,18 +180,20 @@ editUserForm?.addEventListener("submit", async (e) => {
         },
         body: JSON.stringify({
           token,
+          currentPassword: wantsPasswordChange ? currentPassword : null,
           updates: Object.assign(
             { name, surname },
-            wantsPasswordChange
-              ? { currentPassword, newPassword: password }
-              : {}
+            wantsPasswordChange ? { password } : {}
           ),
         }),
       }
     );
 
-    if (!response.ok) {
-      throw new Error("Server returned an error");
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      alert(data.message || "Failed to update profile.");
+      return;
     }
 
     // Redirect back to profile on success
