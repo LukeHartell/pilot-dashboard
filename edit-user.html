@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+    <script defer src="assets/js/edit-user.js"></script>
+    <script defer src="assets/js/nav.js"></script>
+  </head>
+
+  <body>
+    <div class="scaling-wrapper">
+      <!-- Header will be injected here -->
+
+      <main>
+        <section id="user">
+          <h2 style="text-align: center">Edit Profile</h2>
+
+          <form id="editUserForm">
+            <div id="nameFields">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="First Name"
+                required />
+              <div id="nameError" class="error-message"></div>
+
+              <input
+                type="text"
+                id="surname"
+                name="surname"
+                placeholder="Last Name"
+                required />
+              <div id="surnameError" class="error-message"></div>
+
+              <button type="button" id="showPasswordFields">Change Password &gt;</button>
+            </div>
+
+            <div id="passwordFields" style="display: none;">
+              <input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                placeholder="Current Password" />
+
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="New Password" />
+
+              <div
+                id="passwordChecklist"
+                style="font-size: 14px; margin-top: 8px">
+                <p id="lengthCheck">☐ At least 8 characters</p>
+                <p id="caseCheck">☐ Upper and lowercase letters</p>
+                <p id="numberCheck">☐ Contains a number</p>
+                <p id="specialCheck">☐ Contains a special character</p>
+              </div>
+
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm New Password" />
+
+              <button type="button" id="backToNameFields">&lt; Back</button>
+            </div>
+
+            <button type="submit">Save Changes</button>
+
+            <div class="link">
+              <a href="/user">⬅️ Back to Profile</a>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+    <script defer src="assets/js/darkmode.js"></script>
+  </body>
+</html>

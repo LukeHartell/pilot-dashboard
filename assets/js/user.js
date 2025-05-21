@@ -38,6 +38,11 @@ async function loadUserInfo() {
 
 loadUserInfo();
 
+// Edit profile button
+document.getElementById("editProfileButton")?.addEventListener("click", () => {
+  window.location.href = "/edit-user";
+});
+
 // Fullscreen widget modal
 const modal = document.getElementById("widgetModal");
 const modalContent = document.getElementById("modalContent");
