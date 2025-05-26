@@ -353,10 +353,10 @@ You have the right to request access to the personal information I collect from 
 </script>
       </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/simpleMarkdown.js"></script>
     <script>
       const md = document.getElementById("privacyMarkdown").textContent;
-      document.getElementById("privacyContent").innerHTML = marked.parse(md);
+      document.getElementById("privacyContent").innerHTML = simpleMarkdown(md);
     </script>
     <script src="assets/js/darkmode.js"></script>
   </body>

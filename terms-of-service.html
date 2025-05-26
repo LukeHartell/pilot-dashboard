@@ -331,10 +331,10 @@ In order to resolve a complaint regarding the Services or to receive further inf
 </script>
       </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="assets/js/simpleMarkdown.js"></script>
     <script>
       const md = document.getElementById("tosMarkdown").textContent;
-      document.getElementById("tosContent").innerHTML = marked.parse(md);
+      document.getElementById("tosContent").innerHTML = simpleMarkdown(md);
     </script>
     <script src="assets/js/darkmode.js"></script>
   </body>
