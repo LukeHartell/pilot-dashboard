@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service - Pilot Dashboard</title>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/about.css" />
+    <script defer src="assets/js/header.js"></script>
+  </head>
+  <body>
+    <div class="scaling-wrapper">
+      <main>
+        <h1>Terms of Service</h1>
+        <div id="versionRow">
+          Last updated: <span id="lastUpdated">June 01, 2025</span>
+        </div>
+        <div id="tosContent"></div>
+        <script id="tosMarkdown" type="text/plain">
 # **TERMS OF SERVICE**
 
 **Last updated** **June 01, 2025**
@@ -281,3 +303,14 @@ In order to resolve a complaint regarding the Services or to receive further inf
 **Lucas Hjort Rahr Hartung**  
 **Denmark**  
 **lhrh.privat@gmail.com**  
+</script>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+      const md = document.getElementById("tosMarkdown").textContent;
+      document.getElementById("tosContent").innerHTML = marked.parse(md);
+    </script>
+    <script src="assets/js/darkmode.js"></script>
+  </body>
+</html>
