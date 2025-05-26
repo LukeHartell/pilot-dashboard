@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/layout.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/about.css" />
     <script defer src="assets/js/header.js"></script>
     <script defer src="assets/js/user-menu.js"></script>
   </head>
@@ -16,21 +17,23 @@
       <main>
         <section id="requestAllData">
           <h2 style="text-align: center">Request All Your Data</h2>
-          <p>
-            You can request a copy of all personal information stored in Pilot
-            Dashboard. This includes profile details, your planes, flights, and
-            any logbook entries. The report will be generated and sent to your
-            registered email address.
-          </p>
-          <p>
-            For security reasons, passwords are never included—they are stored
-            only as secure hashes, which are not shared. Files such as documents
-            or photos may be encoded; you will need to decode them to view the
-            original content.
-          </p>
-          <button id="requestDataButton" style="margin-top: 20px; width: 50%; height: 40px;">
-            Request Report
-          </button>
+            <p>
+              You can request a copy of all personal information stored in Pilot Dashboard. 
+              This includes your account details, any planes you've added, your flights, and 
+              all logbook entries. Once you request your data, a report will be generated and 
+              sent to your registered email address. The process may take a few minutes depending 
+              on how much data you have.
+            </p>
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+              <button id="requestDataButton" style="width: 50%; height: 40px;">
+                Request Report
+              </button>
+            </div>
+            <p>
+              Passwords are not included in the export. They are stored as salted SHA-256 hashes, 
+              and even these hashes are left out for security reasons. This helps keep your account 
+              safe and prevents exposure of details about how passwords are protected.
+            </p>
         </section>
       </main>
     </div>
