@@ -12,46 +12,46 @@ This Privacy Notice for Lucas Hjort Rahr Hartung ("**I**," "**me**," or "**my**"
 
 ## **SUMMARY OF KEY POINTS**
 
-***This summary provides key points from my Privacy Notice, but you can find out more details about any of these topics by clicking the link following each key point or by using my [table of contents](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#toc) below to find the section you are looking for.***
+***This summary provides key points from my Privacy Notice, but you can find out more details about any of these topics by clicking the link following each key point or by using my [table of contents](https://pilot-dashboard.e57.dk/privacy-notice.html#toc) below to find the section you are looking for.***
 
-**What personal information do I process?** When you visit, use, or navigate my Services, I may process personal information depending on how you interact with me and the Services, the choices you make, and the products and features you use. Learn more about [personal information you disclose to us](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#personalinfo).
+**What personal information do I process?** When you visit, use, or navigate my Services, I may process personal information depending on how you interact with me and the Services, the choices you make, and the products and features you use. Learn more about [personal information you disclose to us](https://pilot-dashboard.e57.dk/privacy-notice.html#personalinfo).
 
-**Do I process any sensitive personal information?** Some of the information may be considered "special" or "sensitive" in certain jurisdictions, for example your racial or ethnic origins, sexual orientation, and religious beliefs. I may process sensitive personal information when necessary with your consent or as otherwise permitted by applicable law. Learn more about [sensitive information I process](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#sensitiveinfo).
+**Do I process any sensitive personal information?** Some of the information may be considered "special" or "sensitive" in certain jurisdictions, for example your racial or ethnic origins, sexual orientation, and religious beliefs. I may process sensitive personal information when necessary with your consent or as otherwise permitted by applicable law. Learn more about [sensitive information I process](https://pilot-dashboard.e57.dk/privacy-notice.html#sensitiveinfo).
 
 **Do I collect any information from third parties?** I do not collect any information from third parties.
 
-**How do I process your information?** I process your information to provide, improve, and administer my Services, communicate with you, for security and fraud prevention, and to comply with law. I may also process your information for other purposes with your consent. I process your information only when I have a valid legal reason to do so. Learn more about [how I process your information](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infouse).
+**How do I process your information?** I process your information to provide, improve, and administer my Services, communicate with you, for security and fraud prevention, and to comply with law. I may also process your information for other purposes with your consent. I process your information only when I have a valid legal reason to do so. Learn more about [how I process your information](https://pilot-dashboard.e57.dk/privacy-notice.html#infouse).
 
-**In what situations and with which parties do I share personal information?** I may share information in specific situations and with specific third parties. Learn more about [when and with whom I share your personal information](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#whoshare).
+**In what situations and with which parties do I share personal information?** I may share information in specific situations and with specific third parties. Learn more about [when and with whom I share your personal information](https://pilot-dashboard.e57.dk/privacy-notice.html#whoshare).
 
-**How do I keep your information safe?** I have adequate organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure, so I cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat my security and improperly collect, access, steal, or modify your information. Learn more about [how I keep your information safe](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infosafe).
+**How do I keep your information safe?** I have adequate organizational and technical processes and procedures in place to protect your personal information. However, no electronic transmission over the internet or information storage technology can be guaranteed to be 100% secure, so I cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat my security and improperly collect, access, steal, or modify your information. Learn more about [how I keep your information safe](https://pilot-dashboard.e57.dk/privacy-notice.html#infosafe).
 
-**What are your rights?** Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information. Learn more about [your privacy rights](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#privacyrights).
+**What are your rights?** Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information. Learn more about [your privacy rights](https://pilot-dashboard.e57.dk/privacy-notice.html#privacyrights).
 
 **How do you exercise your rights?** The easiest way to exercise your rights is by visiting [https://pilot-dashboard.e57.dk/request-all-data](https://pilot-dashboard.e57.dk/request-all-data), or by contacting us. I will consider and act upon any request in accordance with applicable data protection laws.
 
-Want to learn more about what I do with any information I collect? [Review the Privacy Notice in full](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#toc).
+Want to learn more about what I do with any information I collect? [Review the Privacy Notice in full](https://pilot-dashboard.e57.dk/privacy-notice.html#toc).
 
 ## **TABLE OF CONTENTS**
 
-[1\. WHAT INFORMATION DO I COLLECT?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infocollect)  
-[2\. HOW DO I PROCESS YOUR INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infouse)  
-[3\. WHAT LEGAL BASES DO I RELY ON TO PROCESS YOUR PERSONAL INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#legalbases)  
-[4\. WHEN AND WITH WHOM DO I SHARE YOUR PERSONAL INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#whoshare)  
-[5\. DO I USE COOKIES AND OTHER TRACKING TECHNOLOGIES?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#cookies)  
-[6\. DO I OFFER ARTIFICIAL INTELLIGENCE-BASED PRODUCTS?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#ai)  
-[7\. HOW LONG DO I KEEP YOUR INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#inforetain)  
-[8\. HOW DO I KEEP YOUR INFORMATION SAFE?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infosafe)  
-[9\. DO I COLLECT INFORMATION FROM MINORS?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infominors)  
-[10\. WHAT ARE YOUR PRIVACY RIGHTS?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#privacyrights)  
-[11\. CONTROLS FOR DO-NOT-TRACK FEATURES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#DNT)  
-[12\. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#uslaws)  
-[13\. AI USE & NO PERSONAL DATA](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#clausea)  
-[14\. USER DOCUMENT UPLOADS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#clauseb)  
-[15\. LOCAL STORAGE USE](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#clausec)  
-[16\. DO I MAKE UPDATES TO THIS NOTICE?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#policyupdates)  
-[17\. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#contact)  
-[18\. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA I COLLECT FROM YOU?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#request)
+[1\. WHAT INFORMATION DO I COLLECT?](https://pilot-dashboard.e57.dk/privacy-notice.html#infocollect)  
+[2\. HOW DO I PROCESS YOUR INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#infouse)  
+[3\. WHAT LEGAL BASES DO I RELY ON TO PROCESS YOUR PERSONAL INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#legalbases)  
+[4\. WHEN AND WITH WHOM DO I SHARE YOUR PERSONAL INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#whoshare)  
+[5\. DO I USE COOKIES AND OTHER TRACKING TECHNOLOGIES?](https://pilot-dashboard.e57.dk/privacy-notice.html#cookies)  
+[6\. DO I OFFER ARTIFICIAL INTELLIGENCE-BASED PRODUCTS?](https://pilot-dashboard.e57.dk/privacy-notice.html#ai)  
+[7\. HOW LONG DO I KEEP YOUR INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#inforetain)  
+[8\. HOW DO I KEEP YOUR INFORMATION SAFE?](https://pilot-dashboard.e57.dk/privacy-notice.html#infosafe)  
+[9\. DO I COLLECT INFORMATION FROM MINORS?](https://pilot-dashboard.e57.dk/privacy-notice.html#infominors)  
+[10\. WHAT ARE YOUR PRIVACY RIGHTS?](https://pilot-dashboard.e57.dk/privacy-notice.html#privacyrights)  
+[11\. CONTROLS FOR DO-NOT-TRACK FEATURES](https://pilot-dashboard.e57.dk/privacy-notice.html#DNT)  
+[12\. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?](https://pilot-dashboard.e57.dk/privacy-notice.html#uslaws)  
+[13\. AI USE & NO PERSONAL DATA](https://pilot-dashboard.e57.dk/privacy-notice.html#clausea)  
+[14\. USER DOCUMENT UPLOADS](https://pilot-dashboard.e57.dk/privacy-notice.html#clauseb)  
+[15\. LOCAL STORAGE USE](https://pilot-dashboard.e57.dk/privacy-notice.html#clausec)  
+[16\. DO I MAKE UPDATES TO THIS NOTICE?](https://pilot-dashboard.e57.dk/privacy-notice.html#policyupdates)  
+[17\. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://pilot-dashboard.e57.dk/privacy-notice.html#contact)  
+[18\. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA I COLLECT FROM YOU?](https://pilot-dashboard.e57.dk/privacy-notice.html#request)
 
 ## **1\. WHAT INFORMATION DO I COLLECT?**
 
@@ -98,7 +98,7 @@ All personal information that you provide to me must be true, complete, and accu
 
 The General Data Protection Regulation (GDPR) and UK GDPR require me to explain the valid legal bases I rely on in order to process your personal information. As such, I may rely on the following legal bases to process your personal information:
 
-* **Consent. I** may process your information if you have given me permission (i.e., consent) to use your personal information for a specific purpose. You can withdraw your consent at any time. Learn more about [withdrawing your consent](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#withdrawconsent).  
+* **Consent. I** may process your information if you have given me permission (i.e., consent) to use your personal information for a specific purpose. You can withdraw your consent at any time. Learn more about [withdrawing your consent](https://pilot-dashboard.e57.dk/privacy-notice.html#withdrawconsent).  
 * **Performance of a Contract.** I may process your personal information when I believe it is necessary to fulfill my contractual obligations to you, including providing my Services or at your request prior to entering into a contract with you.  
 * **Legitimate Interests.** I may process your information when I believe it is reasonably necessary to achieve my legitimate business interests and those interests do not outweigh your interests and fundamental rights and freedoms. For example, I may process your personal information for some of the purposes described in order to:  
 * Analyze how my Services are used so I can improve them to engage and retain users  
@@ -108,7 +108,7 @@ The General Data Protection Regulation (GDPR) and UK GDPR require me to explain 
 
 ***If you are located in Canada, this section applies to you.***
 
-I may process your information if you have given me specific permission (i.e., express consent) to use your personal information for a specific purpose, or in situations where your permission can be inferred (i.e., implied consent). You can [withdraw your consent](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#withdrawconsent) at any time.
+I may process your information if you have given me specific permission (i.e., express consent) to use your personal information for a specific purpose, or in situations where your permission can be inferred (i.e., implied consent). You can [withdraw your consent](https://pilot-dashboard.e57.dk/privacy-notice.html#withdrawconsent) at any time.
 
 In some exceptional cases, I may be legally permitted under applicable law to process your information without your consent, including, for example:
 
@@ -141,7 +141,7 @@ I may use cookies and similar tracking technologies (like web beacons and pixels
 
 I also permit third parties and service providers to use online tracking technologies on my Services for analytics and advertising, including to help manage and display advertisements, to tailor advertisements to your interests, or to send abandoned shopping cart reminders (depending on your communication preferences). The third parties and service providers use their technology to provide advertising about products and services tailored to your interests which may appear either on my Services or on other websites.
 
-To the extent these online tracking technologies are deemed to be a "sale"/"sharing" (which includes targeted advertising, as defined under the applicable laws) under applicable US state laws, you can opt out of these online tracking technologies by submitting a request as described below under section "[DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#uslaws)"
+To the extent these online tracking technologies are deemed to be a "sale"/"sharing" (which includes targeted advertising, as defined under the applicable laws) under applicable US state laws, you can opt out of these online tracking technologies by submitting a request as described below under section "[DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?](https://pilot-dashboard.e57.dk/privacy-notice.html#uslaws)"
 
 Specific information about how I use such technologies and how you can refuse certain cookies is set out in my Cookie Notice.
 
@@ -153,7 +153,7 @@ As part of my Services, I offer products, features, or tools powered by artifici
 
 **Use of AI Technologies**
 
-I provide the AI Products through third-party service providers ("AI Service Providers"), including OpenAI. As outlined in this Privacy Notice, your input, output, and personal information will be shared with and processed by these AI Service Providers to enable your use of my AI Products for purposes outlined in "[WHAT LEGAL BASES DO I RELY ON TO PROCESS YOUR PERSONAL INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#legalbases)" You must not use the AI Products in any way that violates the terms or policies of any AI Service Provider.
+I provide the AI Products through third-party service providers ("AI Service Providers"), including OpenAI. As outlined in this Privacy Notice, your input, output, and personal information will be shared with and processed by these AI Service Providers to enable your use of my AI Products for purposes outlined in "[WHAT LEGAL BASES DO I RELY ON TO PROCESS YOUR PERSONAL INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#legalbases)" You must not use the AI Products in any way that violates the terms or policies of any AI Service Provider.
 
 **My AI Products**
 
@@ -198,7 +198,7 @@ I do not knowingly collect, solicit data from, or market to children under 18 ye
 
 ***In Short:** Depending on your state of residence in the US or in some regions, such as the European Economic Area (EEA), United Kingdom (UK), Switzerland, and Canada, you have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time, depending on your country, province, or state of residence.*
 
-In some regions (like the EEA, UK, Switzerland, and Canada), you have certain rights under applicable data protection laws. These may include the right (i) to request access and obtain a copy of your personal information, (ii) to request rectification or erasure; (iii) to restrict the processing of your personal information; (iv) if applicable, to data portability; and (v) not to be subject to automated decision-making. If a decision that produces legal or similarly significant effects is made solely by automated means, I will inform you, explain the main factors, and offer a simple way to request human review. In certain circumstances, you may also have the right to object to the processing of your personal information. You can make such a request by contacting me by using the contact details provided in the section "[HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#contact)" below.
+In some regions (like the EEA, UK, Switzerland, and Canada), you have certain rights under applicable data protection laws. These may include the right (i) to request access and obtain a copy of your personal information, (ii) to request rectification or erasure; (iii) to restrict the processing of your personal information; (iv) if applicable, to data portability; and (v) not to be subject to automated decision-making. If a decision that produces legal or similarly significant effects is made solely by automated means, I will inform you, explain the main factors, and offer a simple way to request human review. In certain circumstances, you may also have the right to object to the processing of your personal information. You can make such a request by contacting me by using the contact details provided in the section "[HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://pilot-dashboard.e57.dk/privacy-notice.html#contact)" below.
 
 I will consider and act upon any request in accordance with applicable data protection laws.  
    
@@ -206,7 +206,7 @@ If you are located in the EEA or UK and you believe I are unlawfully processing 
 
 If you are located in Switzerland, you may contact the [Federal Data Protection and Information Commissioner](https://www.edoeb.admin.ch/edoeb/en/home.html).
 
-**Withdrawing your consent:** If I are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting me by using the contact details provided in the section "[HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#contact)" below.
+**Withdrawing your consent:** If I are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting me by using the contact details provided in the section "[HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://pilot-dashboard.e57.dk/privacy-notice.html#contact)" below.
 
 However, please note that this will not affect the lawfulness of the processing before its withdrawal nor, when applicable law allows, will it affect the processing of your personal information conducted in reliance on lawful processing grounds other than consent.
 
@@ -234,7 +234,7 @@ California law requires me to let you know how I respond to web browser DNT sign
 
 ### **Categories of Personal Information I Collect**
 
-The table below shows the categories of personal information I have collected in the past twelve (12) months. The table includes illustrative examples of each category and does not reflect the personal information I collect from you. For a comprehensive inventory of all personal information I process, please refer to the section "[WHAT INFORMATION DO I COLLECT?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infocollect)"
+The table below shows the categories of personal information I have collected in the past twelve (12) months. The table includes illustrative examples of each category and does not reflect the personal information I collect from you. For a comprehensive inventory of all personal information I process, please refer to the section "[WHAT INFORMATION DO I COLLECT?](https://pilot-dashboard.e57.dk/privacy-notice.html#infocollect)"
 
 | Category | Examples | Collected |
 | :---- | :---- | ----- |
@@ -267,15 +267,15 @@ I will use and retain the collected personal information as needed to provide th
 
 ### **Sources of Personal Information**
 
-Learn more about the sources of personal information I collect in "[WHAT INFORMATION DO I COLLECT?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infocollect)"
+Learn more about the sources of personal information I collect in "[WHAT INFORMATION DO I COLLECT?](https://pilot-dashboard.e57.dk/privacy-notice.html#infocollect)"
 
 ### **How I Use and Share Personal Information**
 
-Learn more about how I use your personal information in the section, "[HOW DO I PROCESS YOUR INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#infouse)"
+Learn more about how I use your personal information in the section, "[HOW DO I PROCESS YOUR INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#infouse)"
 
 **Will your information be shared with anyone else?**
 
-I may disclose your personal information with my service providers pursuant to a written contract between me and each service provider. Learn more about how I disclose personal information to in the section, "[WHEN AND WITH WHOM DO I SHARE YOUR PERSONAL INFORMATION?](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/privacy-policy#whoshare)"
+I may disclose your personal information with my service providers pursuant to a written contract between me and each service provider. Learn more about how I disclose personal information to in the section, "[WHEN AND WITH WHOM DO I SHARE YOUR PERSONAL INFORMATION?](https://pilot-dashboard.e57.dk/privacy-notice.html#whoshare)"
 
 I may use your personal information for my own business purposes, such as for undertaking internal research for technological development and demonstration. This is not considered to be "selling" of your personal information.
 

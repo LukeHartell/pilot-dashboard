@@ -22,31 +22,31 @@ I recommend that you print a copy of these Legal Terms for your records.
 
 ## **TABLE OF CONTENTS**
 
-[1\. OUR SERVICES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#services)  
-[2\. INTELLECTUAL PROPERTY RIGHTS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#ip)  
-[3\. USER REPRESENTATIONS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#userreps)  
-[4\. USER REGISTRATION](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#userreg)  
-[5\. PURCHASES AND PAYMENT](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#purchases)  
-[6\. PROHIBITED ACTIVITIES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#prohibited)  
-[7\. USER GENERATED CONTRIBUTIONS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#ugc)  
-[8\. CONTRIBUTION LICENSE](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#license)  
-[9\. THIRD-PARTY WEBSITES AND CONTENT](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#thirdparty)  
-[10\. SERVICES MANAGEMENT](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#sitemanage)  
-[11\. PRIVACY POLICY](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#ppno)  
-[12\. TERM AND TERMINATION](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#terms)  
-[13\. MODIFICATIONS AND INTERRUPTIONS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#modifications)  
-[14\. GOVERNING LAW](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#law)  
-[15\. DISPUTE RESOLUTION](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#disputes)  
-[16\. CORRECTIONS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#corrections)  
-[17\. DISCLAIMER](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#disclaimer)  
-[18\. LIMITATIONS OF LIABILITY](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#liability)  
-[19\. INDEMNIFICATION](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#indemnification)  
-[20\. USER DATA](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#userdata)  
-[21\. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#electronic)  
-[22\. CALIFORNIA USERS AND RESIDENTS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#california)  
-[23\. MISCELLANEOUS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#misc)  
-[24\. API USAGE AND ACCESS](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#addclause)  
-[25\. CONTACT US](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#contact)
+[1\. OUR SERVICES](https://pilot-dashboard.e57.dk/terms-of-service.html#services)  
+[2\. INTELLECTUAL PROPERTY RIGHTS](https://pilot-dashboard.e57.dk/terms-of-service.html#ip)  
+[3\. USER REPRESENTATIONS](https://pilot-dashboard.e57.dk/terms-of-service.html#userreps)  
+[4\. USER REGISTRATION](https://pilot-dashboard.e57.dk/terms-of-service.html#userreg)  
+[5\. PURCHASES AND PAYMENT](https://pilot-dashboard.e57.dk/terms-of-service.html#purchases)  
+[6\. PROHIBITED ACTIVITIES](https://pilot-dashboard.e57.dk/terms-of-service.html#prohibited)  
+[7\. USER GENERATED CONTRIBUTIONS](https://pilot-dashboard.e57.dk/terms-of-service.html#ugc)  
+[8\. CONTRIBUTION LICENSE](https://pilot-dashboard.e57.dk/terms-of-service.html#license)  
+[9\. THIRD-PARTY WEBSITES AND CONTENT](https://pilot-dashboard.e57.dk/terms-of-service.html#thirdparty)  
+[10\. SERVICES MANAGEMENT](https://pilot-dashboard.e57.dk/terms-of-service.html#sitemanage)  
+[11\. PRIVACY POLICY](https://pilot-dashboard.e57.dk/terms-of-service.html#ppno)  
+[12\. TERM AND TERMINATION](https://pilot-dashboard.e57.dk/terms-of-service.html#terms)  
+[13\. MODIFICATIONS AND INTERRUPTIONS](https://pilot-dashboard.e57.dk/terms-of-service.html#modifications)  
+[14\. GOVERNING LAW](https://pilot-dashboard.e57.dk/terms-of-service.html#law)  
+[15\. DISPUTE RESOLUTION](https://pilot-dashboard.e57.dk/terms-of-service.html#disputes)  
+[16\. CORRECTIONS](https://pilot-dashboard.e57.dk/terms-of-service.html#corrections)  
+[17\. DISCLAIMER](https://pilot-dashboard.e57.dk/terms-of-service.html#disclaimer)  
+[18\. LIMITATIONS OF LIABILITY](https://pilot-dashboard.e57.dk/terms-of-service.html#liability)  
+[19\. INDEMNIFICATION](https://pilot-dashboard.e57.dk/terms-of-service.html#indemnification)  
+[20\. USER DATA](https://pilot-dashboard.e57.dk/terms-of-service.html#userdata)  
+[21\. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES](https://pilot-dashboard.e57.dk/terms-of-service.html#electronic)  
+[22\. CALIFORNIA USERS AND RESIDENTS](https://pilot-dashboard.e57.dk/terms-of-service.html#california)  
+[23\. MISCELLANEOUS](https://pilot-dashboard.e57.dk/terms-of-service.html#misc)  
+[24\. API USAGE AND ACCESS](https://pilot-dashboard.e57.dk/terms-of-service.html#addclause)  
+[25\. CONTACT US](https://pilot-dashboard.e57.dk/terms-of-service.html#contact)
 
 ## **1\. OUR SERVICES**
 
@@ -66,7 +66,7 @@ The Content and Marks are provided in or through the Services "AS IS" for your p
 
 ### **Your use of my Services**
 
-Subject to your compliance with these Legal Terms, including the "[PROHIBITED ACTIVITIES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#prohibited)" section below, I grant you a non-exclusive, non-transferable, revocable license to:
+Subject to your compliance with these Legal Terms, including the "[PROHIBITED ACTIVITIES](https://pilot-dashboard.e57.dk/terms-of-service.html#prohibited)" section below, I grant you a non-exclusive, non-transferable, revocable license to:
 
 * access the Services; and  
 * download or print a copy of any portion of the Content to which you have properly gained access,
@@ -83,7 +83,7 @@ Any breach of these Intellectual Property Rights will constitute a material brea
 
 ### **Your submissions and contributions**
 
-Please review this section and the "[PROHIBITED ACTIVITIES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#prohibited)" section carefully prior to using my Services to understand the (a) rights you give me and (b) obligations you have when you post or upload any content through the Services.
+Please review this section and the "[PROHIBITED ACTIVITIES](https://pilot-dashboard.e57.dk/terms-of-service.html#prohibited)" section carefully prior to using my Services to understand the (a) rights you give me and (b) obligations you have when you post or upload any content through the Services.
 
 **Submissions:** By directly sending me any question, comment, suggestion, idea, feedback, or other information about the Services ("Submissions"), you agree to assign to me all intellectual property rights in such Submission. You agree that I shall own this Submission and be entitled to its unrestricted use and dissemination for any lawful purpose, commercial or otherwise, without acknowledgment or compensation to you.
 
@@ -97,7 +97,7 @@ This license includes my use of your name, company name, and franchise name, as 
 
 **You are responsible for what you post or upload:** By sending me Submissions and/or posting Contributions through any part of the Services or making Contributions accessible through the Services by linking your account through the Services to any of your social networking accounts, you:
 
-* confirm that you have read and agree with my "[PROHIBITED ACTIVITIES](https://app.termly.io/dashboard/website/85ebc085-8900-4e17-968d-cbb02f23ee53/terms-of-service#prohibited)" and will not post, send, publish, upload, or transmit through the Services any Submission nor post any Contribution that is illegal, harassing, hateful, harmful, defamatory, obscene, bullying, abusive, discriminatory, threatening to any person or group, sexually explicit, false, inaccurate, deceitful, or misleading;  
+* confirm that you have read and agree with my "[PROHIBITED ACTIVITIES](https://pilot-dashboard.e57.dk/terms-of-service.html#prohibited)" and will not post, send, publish, upload, or transmit through the Services any Submission nor post any Contribution that is illegal, harassing, hateful, harmful, defamatory, obscene, bullying, abusive, discriminatory, threatening to any person or group, sexually explicit, false, inaccurate, deceitful, or misleading;  
 * to the extent permissible by applicable law, waive any and all moral rights to any such Submission and/or Contribution;  
 * warrant that any such Submission and/or Contributions are original to you or that you have the necessary rights and licenses to submit such Submissions and/or Contributions and that you have full authority to grant me the above-mentioned rights in relation to your Submissions and/or Contributions; and  
 * warrant and represent that your Submissions and/or Contributions do not constitute confidential information.
