@@ -8,7 +8,7 @@ This Privacy Notice for Lucas Hjort Rahr Hartung ("**I**," "**me**," or "**my**"
 * Use Pilot Dashboard. Pilot Dashboard is a free, open-source web app designed to help pilots plan, log, and analyze their flights. It is built with a focus on simplicity, usability, and data privacy.  
 * Engage with me in other related ways, including any sales, marketing, or events
 
-**Questions or concerns?** Reading this Privacy Notice will help you understand your privacy rights and choices. I are responsible for making decisions about how your personal information is processed. If you do not agree with my policies and practices, please do not use my Services. If you still have any questions or concerns, please contact me at lhrh.privat@gmail.com.
+**Questions or concerns?** Reading this Privacy Notice will help you understand your privacy rights and choices. I am responsible for making decisions about how your personal information is processed. If you do not agree with my policies and practices, please do not use my Services. If you still have any questions or concerns, please contact me at lhrh.privat@gmail.com.
 
 ## **SUMMARY OF KEY POINTS**
 
@@ -103,7 +103,7 @@ The General Data Protection Regulation (GDPR) and UK GDPR require me to explain 
 * **Legitimate Interests.** I may process your information when I believe it is reasonably necessary to achieve my legitimate business interests and those interests do not outweigh your interests and fundamental rights and freedoms. For example, I may process your personal information for some of the purposes described in order to:  
 * Analyze how my Services are used so I can improve them to engage and retain users  
 * Diagnose problems and/or prevent fraudulent activities  
-* **Legal Obligations.** I may process your information where I believe it is necessary for compliance with my legal obligations, such as to cooperate with a law enforcement body or regulatory agency, exercise or defend my legal rights, or disclose your information as evidence in litigation in which I are involved.  
+* **Legal Obligations.** I may process your information where I believe it is necessary for compliance with my legal obligations, such as to cooperate with a law enforcement body or regulatory agency, exercise or defend my legal rights, or disclose your information as evidence in litigation in which I am involved.  
 * **Vital Interests.** I may process your information where I believe it is necessary to protect your vital interests or the vital interests of a third party, such as situations involving potential threats to the safety of any person.
 
 ***If you are located in Canada, this section applies to you.***
@@ -202,11 +202,11 @@ In some regions (like the EEA, UK, Switzerland, and Canada), you have certain ri
 
 I will consider and act upon any request in accordance with applicable data protection laws.  
    
-If you are located in the EEA or UK and you believe I are unlawfully processing your personal information, you also have the right to complain to your [Member State data protection authority](https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm) or [UK data protection authority](https://ico.org.uk/make-a-complaint/data-protection-complaints/data-protection-complaints/).
+If you are located in the EEA or UK and you believe I am unlawfully processing your personal information, you also have the right to complain to your [Member State data protection authority](https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm) or [UK data protection authority](https://ico.org.uk/make-a-complaint/data-protection-complaints/data-protection-complaints/).
 
 If you are located in Switzerland, you may contact the [Federal Data Protection and Information Commissioner](https://www.edoeb.admin.ch/edoeb/en/home.html).
 
-**Withdrawing your consent:** If I are relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting me by using the contact details provided in the section "[HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://pilot-dashboard.e57.dk/privacy-notice.html#contact)" below.
+**Withdrawing your consent:** If I am relying on your consent to process your personal information, which may be express and/or implied consent depending on the applicable law, you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting me by using the contact details provided in the section "[HOW CAN YOU CONTACT US ABOUT THIS NOTICE?](https://pilot-dashboard.e57.dk/privacy-notice.html#contact)" below.
 
 However, please note that this will not affect the lawfulness of the processing before its withdrawal nor, when applicable law allows, will it affect the processing of your personal information conducted in reliance on lawful processing grounds other than consent.
 
@@ -283,7 +283,7 @@ I have not disclosed, sold, or shared any personal information to third parties 
 
 You have rights under certain US state data protection laws. However, these rights are not absolute, and in certain cases, I may decline your request as permitted by law. These rights include:
 
-* **Right to know** whether or not I are processing your personal data  
+* **Right to know** whether or not I am processing your personal data  
 * **Right to access** your personal data  
 * **Right to correct** inaccuracies in your personal data  
 * **Right to request** the deletion of your personal data  
@@ -319,7 +319,7 @@ I use browser local storage to store your preferences and login tokens. No track
 
 ***In Short:** Yes, I will update this notice as necessary to stay compliant with relevant laws.*
 
-I may update this Privacy Notice from time to time. The updated version will be indicated by an updated "Revised" date at the top of this Privacy Notice. If I make material changes to this Privacy Notice, I may notify you either by prominently posting a notice of such changes or by directly sending you a notification. I encourage you to review this Privacy Notice frequently to be informed of how I are protecting your information.
+I may update this Privacy Notice from time to time. The updated version will be indicated by an updated "Revised" date at the top of this Privacy Notice. If I make material changes to this Privacy Notice, I may notify you either by prominently posting a notice of such changes or by directly sending you a notification. I encourage you to review this Privacy Notice frequently to be informed of how I am protecting your information.
 
 ## **17\. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?**
 
