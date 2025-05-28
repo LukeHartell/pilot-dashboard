@@ -127,7 +127,7 @@ form button:hover {
 }
 
 
-main {
+main.center {
   max-width: 650px;
   margin: 40px auto;
   padding: 32px 24px 32px 24px;
@@ -136,7 +136,7 @@ main {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09);
 }
 @media (max-width: 750px) {
-  main {
+  main.center {
     max-width: 98vw;
   }
 }
