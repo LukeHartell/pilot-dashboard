@@ -4,6 +4,9 @@ if (!token) {
   window.location.href = "/login";
 }
 
+// Store loaded planes for later lookups
+let planesList = [];
+
 // Fetch and display user's planes
 async function loadPlanes() {
   try {
@@ -18,12 +21,14 @@ async function loadPlanes() {
 
     if (!response.ok) throw new Error("Failed to fetch planes");
 
-    const [data] = await response.json();
-    if (!data.success)
-      throw new Error(data.message || "Failed to load planes.");
+  const [data] = await response.json();
+  if (!data.success)
+    throw new Error(data.message || "Failed to load planes.");
 
-    const planesGrid = document.getElementById("planesGrid");
-    planesGrid.innerHTML = "";
+  planesList = Array.isArray(data.planes) ? data.planes : [];
+
+  const planesGrid = document.getElementById("planesGrid");
+  planesGrid.innerHTML = "";
 
     if (Array.isArray(data.planes) && data.planes.length > 0) {
       data.planes.forEach((plane) => {
@@ -139,15 +144,13 @@ document.addEventListener("click", (e) => {
     if (!info) return;
 
     const planeId = info.dataset.id;
-    const planeName = info.querySelector(".plane-title")?.innerText || "";
-    const registration =
-      info.querySelector("p:nth-child(2)")?.innerText.split(": ")[1] || "";
-    const compNo =
-      info.querySelector("p:nth-child(3)")?.innerText?.split(": ")[1] || "";
-    const type =
-      info.querySelector("p:nth-child(4)")?.innerText?.split(": ")[1] || "";
-    const seats =
-      info.querySelector("p:nth-child(5)")?.innerText?.split(": ")[1] || "";
+    const plane = planesList.find((p) => p._id === planeId);
+
+    const planeName = plane?.displayName || "";
+    const registration = plane?.registration || "";
+    const compNo = plane?.competitionNumber || "";
+    const type = plane?.type || "";
+    const seats = plane?.seats || "";
 
     modal.classList.add("fullscreen-mode");
     modal.style.display = "flex";
