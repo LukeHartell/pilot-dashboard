@@ -98,7 +98,7 @@ async function loadPlanes() {
             ${
               imgUrl
                 ? `<img src="${imgUrl}" alt="Plane Photo" />`
-                : `<span>No Image</span>`
+                : `<img src="assets/img/noimage.png" alt="No Image" class="placeholder" />`
             }
           </div>
           <div class="plane-info" data-id="${plane._id}" data-note="${plane.note ? encodeURIComponent(plane.note) : ''}">
@@ -158,7 +158,7 @@ document.addEventListener("click", (e) => {
           ${
             img
               ? `<img src="${img}" alt="Plane Photo" />`
-              : `<span>No Image</span>`
+              : `<img src="assets/img/noimage.png" alt="No Image" class="placeholder" />`
           }
         </div>
         <div class="plane-details">

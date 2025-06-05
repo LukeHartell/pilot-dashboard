@@ -32,6 +32,10 @@
   object-fit: cover;
 }
 
+.plane-photo img.placeholder {
+  object-fit: contain;
+}
+
 .plane-photo span {
   color: #888;
   font-size: 0.9em;
@@ -109,7 +113,7 @@
   }
 }
 #widgetModal.fullscreen-mode .plane-photo img {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 #widgetModal.fullscreen-mode .plane-title {
