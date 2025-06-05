@@ -113,7 +113,7 @@
   }
 }
 #widgetModal.fullscreen-mode .plane-photo img {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 #widgetModal.fullscreen-mode .plane-title {
