@@ -32,7 +32,9 @@ async function loadPlanes() {
       throw new Error(data.message || "Failed to load planes.");
 
     if (Array.isArray(data.planes)) {
-      data.planes.forEach((plane) => {
+      data.planes
+        .filter((p) => p.status !== "deleted")
+        .forEach((plane) => {
         const option = document.createElement("option");
         option.value = plane._id;
         option.textContent = plane.displayName;
