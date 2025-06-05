@@ -123,6 +123,7 @@ body.dark-mode .close-btn:hover {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  position: relative;
 }
 
 .edit-form label {

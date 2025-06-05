@@ -70,13 +70,15 @@ async function loadPlanes() {
   if (!data.success)
     throw new Error(data.message || "Failed to load planes.");
 
-  planesList = Array.isArray(data.planes) ? data.planes : [];
+  planesList = Array.isArray(data.planes)
+    ? data.planes.filter((p) => p.status !== "deleted")
+    : [];
 
   const planesGrid = document.getElementById("planesGrid");
   planesGrid.innerHTML = "";
 
-    if (Array.isArray(data.planes) && data.planes.length > 0) {
-      data.planes.forEach((plane) => {
+    if (planesList.length > 0) {
+      planesList.forEach((plane) => {
         const widget = document.createElement("div");
         widget.className = "widget plane-widget";
 
@@ -209,6 +211,9 @@ document.addEventListener("click", (e) => {
 
     modalContent.innerHTML = `
   <form id="editPlaneForm" class="edit-form">
+    <div class="widget-buttons">
+      <button type="button" id="deletePlaneBtn" class="delete-btn" title="Delete Plane">🗑 Delete Plane</button>
+    </div>
     <h2 style="text-align:center;">Edit Plane</h2>
     <input type="hidden" id="editPlaneId" value="${planeId}" />
 
@@ -332,6 +337,60 @@ document.addEventListener("click", (e) => {
           alert("Failed to update plane: " + err.message);
         }
       });
+
+      document
+        .getElementById("deletePlaneBtn")
+        ?.addEventListener("click", async () => {
+          const confirmed = confirm(
+            "Are you sure you want to permanently delete this plane?"
+          );
+          if (!confirmed) return;
+
+          try {
+            const res = await fetch(
+              "https://n8n.e57.dk/webhook/pilot-dashboard/update-plane",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  token,
+                  plane_id: planeId,
+                  updates: {
+                    status: "deleted",
+                    type: null,
+                    competitionNumber: null,
+                    category: null,
+                    seats: null,
+                    note: null,
+                    creation_date: null,
+                    last_flight: null,
+                    photo: null,
+                  },
+                }),
+              }
+            );
+
+            if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+            const text = await res.text();
+            if (text) {
+              const result = JSON.parse(text);
+              if (!result.success)
+                throw new Error(result.message || "Delete failed");
+            }
+
+            modal.classList.remove("fullscreen-mode");
+            modal.style.display = "none";
+            uploadedImageBase64 = null;
+            removeImage = false;
+            const prev = document.getElementById("imgPreview");
+            if (prev) prev.innerHTML = "";
+            await loadPlanes();
+          } catch (err) {
+            console.error(err);
+            alert("Failed to delete plane: " + err.message);
+          }
+        });
   }
 });
 

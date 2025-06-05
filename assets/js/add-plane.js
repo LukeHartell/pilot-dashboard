@@ -28,6 +28,27 @@ addPlaneForm?.addEventListener("submit", async (e) => {
       return;
     }
 
+    // Load existing planes to prevent duplicates (ignore deleted)
+    const meRes = await fetch("https://n8n.e57.dk/webhook/pilot-dashboard/me", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+
+    if (meRes.ok) {
+      const [meData] = await meRes.json();
+      const existing = Array.isArray(meData.planes) ? meData.planes : [];
+      const dupe = existing
+        .filter((p) => p.status !== "deleted")
+        .some(
+          (p) => (p.registration || "").toUpperCase() === registration
+        );
+      if (dupe) {
+        alert("You already have a plane with that registration.");
+        return;
+      }
+    }
+
     const response = await fetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/add-plane",
       {
@@ -48,12 +69,16 @@ addPlaneForm?.addEventListener("submit", async (e) => {
       }
     );
 
-    if (!response.ok) {
-      throw new Error("Server returned an error");
+    const text = await response.text();
+    const result = text ? JSON.parse(text) : {};
+
+    if (!response.ok || result.success === false) {
+      const message = result.message || "Failed to add plane.";
+      alert(message);
+      return;
     }
 
-    // alert("Plane added successfully! Redirecting to profile...");
-    window.location.href = "/user";
+    window.location.href = "/planes";
   } catch (err) {
     console.error(err);
     alert("Failed to add plane. Please try again later.");
