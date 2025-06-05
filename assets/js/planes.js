@@ -70,13 +70,15 @@ async function loadPlanes() {
   if (!data.success)
     throw new Error(data.message || "Failed to load planes.");
 
-  planesList = Array.isArray(data.planes) ? data.planes : [];
+  planesList = Array.isArray(data.planes)
+    ? data.planes.filter((p) => p.status !== "deleted")
+    : [];
 
   const planesGrid = document.getElementById("planesGrid");
   planesGrid.innerHTML = "";
 
-    if (Array.isArray(data.planes) && data.planes.length > 0) {
-      data.planes.forEach((plane) => {
+    if (planesList.length > 0) {
+      planesList.forEach((plane) => {
         const widget = document.createElement("div");
         widget.className = "widget plane-widget";
 
@@ -209,7 +211,6 @@ document.addEventListener("click", (e) => {
 
     modalContent.innerHTML = `
   <form id="editPlaneForm" class="edit-form">
-    <div class="widget-buttons"><button type="button" id="deletePlaneBtn" class="delete-btn" title="Delete Plane">🗑 Delete Plane</button></div>
     <h2 style="text-align:center;">Edit Plane</h2>
     <input type="hidden" id="editPlaneId" value="${planeId}" />
 
@@ -252,6 +253,7 @@ document.addEventListener("click", (e) => {
     </div>
 
     <button type="submit">Save Changes</button>
+    <button type="button" id="deletePlaneBtn" class="delete-btn" title="Delete Plane">🗑 Delete Plane</button>
   </form>
 `;
 
@@ -351,7 +353,17 @@ document.addEventListener("click", (e) => {
                 body: JSON.stringify({
                   token,
                   plane_id: planeId,
-                  updates: { status: "deleted", photo: null },
+                  updates: {
+                    status: "deleted",
+                    type: null,
+                    competitionNumber: null,
+                    category: null,
+                    seats: null,
+                    note: null,
+                    creation_date: null,
+                    last_flight: null,
+                    photo: null,
+                  },
                 }),
               }
             );

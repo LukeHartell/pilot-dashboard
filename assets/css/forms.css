@@ -141,6 +141,11 @@ body.dark-mode .close-btn:hover {
   margin-top: 20px;
 }
 
+/* Extra spacing for delete button to avoid mis-clicks */
+.edit-form .delete-btn {
+  margin-top: 30px;
+}
+
 #imageControls {
   display: flex;
   gap: 10px;

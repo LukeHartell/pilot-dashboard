@@ -52,8 +52,8 @@ addPlaneForm?.addEventListener("submit", async (e) => {
       throw new Error("Server returned an error");
     }
 
-    // alert("Plane added successfully! Redirecting to profile...");
-    window.location.href = "/user";
+    // alert("Plane added successfully! Redirecting to planes page...");
+    window.location.href = "/planes";
   } catch (err) {
     console.error(err);
     alert("Failed to add plane. Please try again later.");
