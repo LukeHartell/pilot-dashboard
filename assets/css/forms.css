@@ -141,6 +141,12 @@ body.dark-mode .close-btn:hover {
   margin-top: 20px;
 }
 
+#imageControls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
 #nameFields input,
 #passwordFields input {
   margin-bottom: 15px;
