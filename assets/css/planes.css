@@ -32,6 +32,10 @@
   object-fit: cover;
 }
 
+.plane-photo img.placeholder {
+  object-fit: contain;
+}
+
 .plane-photo span {
   color: #888;
   font-size: 0.9em;
