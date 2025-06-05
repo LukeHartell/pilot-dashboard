@@ -211,6 +211,9 @@ document.addEventListener("click", (e) => {
 
     modalContent.innerHTML = `
   <form id="editPlaneForm" class="edit-form">
+    <div class="widget-buttons">
+      <button type="button" id="deletePlaneBtn" class="delete-btn" title="Delete Plane">🗑 Delete Plane</button>
+    </div>
     <h2 style="text-align:center;">Edit Plane</h2>
     <input type="hidden" id="editPlaneId" value="${planeId}" />
 
@@ -253,7 +256,6 @@ document.addEventListener("click", (e) => {
     </div>
 
     <button type="submit">Save Changes</button>
-    <button type="button" id="deletePlaneBtn" class="delete-btn" title="Delete Plane">🗑 Delete Plane</button>
   </form>
 `;
 

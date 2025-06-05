@@ -123,6 +123,7 @@ body.dark-mode .close-btn:hover {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  position: relative;
 }
 
 .edit-form label {
@@ -139,11 +140,6 @@ body.dark-mode .close-btn:hover {
 
 .edit-form button {
   margin-top: 20px;
-}
-
-/* Extra spacing for delete button to avoid mis-clicks */
-.edit-form .delete-btn {
-  margin-top: 30px;
 }
 
 #imageControls {
