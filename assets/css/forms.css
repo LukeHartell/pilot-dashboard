@@ -147,6 +147,20 @@ body.dark-mode .close-btn:hover {
   justify-content: center;
 }
 
+#imgPreview {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#imgPreview img {
+  width: 100px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto 5px;
+}
+
 #nameFields input,
 #passwordFields input {
   margin-bottom: 15px;

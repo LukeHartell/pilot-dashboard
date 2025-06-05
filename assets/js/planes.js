@@ -201,7 +201,8 @@ document.addEventListener("click", (e) => {
     const compNo = plane?.competitionNumber || "";
     const type = plane?.type || "";
     const seats = plane?.seats || "";
-    const hasImage = !!(plane?.photo || plane?.photoUrl);
+    const rawImgData = plane?.photo || plane?.photoUrl || "";
+    const hasImage = !!rawImgData;
 
     modal.classList.add("fullscreen-mode");
     modal.style.display = "flex";
@@ -238,6 +239,16 @@ document.addEventListener("click", (e) => {
         : `<button type="button" id="uploadImgBtn">Upload Image</button>`}
       <input type="file" id="planeImgInput" accept="image/*" style="display:none;" />
     </div>
+    <div id="imgPreview">
+      ${hasImage
+        ? `<img src="${
+            rawImgData.startsWith('data:')
+              ? rawImgData
+              : `data:image/jpeg;base64,${rawImgData}`
+          }" alt="Current Image" />
+           <span>Current Image</span>`
+        : ''}
+    </div>
 
     <button type="submit">Save Changes</button>
   </form>
@@ -256,12 +267,16 @@ document.addEventListener("click", (e) => {
     document.getElementById("removeImgBtn")?.addEventListener("click", () => {
       uploadedImageBase64 = null;
       removeImage = true;
+      document.getElementById("imgPreview").innerHTML = "";
     });
     imgInput?.addEventListener("change", async (ev) => {
       const file = ev.target.files[0];
       if (file) {
         try {
           uploadedImageBase64 = await processPlaneImage(file);
+          document.getElementById(
+            "imgPreview"
+          ).innerHTML = `<img src="${uploadedImageBase64}" alt="Preview" /><span>${file.name}</span>`;
         } catch (err) {
           console.error(err);
         }
@@ -309,6 +324,8 @@ document.addEventListener("click", (e) => {
           modal.style.display = "none";
           uploadedImageBase64 = null;
           removeImage = false;
+          const prev = document.getElementById("imgPreview");
+          if (prev) prev.innerHTML = "";
           await loadPlanes();
         } catch (err) {
           console.error(err);
@@ -324,6 +341,8 @@ document.getElementById("closeModalBtn").addEventListener("click", () => {
   modal.style.display = "none";
   uploadedImageBase64 = null;
   removeImage = false;
+  const prev = document.getElementById("imgPreview");
+  if (prev) prev.innerHTML = "";
 });
 
 modal.addEventListener("click", (e) => {
@@ -332,6 +351,8 @@ modal.addEventListener("click", (e) => {
     modal.style.display = "none";
     uploadedImageBase64 = null;
     removeImage = false;
+    const prev = document.getElementById("imgPreview");
+    if (prev) prev.innerHTML = "";
   }
 });
 
@@ -341,6 +362,8 @@ document.addEventListener("keydown", (e) => {
     modal.style.display = "none";
     uploadedImageBase64 = null;
     removeImage = false;
+    const prev = document.getElementById("imgPreview");
+    if (prev) prev.innerHTML = "";
   }
 });
 
