@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Flights | Pilot Dashboard</title>
+    <link rel="icon" href="assets/img/favicon.ico" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/darkmode.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+    <script defer src="assets/js/header.js"></script>
+    <script defer src="assets/js/user-menu.js"></script>
+    <script defer src="assets/js/add-flights.js"></script>
+    <script defer src="assets/js/nav.js"></script>
+    <script defer src="assets/js/darkmode.js"></script>
+  </head>
+  <body>
+    <div class="scaling-wrapper">
+      <main>
+        <section id="flight">
+          <h2 style="text-align: center">Add Multiple Flights</h2>
+          <form id="addFlightsForm">
+            <fieldset>
+              <legend>General</legend>
+              <select id="plane" name="plane" required>
+                <option value="">Select Plane</option>
+                <!-- Planes will be loaded here -->
+                <option value="manual">Manual Entry</option>
+              </select>
+              <div id="manualPlaneFields" style="display: none">
+                <input type="text" id="manualDisplayName" name="manualDisplayName" placeholder="Display Name" required />
+                <input type="text" id="manualRegistration" name="manualRegistration" placeholder="Registration" required />
+                <input type="text" id="manualType" name="manualType" placeholder="Type (e.g., ASK-21)" required />
+                <select id="manualCategory" name="manualCategory" required>
+                  <option value="">Select Category</option>
+                  <option value="Aeroplane">Aeroplane</option>
+                  <option value="Glider (no engine)">Glider (Pure)</option>
+                  <option value="Glider (SSG)">Glider (Self-Sustaining)</option>
+                  <option value="Glider (SLG)">Glider (Self-Launching)</option>
+                  <option value="Helicopter">Helicopter</option>
+                  <option value="Balloon">Balloon</option>
+                </select>
+                <div class="manual-plane-tip" style="margin-top: 10px; font-size: 14px; color: #666">
+                  Tip: You can also <a href="/add-plane" style="color: #0056b3; text-decoration: underline">add a plane</a> to reuse it easily later.
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Flights</legend>
+              <input type="date" id="flightDate" name="flightDate" required />
+              <input type="number" id="numFlights" name="numFlights" placeholder="Number of Flights" min="1" required />
+              <div id="engineTimeFields" style="display: none">
+                <input type="number" id="totalEngineTimeMinutes" name="totalEngineTimeMinutes" placeholder="Total Engine Time (minutes)" min="0" />
+              </div>
+              <div id="airTimeFields" style="display: none">
+                <input type="number" id="totalAirTimeMinutes" name="totalAirTimeMinutes" placeholder="Total Air Time (minutes)" min="0" />
+              </div>
+            </fieldset>
+            <button type="submit">Save Flights</button>
+          </form>
+          <div class="link" style="margin-top: 20px">
+            <a href="/add-flight">⬅️ Back to Single Flight</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
