@@ -66,29 +66,30 @@ manualCategory?.addEventListener("change", () => {
 });
 
 function handleCategoryChange(category) {
+  const normalized = (category || "").toLowerCase();
   const engineCategories = [
-    "Aeroplane",
-    "Glider (SSG)",
-    "Glider (SLG)",
-    "Helicopter",
+    "aeroplane",
+    "glider (ssg)",
+    "glider (slg)",
+    "helicopter",
   ];
   const airCategories = [
-    "Glider (no engine)",
-    "Glider (SSG)",
-    "Glider (SLG)",
-    "Balloon",
+    "glider (no engine)",
+    "glider (ssg)",
+    "glider (slg)",
+    "balloon",
   ];
 
-  if (!category) {
+  if (!normalized) {
     engineTimeFields.style.display = "none";
     airTimeFields.style.display = "none";
     return;
   }
 
-  engineTimeFields.style.display = engineCategories.includes(category)
+  engineTimeFields.style.display = engineCategories.includes(normalized)
     ? "block"
     : "none";
-  airTimeFields.style.display = airCategories.includes(category)
+  airTimeFields.style.display = airCategories.includes(normalized)
     ? "block"
     : "none";
 }
