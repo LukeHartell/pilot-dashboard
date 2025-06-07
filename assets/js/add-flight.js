@@ -96,7 +96,12 @@ function handleCategoryChange(category) {
   } else {
     // Everything else (Aeroplane, Helicopter, Balloon)
     launchTypeFields.style.display = "none";
-    engineTimeFields.style.display = "none";
+
+    if (category === "Helicopter") {
+      engineTimeFields.style.display = "block";
+    } else {
+      engineTimeFields.style.display = "none";
+    }
   }
 }
 
