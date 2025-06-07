@@ -66,7 +66,12 @@ manualCategory?.addEventListener("change", () => {
 });
 
 function handleCategoryChange(category) {
-  const engineCategories = ["Aeroplane", "Glider (SSG)", "Glider (SLG)"];
+  const engineCategories = [
+    "Aeroplane",
+    "Glider (SSG)",
+    "Glider (SLG)",
+    "Helicopter",
+  ];
   const airCategories = [
     "Glider (no engine)",
     "Glider (SSG)",
