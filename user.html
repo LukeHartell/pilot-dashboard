@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/darkmode.css" />
     <link rel="stylesheet" href="assets/css/widgets.css" />
-    <link rel="stylesheet" href="assets/css/about.css" />
     <script defer src="assets/js/header.js"></script>
     <script defer src="assets/js/user-menu.js"></script>
   </head>
@@ -33,7 +32,7 @@
                 </button>
                 <button class="fullscreen-btn" title="Fullscreen">⛶</button>
               </div>
-              <h3>👤 Basic Information</h3>
+              <h3 id="userInfoHeader">👤</h3>
               <p>
                 <strong>Name:</strong>
                 <span id="userName">Loading...</span>
@@ -42,16 +41,18 @@
                 <strong>Email:</strong>
                 <span id="userEmail">Loading...</span>
               </p>
-            </div>
-
-            <!-- Widget: Stats (Placeholder) -->
-            <div class="widget" id="statsWidget">
-              <div class="widget-buttons">
-                <!-- <button class="edit-btn" title="Edit">✏️</button> -->
-                <button class="fullscreen-btn" title="Fullscreen">⛶</button>
-              </div>
-              <h3>📈 Your Stats</h3>
-              <p>Coming soon...</p>
+              <button
+                id="logoutButton"
+                style="
+                  margin-top: 10px;
+                  width: 50%;
+                  height: 35px;
+                  color: darkred;
+                  border-color: darkred;
+                  border-radius: inherit;
+                ">
+                Log Out
+              </button>
             </div>
 
             <!-- Widget: Fit for flying? -->
@@ -99,22 +100,15 @@
               </div>
             </div>
 
-            <!-- Widget: Log Out -->
-            <div class="widget" id="logoutWidget">
-              <h3>🚪 Log Out</h3>
-              <button
-                id="logoutButton"
-                style="
-                  margin-top: 10px;
-                  width: 50%;
-                  height: 35px;
-                  color: darkred;
-                  border-color: darkred;
-                  border-radius: inherit;
-                ">
-                Log Out
-              </button>
+            <!-- Widget: Stats -->
+            <div class="widget" id="statsWidget">
+              <div class="widget-buttons">
+                <button class="fullscreen-btn" title="Fullscreen">⛶</button>
+              </div>
+              <h3>📈 Your Stats</h3>
+              <ul id="statsList"></ul>
             </div>
+
           </div>
         </section>
       </main>

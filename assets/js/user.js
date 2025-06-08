@@ -32,6 +32,9 @@ async function loadUserInfo() {
       "userName"
     ).textContent = `${data.name} ${data.surname}`;
     document.getElementById("userEmail").textContent = data.email;
+    const firstName = data.name || "";
+    const header = document.getElementById("userInfoHeader");
+    if (header) header.textContent = `👤 ${firstName}`;
   } catch (err) {
     console.error("Error fetching user info:", err);
     document.getElementById("userName").textContent = "Guest";
@@ -61,6 +64,7 @@ async function loadFitnessInfo() {
 
     const flights = Array.isArray(data.flights) ? data.flights : [];
     userFlights = flights;
+    updateStats();
     if (flights.length === 0) {
       document.getElementById("fitMessage").textContent =
         "No flights logged yet.";
@@ -300,6 +304,57 @@ function smoothHistory(history, windowSize = 60) {
     });
   }
   return result;
+}
+
+function planeLabel(flight) {
+  if (flight.displayName) return flight.displayName;
+  if (flight.registration) return flight.registration;
+  if (flight.plane_id) return flight.plane_id.substring(0, 6);
+  return "Unknown";
+}
+
+function updateStats() {
+  const list = document.getElementById("statsList");
+  if (!list) return;
+  if (!userFlights.length) {
+    list.innerHTML = "<li>No flights logged yet.</li>";
+    return;
+  }
+
+  const totalFlights = userFlights.reduce(
+    (sum, f) => sum + getFlightCount(f),
+    0
+  );
+  const totalMinutes = userFlights.reduce(
+    (sum, f) => sum + getFlightMinutes(f),
+    0
+  );
+
+  const planeCounts = {};
+  const baseCounts = {};
+  let longest = 0;
+  userFlights.forEach((f) => {
+    const count = getFlightCount(f);
+    const minutes = getFlightMinutes(f);
+    const plane = planeLabel(f);
+    if (plane) planeCounts[plane] = (planeCounts[plane] || 0) + count;
+    const base = (f.startLocation || "").toUpperCase();
+    if (base) baseCounts[base] = (baseCounts[base] || 0) + count;
+    if (minutes > longest) longest = minutes;
+  });
+
+  const favPlane = Object.entries(planeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const favBase = Object.entries(baseCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+
+  const formatDur = (m) => `${Math.floor(m / 60)}h ${m % 60}m`;
+
+  list.innerHTML = `
+    <li>Total flights: ${totalFlights}</li>
+    <li>Total air time: ${formatDur(totalMinutes)}</li>
+    <li>Favorite plane: ${favPlane}</li>
+    <li>Favorite airbase: ${favBase}</li>
+    <li>Longest flight: ${formatDur(longest)}</li>
+  `;
 }
 
 loadFitnessInfo();
