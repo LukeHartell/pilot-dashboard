@@ -76,7 +76,8 @@ function renderPage() {
 
   const indicator = document.getElementById("pageIndicator");
   if (indicator) {
-    indicator.textContent = `${currentPage + 1}/${totalPages}`;
+    const displayPage = totalPages > 0 ? currentPage + 1 : 0;
+    indicator.textContent = `${displayPage}/${totalPages}`;
   }
 
   const start = currentPage * flightsPerPage;
@@ -170,8 +171,14 @@ function formatMinutes(min) {
 }
 
 function escapeHtml(unsafe) {
-  return unsafe.replace(/[&<"']/g, (match) => {
-    const escape = { "&": "&amp;", "<": "&lt;", '"': "&quot;", "'": "&#039;" };
+  return unsafe.replace(/[&<>"']/g, (match) => {
+    const escape = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
     return escape[match];
   });
 }
