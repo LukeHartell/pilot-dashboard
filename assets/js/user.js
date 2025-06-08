@@ -497,6 +497,7 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
               {
                 label: "Fitness Score",
                 data: fData,
+
                 borderColor: "#4b89ff",
                 backgroundColor: "#4b89ff33",
                 fill: false,
