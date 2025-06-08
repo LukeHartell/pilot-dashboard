@@ -165,7 +165,8 @@ addFlightForm?.addEventListener("submit", async (e) => {
     return;
   }
 
-  // Build final flight data
+  // Build final flight data. Include locations in the payload so the
+  // backend can store them along with the rest of the entry.
   let flightData = {
     token,
     manualPlane: isManual,

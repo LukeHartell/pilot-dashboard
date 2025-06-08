@@ -6,7 +6,9 @@ if (!token) {
 let cachedPlanes = {};
 let flights = [];
 let currentPage = 0;
+let totalPages = 0;
 const flightsPerPage = 10;
+let flightNumberBias = 0; // offset added to all displayed flight numbers
 
 async function loadLogbook() {
   try {
@@ -45,10 +47,19 @@ async function loadLogbook() {
       throw new Error(flightsData.message || "Failed to load flights.");
 
     flights = flightsData.flights || [];
-    flights.sort((a, b) => new Date(a.takeoffTime) - new Date(b.takeoffTime));
+    flights.sort((a, b) => new Date(getEntryDate(a)) - new Date(getEntryDate(b)));
 
+    let counter = 1 + flightNumberBias;
+    flights.forEach((f) => {
+      f.flightNumber = counter;
+      const increment = f.logType === "batch" ? f.numberFlights || 1 : 1;
+      counter += increment;
+    });
+
+    totalPages = Math.ceil(flights.length / flightsPerPage);
     if (flights.length > 0) {
       document.getElementById("pager").style.display = "block";
+      currentPage = totalPages - 1;
     }
 
     renderPage();
@@ -63,15 +74,25 @@ function renderPage() {
   const flightTableBody = document.getElementById("flightTableBody");
   flightTableBody.innerHTML = "";
 
+  const indicator = document.getElementById("pageIndicator");
+  if (indicator) {
+    const displayPage = totalPages > 0 ? currentPage + 1 : 0;
+    indicator.textContent = `${displayPage}/${totalPages}`;
+  }
+
   const start = currentPage * flightsPerPage;
   const end = start + flightsPerPage;
   const pageFlights = flights.slice(start, end);
 
-  pageFlights.forEach((flight, index) => {
+  pageFlights.forEach((flight) => {
     const row = document.createElement("tr");
 
-    const takeoffDateFormatted = formatDateOnly(flight.takeoffTime);
-    const duration = computeDuration(flight.takeoffTime, flight.landingTime);
+    const entryDate = getEntryDate(flight);
+    const takeoffDateFormatted = entryDate ? formatDateOnly(entryDate) : "-";
+    const duration =
+      flight.logType === "batch"
+        ? computeDuration(null, null, flight.airTimeMinutes)
+        : computeDuration(flight.takeoffTime, flight.landingTime);
 
     let planeName = "Unknown Plane";
     if (flight.manualPlane) {
@@ -83,22 +104,33 @@ function renderPage() {
       planeName = `Plane ID: ${flight.plane_id.substring(0, 6)}...`;
     }
 
+    const startNum = flight.flightNumber;
+    const endNum =
+      flight.logType === "batch" && flight.numberFlights > 1
+        ? startNum + flight.numberFlights - 1
+        : startNum;
+    const numberDisplay = endNum !== startNum ? `${startNum}-${endNum}` : startNum;
+
     row.innerHTML = `
-      <td>${start + index + 1}</td>
+      <td>${numberDisplay}</td>
       <td>${takeoffDateFormatted}</td>
       <td>${planeName}</td>
-      <td>${flight.startLocation}</td>
-      <td>${flight.endLocation}</td>
+      <td>${flight.startLocation || "-"}</td>
+      <td>${flight.endLocation || "-"}</td>
       <td>${duration}</td>
       <td>${flight.notes ? escapeHtml(flight.notes) : "-"}</td>
     `;
 
-    row.addEventListener("click", () =>
-      showFlightDetails(flight, start + index + 1)
-    );
+    row.addEventListener("click", () => showFlightDetails(flight));
 
     flightTableBody.appendChild(row);
   });
+
+  for (let i = pageFlights.length; i < flightsPerPage; i++) {
+    const emptyRow = document.createElement("tr");
+    emptyRow.innerHTML = "<td colspan='7'>&nbsp;</td>";
+    flightTableBody.appendChild(emptyRow);
+  }
 }
 
 // Pager controls
@@ -126,27 +158,48 @@ function formatDateOnly(datetimeStr) {
   return new Date(datetimeStr).toLocaleDateString(undefined, options);
 }
 
-function computeDuration(start, end) {
+function computeDuration(start, end, minutes) {
+  if (minutes != null) return formatMinutes(minutes);
+
   const startTime = new Date(start);
   const endTime = new Date(end);
   const diffMs = endTime - startTime;
   if (diffMs <= 0) return "-";
 
-  const minutes = Math.floor(diffMs / 60000);
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
+  const totalMinutes = Math.floor(diffMs / 60000);
+  return formatMinutes(totalMinutes);
+}
 
+function formatMinutes(min) {
+  const hours = Math.floor(min / 60);
+  const remainingMinutes = min % 60;
   return `${hours}h ${remainingMinutes}m`;
 }
 
 function escapeHtml(unsafe) {
-  return unsafe.replace(/[&<"']/g, (match) => {
-    const escape = { "&": "&amp;", "<": "&lt;", '"': "&quot;", "'": "&#039;" };
+  return unsafe.replace(/[&<>"']/g, (match) => {
+    const escape = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
     return escape[match];
   });
 }
 
-function showFlightDetails(flight, flightNumber) {
+function getEntryDate(flight) {
+  return (
+    flight.takeoffTime ||
+    flight.date ||
+    flight.landingTime ||
+    flight.createdAt ||
+    0
+  );
+}
+
+function showFlightDetails(flight) {
   const detailBox = document.getElementById("flightDetail");
   const detailContent = document.getElementById("flightDetailContent");
 
@@ -158,49 +211,94 @@ function showFlightDetails(flight, flightNumber) {
     planeName = `${plane.displayName} (${plane.registration})`;
   }
 
-  const takeoffFormatted = formatDate(flight.takeoffTime);
-  const landingFormatted = formatDate(flight.landingTime);
-  const duration = computeDuration(flight.takeoffTime, flight.landingTime);
+  const entryDate = getEntryDate(flight);
 
-  detailContent.innerHTML = `
-    <section class="detail-section">
-      <h4>General</h4>
-      <p><strong>Flight #:</strong> ${flightNumber}</p>
-      <p><strong>Plane:</strong> ${planeName}</p>
-      <p><strong>Category:</strong> ${flight.category || "-"}</p>
-      <p><strong>Launch Type:</strong> ${flight.launchType || "-"}</p>
-    </section>
+  const takeoffFormatted = flight.takeoffTime ? formatDate(flight.takeoffTime) : "-";
+  const landingFormatted = flight.landingTime ? formatDate(flight.landingTime) : "-";
+  const duration =
+    flight.logType === "batch"
+      ? computeDuration(null, null, flight.airTimeMinutes)
+      : computeDuration(flight.takeoffTime, flight.landingTime);
 
-    <section class="detail-section">
-      <h4>Start</h4>
-      <p><strong>Start Location:</strong> ${flight.startLocation}</p>
-      <p><strong>Takeoff:</strong> ${takeoffFormatted}</p>
-    </section>
+  const startNum = flight.flightNumber;
+  const endNum =
+    flight.logType === "batch" && flight.numberFlights > 1
+      ? startNum + flight.numberFlights - 1
+      : startNum;
+  const numberDisplay = endNum !== startNum ? `${startNum}-${endNum}` : startNum;
 
-    <section class="detail-section">
-      <h4>End</h4>
-      <p><strong>End Location:</strong> ${flight.endLocation}</p>
-      <p><strong>Landing:</strong> ${landingFormatted}</p>
-    </section>
+  if (flight.logType === "batch") {
+    const dateFormatted = entryDate ? formatDateOnly(entryDate) : "-";
+    detailContent.innerHTML = `
+      <section class="detail-section">
+        <h4>General</h4>
+        <p><strong>Flights #:</strong> ${numberDisplay}</p>
+        <p><strong>Plane:</strong> ${planeName}</p>
+        <p><strong>Category:</strong> ${flight.category || "-"}</p>
+      </section>
 
-    <section class="detail-section">
-      <h4>Extra</h4>
-      <p><strong>Duration:</strong> ${duration}</p>
-      <p><strong>Engine Time:</strong> ${
-        flight.engineTimeMinutes != null
-          ? flight.engineTimeMinutes + " min"
-          : "-"
-      }</p>
-      <p><strong>Cross-country Distance:</strong> ${
-        flight.crossCountryDistanceKm != null
-          ? flight.crossCountryDistanceKm + " km"
-          : "-"
-      }</p>
-      <p><strong>Notes:</strong> ${
-        flight.notes ? escapeHtml(flight.notes) : "-"
-      }</p>
-    </section>
-  `;
+      <section class="detail-section">
+        <h4>Date</h4>
+        <p><strong>Date:</strong> ${dateFormatted}</p>
+      </section>
+
+      <section class="detail-section">
+        <h4>Route</h4>
+        <p><strong>From:</strong> ${flight.startLocation || "-"}</p>
+        <p><strong>To:</strong> ${flight.endLocation || "-"}</p>
+      </section>
+
+      <section class="detail-section">
+        <h4>Extra</h4>
+        <p><strong>Total Flights:</strong> ${flight.numberFlights}</p>
+        <p><strong>Air Time:</strong> ${duration}</p>
+        <p><strong>Engine Time:</strong> ${
+          flight.engineTimeMinutes != null ? flight.engineTimeMinutes + " min" : "-"
+        }</p>
+        <p><strong>Notes:</strong> ${
+          flight.notes ? escapeHtml(flight.notes) : "-"
+        }</p>
+      </section>
+    `;
+  } else {
+    detailContent.innerHTML = `
+      <section class="detail-section">
+        <h4>General</h4>
+        <p><strong>Flight #:</strong> ${numberDisplay}</p>
+        <p><strong>Plane:</strong> ${planeName}</p>
+        <p><strong>Category:</strong> ${flight.category || "-"}</p>
+        <p><strong>Launch Type:</strong> ${flight.launchType || "-"}</p>
+      </section>
+
+      <section class="detail-section">
+        <h4>Start</h4>
+        <p><strong>Start Location:</strong> ${flight.startLocation}</p>
+        <p><strong>Takeoff:</strong> ${takeoffFormatted}</p>
+      </section>
+
+      <section class="detail-section">
+        <h4>End</h4>
+        <p><strong>End Location:</strong> ${flight.endLocation}</p>
+        <p><strong>Landing:</strong> ${landingFormatted}</p>
+      </section>
+
+      <section class="detail-section">
+        <h4>Extra</h4>
+        <p><strong>Duration:</strong> ${duration}</p>
+        <p><strong>Engine Time:</strong> ${
+          flight.engineTimeMinutes != null ? flight.engineTimeMinutes + " min" : "-"
+        }</p>
+        <p><strong>Cross-country Distance:</strong> ${
+          flight.crossCountryDistanceKm != null
+            ? flight.crossCountryDistanceKm + " km"
+            : "-"
+        }</p>
+        <p><strong>Notes:</strong> ${
+          flight.notes ? escapeHtml(flight.notes) : "-"
+        }</p>
+      </section>
+    `;
+  }
 
   detailBox.style.display = "block";
 }

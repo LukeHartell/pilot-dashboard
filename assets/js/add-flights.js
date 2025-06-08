@@ -130,11 +130,20 @@ addFlightsForm?.addEventListener("submit", async (e) => {
     ? parseInt(addFlightsForm.elements["totalAirTimeMinutes"].value, 10)
     : null;
 
-  if (!date || !numFlights || numFlights <= 0) {
+  const startLocation = addFlightsForm.elements["startLocation"].value
+    .trim()
+    .toUpperCase();
+  const endLocation = addFlightsForm.elements["endLocation"].value
+    .trim()
+    .toUpperCase();
+
+  if (!date || !numFlights || numFlights <= 0 || !startLocation || !endLocation) {
     alert("Please fill out all required fields.");
     return;
   }
 
+  // Payload for the batch flight endpoint. Route information is included
+  // so each grouped entry has the correct origin and destination stored.
   const batchData = {
     token,
     manualPlane: isManual,
@@ -142,6 +151,8 @@ addFlightsForm?.addEventListener("submit", async (e) => {
     numberFlights: numFlights,
     totalEngineTimeMinutes,
     totalAirTimeMinutes,
+    startLocation,
+    endLocation,
   };
 
   if (isManual) {
