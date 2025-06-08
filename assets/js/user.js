@@ -332,7 +332,13 @@ Recency Score = Raw Recency Score * (0.5 + 0.5 * Experience Score)
 This makes it super easy for pilots to **self-evaluate** and for instructors to **guide** them.`;
 
 const scoreHelpHTML = `<h3>Fitness Scores Explained</h3>
-<p><em>Quick version:</em> Higher scores mean you're more current. Experience counts flights and hours in the last year. Recency measures how long since you flew last. The Fitness Score is the average of the two.</p>
+<p><em>Quick overview:</em></p>
+<ul>
+  <li><strong>Fitness (F)</strong> – overall score, averaging E and R.</li>
+  <li><strong>Experience (E)</strong> – flights and hours logged in the last year.</li>
+  <li><strong>Recency (R)</strong> – decays with days since last flight; drops slower if you have more experience.</li>
+</ul>
+<p>Scores range from 0–100. Higher values mean you're more current. Use the Fitness score to judge if more practice is needed.</p>
 ${simpleMarkdown(scoreHelpText.replace(/```/g, ""))}`;
 
 document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
