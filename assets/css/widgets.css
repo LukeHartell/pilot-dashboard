@@ -99,6 +99,10 @@
     background: none;
     border: none;
   }
+  #widgetModal pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
   .dark-mode #closeModalBtn {
     color: white;
   }

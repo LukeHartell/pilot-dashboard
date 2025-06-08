@@ -69,8 +69,8 @@ async function loadFitnessInfo() {
 
     const now = new Date();
     const lastFlightDate = new Date(getEntryDate(flights[0]));
-    const diffMonths = (now - lastFlightDate) / (1000 * 60 * 60 * 24 * 30);
-    const monthsSince = Math.floor(diffMonths);
+    const daysSince = Math.floor((now - lastFlightDate) / (1000 * 60 * 60 * 24));
+    const monthsSince = Math.floor(daysSince / 30);
 
     const yearAgo = new Date();
     yearAgo.setFullYear(yearAgo.getFullYear() - 1);
@@ -92,9 +92,6 @@ async function loadFitnessInfo() {
     const hoursScore = Math.min(hours12 / 100, 1.0);
     const experienceScore = (flightsScore + hoursScore) / 2;
 
-    const daysSince = Math.floor(
-      (now - lastFlightDate) / (1000 * 60 * 60 * 24)
-    );
     const baseK = 0.05;
     const adjustedK = baseK / (0.5 + 0.5 * experienceScore);
     const rawRecency = Math.exp(-adjustedK * daysSince);
@@ -111,10 +108,7 @@ async function loadFitnessInfo() {
       recencyScore * 100
     )}`;
 
-    const agoText =
-      monthsSince >= 1
-        ? `${monthsSince} month${monthsSince > 1 ? "s" : ""} ago`
-        : "<1 month ago";
+    const agoText = `${daysSince} day${daysSince !== 1 ? "s" : ""}`;
     setStatus("lastFlightAgo", agoText, severityFromMonths(monthsSince));
 
     setStatus("flights12m", flights12, severityFromFlights(flights12));
@@ -339,7 +333,7 @@ This makes it super easy for pilots to **self-evaluate** and for instructors to 
 
 const scoreHelpHTML = `<h3>Fitness Scores Explained</h3>
 <p><em>Quick version:</em> Higher scores mean you're more current. Experience counts flights and hours in the last year. Recency measures how long since you flew last. The Fitness Score is the average of the two.</p>
-<pre>${scoreHelpText}</pre>`;
+${simpleMarkdown(scoreHelpText.replace(/```/g, ""))}`;
 
 document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
