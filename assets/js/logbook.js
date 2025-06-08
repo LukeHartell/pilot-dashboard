@@ -47,7 +47,11 @@ async function loadLogbook() {
     if (!flightsData.success)
       throw new Error(flightsData.message || "Failed to load flights.");
 
-    flights = flightsData.flights || [];
+    flights = Array.isArray(flightsData.flights)
+      ? flightsData.flights.filter(
+          (f) => f && Object.keys(f).length > 0
+        )
+      : [];
     flights.sort((a, b) => new Date(getEntryDate(a)) - new Date(getEntryDate(b)));
 
     let counter = 1 + flightNumberBias;
@@ -61,9 +65,12 @@ async function loadLogbook() {
     if (flights.length > 0) {
       document.getElementById("pager").style.display = "block";
       currentPage = totalPages - 1;
+      renderPage();
+    } else {
+      document.getElementById("pager").style.display = "none";
+      document.getElementById("flightTableBody").innerHTML =
+        "<tr><td colspan='7'>No flights added yet.</td></tr>";
     }
-
-    renderPage();
   } catch (err) {
     console.error("Error loading logbook:", err);
     document.getElementById("flightTableBody").innerHTML =
@@ -307,12 +314,13 @@ function showFlightDetails(flight) {
 
 document.getElementById("closeDetailBtn")?.addEventListener("click", () => {
   document.getElementById("flightDetail").style.display = "none";
+  selectedFlightId = null;
 });
 
 document.getElementById("deleteEntryBtn")?.addEventListener("click", async () => {
   if (!selectedFlightId) return;
   const confirmed = confirm(
-    "Deleting this entry is permanent and will affect your statistics. Continue?"
+    "Are you sure you want to permanently delete this entry? This will affect your statistics."
   );
   if (!confirmed) return;
   try {
