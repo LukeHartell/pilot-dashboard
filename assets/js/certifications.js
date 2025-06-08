@@ -19,16 +19,20 @@ async function loadCertifications() {
   if (!certListEl) return;
   certListEl.innerHTML = "<p>Loading...</p>";
   try {
-    const res = await fetch(
-      `https://n8n.e57.dk/webhook/pilot-dashboard/get-certification?token=${encodeURIComponent(
-        token
-      )}`
-    );
+    const url =
+      "https://n8n.e57.dk/webhook/pilot-dashboard/get-certification?token=" +
+      encodeURIComponent(token);
+    const res = await fetch(url);
     if (!res.ok) throw new Error("Failed to fetch");
     const [data] = await res.json();
     if (!data.success) throw new Error(data.message || "Failed to load");
-    const certs = Array.isArray(data.certifications) ? data.certifications : [];
-    if (!certs.length) {
+    const certs = Array.isArray(data.certifications)
+      ? data.certifications
+      : [];
+    const noCerts =
+      certs.length === 0 ||
+      (certs.length === 1 && Object.keys(certs[0] || {}).length === 0);
+    if (noCerts) {
       certListEl.innerHTML = "<p>No certifications added yet.</p>";
       return;
     }
