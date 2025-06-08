@@ -136,6 +136,7 @@ addFlightsForm?.addEventListener("submit", async (e) => {
   const endLocation = addFlightsForm.elements["endLocation"].value
     .trim()
     .toUpperCase();
+  const notes = addFlightsForm.elements["notes"]?.value.trim();
 
   if (!date || !numFlights || numFlights <= 0 || !startLocation || !endLocation) {
     alert("Please fill out all required fields.");
@@ -153,6 +154,7 @@ addFlightsForm?.addEventListener("submit", async (e) => {
     totalAirTimeMinutes,
     startLocation,
     endLocation,
+    notes: notes || null,
   };
 
   if (isManual) {
@@ -176,7 +178,13 @@ addFlightsForm?.addEventListener("submit", async (e) => {
 
     if (!response.ok) throw new Error("Server returned an error");
 
-    window.location.href = "/logbook";
+    const result = await response.json();
+
+    if (result.success) {
+      window.location.href = "/add-flights";
+    } else {
+      alert(result.message || "Failed to add flights.");
+    }
   } catch (err) {
     console.error(err);
     alert("Failed to add flights. Please try again later.");
