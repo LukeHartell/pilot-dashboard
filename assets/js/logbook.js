@@ -125,6 +125,12 @@ function renderPage() {
 
     flightTableBody.appendChild(row);
   });
+
+  for (let i = pageFlights.length; i < flightsPerPage; i++) {
+    const emptyRow = document.createElement("tr");
+    emptyRow.innerHTML = "<td colspan='7'>&nbsp;</td>";
+    flightTableBody.appendChild(emptyRow);
+  }
 }
 
 // Pager controls
@@ -234,6 +240,12 @@ function showFlightDetails(flight) {
       <section class="detail-section">
         <h4>Date</h4>
         <p><strong>Date:</strong> ${dateFormatted}</p>
+      </section>
+
+      <section class="detail-section">
+        <h4>Route</h4>
+        <p><strong>From:</strong> ${flight.startLocation || "-"}</p>
+        <p><strong>To:</strong> ${flight.endLocation || "-"}</p>
       </section>
 
       <section class="detail-section">

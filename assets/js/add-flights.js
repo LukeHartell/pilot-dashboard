@@ -130,7 +130,14 @@ addFlightsForm?.addEventListener("submit", async (e) => {
     ? parseInt(addFlightsForm.elements["totalAirTimeMinutes"].value, 10)
     : null;
 
-  if (!date || !numFlights || numFlights <= 0) {
+  const startLocation = addFlightsForm.elements["startLocation"].value
+    .trim()
+    .toUpperCase();
+  const endLocation = addFlightsForm.elements["endLocation"].value
+    .trim()
+    .toUpperCase();
+
+  if (!date || !numFlights || numFlights <= 0 || !startLocation || !endLocation) {
     alert("Please fill out all required fields.");
     return;
   }
@@ -142,6 +149,8 @@ addFlightsForm?.addEventListener("submit", async (e) => {
     numberFlights: numFlights,
     totalEngineTimeMinutes,
     totalAirTimeMinutes,
+    startLocation,
+    endLocation,
   };
 
   if (isManual) {
