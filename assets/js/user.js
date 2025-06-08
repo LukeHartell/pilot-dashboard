@@ -77,7 +77,7 @@ async function loadFitnessInfo() {
     flights.forEach((f) => {
       const entryDate = new Date(getEntryDate(f));
       if (entryDate >= yearAgo) {
-        flights12++;
+        flights12 += getFlightCount(f);
         minutes12 += getFlightMinutes(f);
       }
     });
@@ -90,7 +90,9 @@ async function loadFitnessInfo() {
       severityFromMonths(monthsSince)
     );
     document.getElementById("lastFlightAgo").textContent =
-      monthsSince > 0 ? `${monthsSince}m` : "<1m";
+      monthsSince >= 1
+        ? `${monthsSince} month${monthsSince > 1 ? "s" : ""}`
+        : "<1 month";
 
     setStatus("flights12m", flights12, severityFromFlights(flights12));
     setStatus(
@@ -128,6 +130,11 @@ function getEntryDate(flight) {
   );
 }
 
+function getFlightCount(flight) {
+  const count = parseInt(flight.numberFlights, 10);
+  return Number.isFinite(count) && count > 0 ? count : 1;
+}
+
 function getFlightMinutes(flight) {
   if (flight.airTimeMinutes != null) return flight.airTimeMinutes;
   if (flight.takeoffTime && flight.landingTime) {
@@ -159,7 +166,7 @@ function severityFromFlights(f) {
 }
 
 function severityFromHours(h) {
-  return h <= 15 ? 2 : h <= 27 ? 1 : 0;
+  return h < 15 ? 2 : h < 27 ? 1 : 0;
 }
 
 function setStatus(id, value, severity) {
