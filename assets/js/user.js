@@ -314,10 +314,10 @@ function planeLabel(flight) {
 }
 
 function updateStats() {
-  const list = document.getElementById("statsList");
-  if (!list) return;
+  const details = document.getElementById("statsDetails");
+  if (!details) return;
   if (!userFlights.length) {
-    list.innerHTML = "<li>No flights logged yet.</li>";
+    details.innerHTML = "<p>No flights logged yet.</p>";
     return;
   }
 
@@ -331,30 +331,37 @@ function updateStats() {
   );
 
   const planeCounts = {};
+  const planeMinutes = {};
   const baseCounts = {};
   let longest = 0;
   userFlights.forEach((f) => {
     const count = getFlightCount(f);
     const minutes = getFlightMinutes(f);
     const plane = planeLabel(f);
-    if (plane) planeCounts[plane] = (planeCounts[plane] || 0) + count;
+    if (plane) {
+      planeCounts[plane] = (planeCounts[plane] || 0) + count;
+      planeMinutes[plane] = (planeMinutes[plane] || 0) + minutes;
+    }
     const base = (f.startLocation || "").toUpperCase();
     if (base) baseCounts[base] = (baseCounts[base] || 0) + count;
     if (minutes > longest) longest = minutes;
   });
 
-  const favPlane = Object.entries(planeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
-  const favBase = Object.entries(baseCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const favPlaneFlights =
+    Object.entries(planeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const favPlaneTime =
+    Object.entries(planeMinutes).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const favBase =
+    Object.entries(baseCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
 
   const formatDur = (m) => `${Math.floor(m / 60)}h ${m % 60}m`;
 
-  list.innerHTML = `
-    <li>Total flights: ${totalFlights}</li>
-    <li>Total air time: ${formatDur(totalMinutes)}</li>
-    <li>Favorite plane: ${favPlane}</li>
-    <li>Favorite airbase: ${favBase}</li>
-    <li>Longest flight: ${formatDur(longest)}</li>
-  `;
+  document.getElementById("statTotalFlights").textContent = totalFlights;
+  document.getElementById("statTotalMinutes").textContent = formatDur(totalMinutes);
+  document.getElementById("statFavPlaneFlights").textContent = favPlaneFlights;
+  document.getElementById("statFavPlaneTime").textContent = favPlaneTime;
+  document.getElementById("statFavBase").textContent = favBase;
+  document.getElementById("statLongest").textContent = formatDur(longest);
 }
 
 loadFitnessInfo();

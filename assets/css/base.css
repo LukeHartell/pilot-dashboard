@@ -170,6 +170,15 @@ main.center {
   text-align: right;
 }
 
+#statsDetails p {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+#statsDetails p span {
+  margin-left: auto;
+  text-align: right;
+}
 #fitnessScores {
   display: flex;
   flex-direction: initial;
