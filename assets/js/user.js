@@ -6,6 +6,8 @@ if (!token) {
 
 // Store flights for later calculations
 let userFlights = [];
+// Cache plane display names by id
+let cachedPlanes = {};
 
 // Fetch and display user data
 async function loadUserInfo() {
@@ -32,6 +34,20 @@ async function loadUserInfo() {
       "userName"
     ).textContent = `${data.name} ${data.surname}`;
     document.getElementById("userEmail").textContent = data.email;
+    const firstName = data.name || "";
+    const header = document.getElementById("userInfoHeader");
+    if (header) header.textContent = `👤 ${firstName}`;
+
+    // Cache planes for later lookup
+    if (Array.isArray(data.planes)) {
+      data.planes.forEach((plane) => {
+        if (plane && plane._id) {
+          cachedPlanes[plane._id] = plane;
+        }
+      });
+      // Refresh stats in case flights loaded first
+      updateStats();
+    }
   } catch (err) {
     console.error("Error fetching user info:", err);
     document.getElementById("userName").textContent = "Guest";
@@ -61,6 +77,7 @@ async function loadFitnessInfo() {
 
     const flights = Array.isArray(data.flights) ? data.flights : [];
     userFlights = flights;
+    updateStats();
     if (flights.length === 0) {
       document.getElementById("fitMessage").textContent =
         "No flights logged yet.";
@@ -300,6 +317,77 @@ function smoothHistory(history, windowSize = 60) {
     });
   }
   return result;
+}
+
+function planeLabel(flight) {
+  // If manual plane entry, prefer the name or registration
+  if (flight.manualPlane) {
+    if (flight.displayName) return flight.displayName;
+    if (flight.registration) return flight.registration;
+  }
+
+  // Lookup cached planes by id
+  if (flight.plane_id && cachedPlanes[flight.plane_id]) {
+    const plane = cachedPlanes[flight.plane_id];
+    if (plane.displayName) return plane.displayName;
+    if (plane.registration) return plane.registration;
+  }
+
+  if (flight.displayName) return flight.displayName;
+  if (flight.registration) return flight.registration;
+  if (flight.plane_id) return flight.plane_id.substring(0, 6);
+  return "Unknown";
+}
+
+function updateStats() {
+  const details = document.getElementById("statsDetails");
+  if (!details) return;
+  if (!userFlights.length) {
+    details.innerHTML = "<p>No flights logged yet.</p>";
+    return;
+  }
+
+  const totalFlights = userFlights.reduce(
+    (sum, f) => sum + getFlightCount(f),
+    0
+  );
+  const totalMinutes = userFlights.reduce(
+    (sum, f) => sum + getFlightMinutes(f),
+    0
+  );
+
+  const planeCounts = {};
+  const planeMinutes = {};
+  const baseCounts = {};
+  let longest = 0;
+  userFlights.forEach((f) => {
+    const count = getFlightCount(f);
+    const minutes = getFlightMinutes(f);
+    const plane = planeLabel(f);
+    if (plane) {
+      planeCounts[plane] = (planeCounts[plane] || 0) + count;
+      planeMinutes[plane] = (planeMinutes[plane] || 0) + minutes;
+    }
+    const base = (f.startLocation || "").toUpperCase();
+    if (base) baseCounts[base] = (baseCounts[base] || 0) + count;
+    if (minutes > longest) longest = minutes;
+  });
+
+  const favPlaneFlights =
+    Object.entries(planeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const favPlaneTime =
+    Object.entries(planeMinutes).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const favBase =
+    Object.entries(baseCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+
+  const formatDur = (m) => `${Math.floor(m / 60)}h ${m % 60}m`;
+
+  document.getElementById("statTotalFlights").textContent = totalFlights;
+  document.getElementById("statTotalMinutes").textContent = formatDur(totalMinutes);
+  document.getElementById("statFavPlaneFlights").textContent = favPlaneFlights;
+  document.getElementById("statFavPlaneTime").textContent = favPlaneTime;
+  document.getElementById("statFavBase").textContent = favBase;
+  document.getElementById("statLongest").textContent = formatDur(longest);
 }
 
 loadFitnessInfo();
