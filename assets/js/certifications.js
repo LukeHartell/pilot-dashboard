@@ -148,8 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const id = item.dataset.id;
     if (editBtn) {
       const name = item.querySelector("strong")?.textContent || "";
-      const status = item
-        .querySelector("em")?.textContent.replace(/[()]/g, "") || "";
+      const status =
+        item.querySelector("em")?.textContent.replace(/[()]/g, "") || "";
       const [issue, valid] =
         item.querySelector("small")?.textContent.split(" - ") || ["", ""];
       showCertForm({
@@ -163,6 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteCertification(id);
     }
   });
-
-  loadCertifications();
 });
+
+// Immediately load certifications when the script executes
+loadCertifications();
