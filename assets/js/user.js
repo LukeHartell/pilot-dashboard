@@ -233,7 +233,7 @@ function computeScoreAtDate(flights, date) {
   const rawRecency = Math.exp(-adjustedK * (isFinite(daysSince) ? daysSince : 0));
   const recencyScore = rawRecency * (0.5 + 0.5 * experienceScore);
   const fitnessScore = 0.5 * recencyScore + 0.5 * experienceScore;
-  return { date, fitnessScore };
+  return { date, fitnessScore, experienceScore, recencyScore };
 }
 
 function computeFitnessHistory(flights, startDate, endDate = new Date()) {
@@ -279,16 +279,25 @@ function historyForRange(flights, range) {
   return computeFitnessHistory(flights, start, today);
 }
 
-function smoothHistory(history, windowSize = 30) {
+function smoothHistory(history, windowSize = 60) {
   const result = [];
   for (let i = 0; i < history.length; i++) {
-    let sum = 0;
+    let sumF = 0;
+    let sumE = 0;
+    let sumR = 0;
     let count = 0;
     for (let j = Math.max(0, i - windowSize + 1); j <= i; j++) {
-      sum += history[j].fitnessScore;
+      sumF += history[j].fitnessScore;
+      sumE += history[j].experienceScore;
+      sumR += history[j].recencyScore;
       count++;
     }
-    result.push({ date: history[i].date, fitnessScore: sum / count });
+    result.push({
+      date: history[i].date,
+      fitnessScore: sumF / count,
+      experienceScore: sumE / count,
+      recencyScore: sumR / count,
+    });
   }
   return result;
 }
@@ -439,6 +448,7 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     const widget = e.target.closest(".widget");
     modalContent.innerHTML = widget.innerHTML;
     modalContent.querySelector(".fullscreen-btn")?.remove();
+    modalContent.querySelector(".help-btn")?.remove();
     modal.style.display = "flex";
 
     if (widget.id === "fitWidget" && userFlights.length) {
@@ -468,9 +478,17 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
         const canvas = document.createElement("canvas");
         canvas.id = "fitnessHistoryChart";
         modalContent.appendChild(canvas);
+
         const labels = history.map((h) => formatDateOnly(h.date));
-        const data = history.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
-        const trendData = trend.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
+        const clamp = (v) => Math.min(Math.max(Math.round(v * 100), 0), 100);
+
+        const fData = history.map((h) => clamp(h.fitnessScore));
+        const fTrend = trend.map((h) => clamp(h.fitnessScore));
+        const eData = history.map((h) => clamp(h.experienceScore));
+        const eTrend = trend.map((h) => clamp(h.experienceScore));
+        const rData = history.map((h) => clamp(h.recencyScore));
+        const rTrend = trend.map((h) => clamp(h.recencyScore));
+
         new Chart(canvas.getContext("2d"), {
           type: "line",
           data: {
@@ -478,7 +496,8 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
             datasets: [
               {
                 label: "Fitness Score",
-                data,
+                data: fData,
+
                 borderColor: "#4b89ff",
                 backgroundColor: "#4b89ff33",
                 fill: false,
@@ -486,17 +505,59 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
                 pointRadius: 0,
               },
               {
-                label: "Trend (30d avg)",
-                data: trendData,
-                borderColor: "#f98037",
-                backgroundColor: "#f9803733",
+                label: "Fitness 60d Avg",
+                data: fTrend,
+                borderColor: "#4b89ff",
+                backgroundColor: "#4b89ff55",
                 fill: false,
                 tension: 0.3,
                 pointRadius: 0,
+                borderDash: [5, 3],
+              },
+              {
+                label: "Experience Score",
+                data: eData,
+                borderColor: "#37c871",
+                backgroundColor: "#37c87133",
+                fill: false,
+                tension: 0,
+                pointRadius: 0,
+              },
+              {
+                label: "Experience 60d Avg",
+                data: eTrend,
+                borderColor: "#37c871",
+                backgroundColor: "#37c87155",
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+                borderDash: [5, 3],
+              },
+              {
+                label: "Recency Score",
+                data: rData,
+                borderColor: "#f98037",
+                backgroundColor: "#f9803733",
+                fill: false,
+                tension: 0,
+                pointRadius: 0,
+              },
+              {
+                label: "Recency 60d Avg",
+                data: rTrend,
+                borderColor: "#f98037",
+                backgroundColor: "#f9803755",
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+                borderDash: [5, 3],
               },
             ],
           },
-          options: { responsive: true, scales: { y: { min: 0, max: 100 } } },
+          options: {
+            responsive: true,
+            scales: { y: { min: 0, max: 100 } },
+          },
         });
       };
       renderChart();
