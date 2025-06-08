@@ -452,11 +452,6 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     modal.style.display = "flex";
 
     if (widget.id === "fitWidget" && userFlights.length) {
-      const label = document.createElement("label");
-      label.textContent = "History Range:";
-      label.htmlFor = "historyRangeSelect";
-      label.style.display = "block";
-      label.style.marginTop = "5px";
       const select = document.createElement("select");
       select.id = "historyRangeSelect";
       select.innerHTML = `
@@ -465,7 +460,6 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
         <option value="ytd">Year to date</option>
         <option value="3m">Last 3 months</option>
         <option value="1m">Last 1 month</option>`;
-      modalContent.appendChild(label);
       modalContent.appendChild(select);
       const renderChart = () => {
         const loading = document.createElement("p");
