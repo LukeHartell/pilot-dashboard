@@ -4,6 +4,9 @@ if (!token) {
   window.location.href = "/login";
 }
 
+// Store flights for later calculations
+let userFlights = [];
+
 // Fetch and display user data
 async function loadUserInfo() {
   try {
@@ -57,6 +60,7 @@ async function loadFitnessInfo() {
       throw new Error(data.message || "Failed to load flights.");
 
     const flights = Array.isArray(data.flights) ? data.flights : [];
+    userFlights = flights;
     if (flights.length === 0) {
       document.getElementById("fitMessage").textContent =
         "No flights logged yet.";
@@ -198,6 +202,104 @@ function setStatus(id, value, severity) {
       ? "status-yellow"
       : "status-green"
   );
+}
+
+function computeScoreAtDate(flights, date) {
+  let lastFlight = null;
+  let flights12 = 0;
+  let minutes12 = 0;
+  const yearAgo = new Date(date);
+  yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+  flights.forEach((f) => {
+    const entry = new Date(getEntryDate(f));
+    if (entry <= date) {
+      if (!lastFlight || entry > lastFlight) lastFlight = entry;
+      if (entry >= yearAgo) {
+        flights12 += getFlightCount(f);
+        minutes12 += getFlightMinutes(f);
+      }
+    }
+  });
+
+  const daysSince = lastFlight
+    ? Math.floor((date - lastFlight) / (1000 * 60 * 60 * 24))
+    : Infinity;
+  const hours12 = minutes12 / 60;
+  const flightsScore = Math.min(flights12 / 50, 1.0);
+  const hoursScore = Math.min(hours12 / 100, 1.0);
+  const experienceScore = (flightsScore + hoursScore) / 2;
+  const baseK = 0.05;
+  const adjustedK = baseK / (0.5 + 0.5 * experienceScore);
+  const rawRecency = Math.exp(-adjustedK * (isFinite(daysSince) ? daysSince : 0));
+  const recencyScore = rawRecency * (0.5 + 0.5 * experienceScore);
+  const fitnessScore = 0.5 * recencyScore + 0.5 * experienceScore;
+  return { date, fitnessScore, experienceScore, recencyScore };
+}
+
+function computeFitnessHistory(flights, startDate, endDate = new Date()) {
+  const history = [];
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    history.push(computeScoreAtDate(flights, new Date(d)));
+  }
+  return history;
+}
+
+function historyForRange(flights, range) {
+  const today = new Date();
+  let start;
+  switch (range) {
+    case "all": {
+      const first = flights.reduce((min, f) => {
+        const d = new Date(getEntryDate(f));
+        return !min || d < min ? d : min;
+      }, null);
+      start = first ? new Date(first) : today;
+      break;
+    }
+    case "ytd":
+      start = new Date(today.getFullYear(), 0, 1);
+      break;
+    case "3m":
+      start = new Date(today);
+      start.setMonth(start.getMonth() - 3);
+      break;
+    case "1m":
+      start = new Date(today);
+      start.setMonth(start.getMonth() - 1);
+      break;
+    case "12m":
+    default:
+      start = new Date(today);
+      start.setFullYear(start.getFullYear() - 1);
+      break;
+  }
+  start.setHours(0, 0, 0, 0);
+  return computeFitnessHistory(flights, start, today);
+}
+
+function smoothHistory(history, windowSize = 60) {
+  const result = [];
+  for (let i = 0; i < history.length; i++) {
+    let sumF = 0;
+    let sumE = 0;
+    let sumR = 0;
+    let count = 0;
+    for (let j = Math.max(0, i - windowSize + 1); j <= i; j++) {
+      sumF += history[j].fitnessScore;
+      sumE += history[j].experienceScore;
+      sumR += history[j].recencyScore;
+      count++;
+    }
+    result.push({
+      date: history[i].date,
+      fitnessScore: sumF / count,
+      experienceScore: sumE / count,
+      recencyScore: sumR / count,
+    });
+  }
+  return result;
 }
 
 loadFitnessInfo();
@@ -346,7 +448,120 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     const widget = e.target.closest(".widget");
     modalContent.innerHTML = widget.innerHTML;
     modalContent.querySelector(".fullscreen-btn")?.remove();
+    modalContent.querySelector(".help-btn")?.remove();
     modal.style.display = "flex";
+
+    if (widget.id === "fitWidget" && userFlights.length) {
+      const label = document.createElement("label");
+      label.textContent = "History Range:";
+      label.htmlFor = "historyRangeSelect";
+      label.style.display = "block";
+      label.style.marginTop = "5px";
+      const select = document.createElement("select");
+      select.id = "historyRangeSelect";
+      select.innerHTML = `
+        <option value="12m" selected>Last 12 months</option>
+        <option value="all">All time</option>
+        <option value="ytd">Year to date</option>
+        <option value="3m">Last 3 months</option>
+        <option value="1m">Last 1 month</option>`;
+      modalContent.appendChild(label);
+      modalContent.appendChild(select);
+      const renderChart = () => {
+        const loading = document.createElement("p");
+        loading.textContent = "Calculating...";
+        modalContent.appendChild(loading);
+        const history = historyForRange(userFlights, select?.value || "12m");
+        const trend = smoothHistory(history);
+        loading.remove();
+        modalContent.querySelector("#fitnessHistoryChart")?.remove();
+        const canvas = document.createElement("canvas");
+        canvas.id = "fitnessHistoryChart";
+        modalContent.appendChild(canvas);
+
+        const labels = history.map((h) => formatDateOnly(h.date));
+        const clamp = (v) => Math.min(Math.max(Math.round(v * 100), 0), 100);
+
+        const fData = history.map((h) => clamp(h.fitnessScore));
+        const fTrend = trend.map((h) => clamp(h.fitnessScore));
+        const eData = history.map((h) => clamp(h.experienceScore));
+        const eTrend = trend.map((h) => clamp(h.experienceScore));
+        const rData = history.map((h) => clamp(h.recencyScore));
+        const rTrend = trend.map((h) => clamp(h.recencyScore));
+
+        new Chart(canvas.getContext("2d"), {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Fitness Score",
+                data: fData,
+                borderColor: "#4b89ff",
+                backgroundColor: "#4b89ff33",
+                fill: false,
+                tension: 0,
+                pointRadius: 0,
+              },
+              {
+                label: "Fitness 60d Avg",
+                data: fTrend,
+                borderColor: "#4b89ff",
+                backgroundColor: "#4b89ff55",
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+                borderDash: [5, 3],
+              },
+              {
+                label: "Experience Score",
+                data: eData,
+                borderColor: "#37c871",
+                backgroundColor: "#37c87133",
+                fill: false,
+                tension: 0,
+                pointRadius: 0,
+              },
+              {
+                label: "Experience 60d Avg",
+                data: eTrend,
+                borderColor: "#37c871",
+                backgroundColor: "#37c87155",
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+                borderDash: [5, 3],
+              },
+              {
+                label: "Recency Score",
+                data: rData,
+                borderColor: "#f98037",
+                backgroundColor: "#f9803733",
+                fill: false,
+                tension: 0,
+                pointRadius: 0,
+              },
+              {
+                label: "Recency 60d Avg",
+                data: rTrend,
+                borderColor: "#f98037",
+                backgroundColor: "#f9803755",
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+                borderDash: [5, 3],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: { y: { min: 0, max: 100 } },
+          },
+        });
+      };
+      renderChart();
+      select?.addEventListener("change", renderChart);
+    }
   });
 });
 
