@@ -38,6 +38,149 @@ async function loadUserInfo() {
 
 loadUserInfo();
 
+// Load "Fit for flying?" data
+async function loadFitnessInfo() {
+  try {
+    const response = await fetch(
+      "https://n8n.e57.dk/webhook/pilot-dashboard/my-flights",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      }
+    );
+
+    if (!response.ok) throw new Error("Failed to fetch flights");
+
+    const [data] = await response.json();
+    if (!data.success) throw new Error(data.message || "Failed to load flights.");
+
+    const flights = Array.isArray(data.flights) ? data.flights : [];
+    if (flights.length === 0) {
+      document.getElementById("fitMessage").textContent =
+        "No flights logged yet.";
+      return;
+    }
+
+    flights.sort((a, b) => new Date(getEntryDate(b)) - new Date(getEntryDate(a)));
+
+    const now = new Date();
+    const lastFlightDate = new Date(getEntryDate(flights[0]));
+    const diffMonths = (now - lastFlightDate) / (1000 * 60 * 60 * 24 * 30);
+    const monthsSince = Math.floor(diffMonths);
+
+    const yearAgo = new Date();
+    yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+
+    let flights12 = 0;
+    let minutes12 = 0;
+    flights.forEach((f) => {
+      const entryDate = new Date(getEntryDate(f));
+      if (entryDate >= yearAgo) {
+        flights12 += getFlightCount(f);
+        minutes12 += getFlightMinutes(f);
+      }
+    });
+
+    const hours12 = minutes12 / 60;
+
+    setStatus(
+      "lastFlightDate",
+      formatDateOnly(lastFlightDate),
+      severityFromMonths(monthsSince)
+    );
+    document.getElementById("lastFlightAgo").textContent =
+      monthsSince >= 1
+        ? `${monthsSince} month${monthsSince > 1 ? "s" : ""}`
+        : "<1 month";
+
+    setStatus("flights12m", flights12, severityFromFlights(flights12));
+    setStatus(
+      "airtime12m",
+      formatMinutes(minutes12),
+      severityFromHours(hours12)
+    );
+
+    const severity = Math.max(
+      severityFromMonths(monthsSince),
+      severityFromFlights(flights12),
+      severityFromHours(hours12)
+    );
+    const msg =
+      severity === 2
+        ? "Your activity is low. Consider refresher training before flying."
+        : severity === 1
+        ? "You're somewhat active but more practice is recommended."
+        : "You appear up to date and fit to fly.";
+    document.getElementById("fitMessage").textContent = msg;
+  } catch (err) {
+    console.error("Error loading fitness info:", err);
+    document.getElementById("fitMessage").textContent =
+      "Could not load fitness info.";
+  }
+}
+
+function getEntryDate(flight) {
+  return (
+    flight.takeoffTime ||
+    flight.date ||
+    flight.landingTime ||
+    flight.createdAt ||
+    0
+  );
+}
+
+function getFlightCount(flight) {
+  const count = parseInt(flight.numberFlights, 10);
+  return Number.isFinite(count) && count > 0 ? count : 1;
+}
+
+function getFlightMinutes(flight) {
+  if (flight.airTimeMinutes != null) return flight.airTimeMinutes;
+  if (flight.takeoffTime && flight.landingTime) {
+    const start = new Date(flight.takeoffTime);
+    const end = new Date(flight.landingTime);
+    const diff = end - start;
+    return diff > 0 ? Math.floor(diff / 60000) : 0;
+  }
+  return 0;
+}
+
+function formatDateOnly(datetimeStr) {
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  return new Date(datetimeStr).toLocaleDateString(undefined, options);
+}
+
+function formatMinutes(min) {
+  const hours = Math.floor(min / 60);
+  const remainingMinutes = min % 60;
+  return `${hours}h ${remainingMinutes}m`;
+}
+
+function severityFromMonths(m) {
+  return m >= 3 ? 2 : m >= 1 ? 1 : 0;
+}
+
+function severityFromFlights(f) {
+  return f <= 10 ? 2 : f <= 20 ? 1 : 0;
+}
+
+function severityFromHours(h) {
+  return h < 15 ? 2 : h < 27 ? 1 : 0;
+}
+
+function setStatus(id, value, severity) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = value;
+  el.classList.remove("status-red", "status-yellow", "status-green");
+  el.classList.add(
+    severity === 2 ? "status-red" : severity === 1 ? "status-yellow" : "status-green"
+  );
+}
+
+loadFitnessInfo();
+
 // Edit profile button
 document.getElementById("editProfileButton")?.addEventListener("click", () => {
   window.location.href = "/edit-user";
