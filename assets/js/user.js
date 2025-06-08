@@ -442,7 +442,21 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     modal.style.display = "flex";
 
     if (widget.id === "fitWidget" && userFlights.length) {
-      const select = modalContent.querySelector("#historyRangeSelect");
+      const label = document.createElement("label");
+      label.textContent = "History Range:";
+      label.htmlFor = "historyRangeSelect";
+      label.style.display = "block";
+      label.style.marginTop = "5px";
+      const select = document.createElement("select");
+      select.id = "historyRangeSelect";
+      select.innerHTML = `
+        <option value="12m" selected>Last 12 months</option>
+        <option value="all">All time</option>
+        <option value="ytd">Year to date</option>
+        <option value="3m">Last 3 months</option>
+        <option value="1m">Last 1 month</option>`;
+      modalContent.appendChild(label);
+      modalContent.appendChild(select);
       const renderChart = () => {
         const loading = document.createElement("p");
         loading.textContent = "Calculating...";
@@ -469,6 +483,7 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
                 backgroundColor: "#4b89ff33",
                 fill: false,
                 tension: 0,
+                pointRadius: 0,
               },
               {
                 label: "Trend (30d avg)",
@@ -477,6 +492,7 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
                 backgroundColor: "#f9803733",
                 fill: false,
                 tension: 0.3,
+                pointRadius: 0,
               },
             ],
           },
