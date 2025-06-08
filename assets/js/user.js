@@ -236,15 +236,47 @@ function computeScoreAtDate(flights, date) {
   return { date, fitnessScore };
 }
 
-function computeFitnessHistory(flights) {
+function computeFitnessHistory(flights, startDate, endDate = new Date()) {
   const history = [];
-  const today = new Date();
-  for (let i = 364; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    history.push(computeScoreAtDate(flights, d));
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+    history.push(computeScoreAtDate(flights, new Date(d)));
   }
   return history;
+}
+
+function historyForRange(flights, range) {
+  const today = new Date();
+  let start;
+  switch (range) {
+    case "all": {
+      const first = flights.reduce((min, f) => {
+        const d = new Date(getEntryDate(f));
+        return !min || d < min ? d : min;
+      }, null);
+      start = first ? new Date(first) : today;
+      break;
+    }
+    case "ytd":
+      start = new Date(today.getFullYear(), 0, 1);
+      break;
+    case "3m":
+      start = new Date(today);
+      start.setMonth(start.getMonth() - 3);
+      break;
+    case "1m":
+      start = new Date(today);
+      start.setMonth(start.getMonth() - 1);
+      break;
+    case "12m":
+    default:
+      start = new Date(today);
+      start.setFullYear(start.getFullYear() - 1);
+      break;
+  }
+  start.setHours(0, 0, 0, 0);
+  return computeFitnessHistory(flights, start, today);
 }
 
 function smoothHistory(history, windowSize = 30) {
@@ -410,43 +442,49 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     modal.style.display = "flex";
 
     if (widget.id === "fitWidget" && userFlights.length) {
-      const loading = document.createElement("p");
-      loading.textContent = "Calculating...";
-      modalContent.appendChild(loading);
-      const history = computeFitnessHistory(userFlights);
-      const trend = smoothHistory(history);
-      loading.remove();
-      const canvas = document.createElement("canvas");
-      canvas.id = "fitnessHistoryChart";
-      modalContent.appendChild(canvas);
-      const labels = history.map((h) => formatDateOnly(h.date));
-      const data = history.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
-      const trendData = trend.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
-      new Chart(canvas.getContext("2d"), {
-        type: "line",
-        data: {
-          labels,
-          datasets: [
-            {
-              label: "Fitness Score",
-              data,
-              borderColor: "#4b89ff",
-              backgroundColor: "#4b89ff33",
-              fill: false,
-              tension: 0,
-            },
-            {
-              label: "Trend (30d avg)",
-              data: trendData,
-              borderColor: "#f98037",
-              backgroundColor: "#f9803733",
-              fill: false,
-              tension: 0.3,
-            },
-          ],
-        },
-        options: { responsive: true, scales: { y: { min: 0, max: 100 } } },
-      });
+      const select = modalContent.querySelector("#historyRangeSelect");
+      const renderChart = () => {
+        const loading = document.createElement("p");
+        loading.textContent = "Calculating...";
+        modalContent.appendChild(loading);
+        const history = historyForRange(userFlights, select?.value || "12m");
+        const trend = smoothHistory(history);
+        loading.remove();
+        modalContent.querySelector("#fitnessHistoryChart")?.remove();
+        const canvas = document.createElement("canvas");
+        canvas.id = "fitnessHistoryChart";
+        modalContent.appendChild(canvas);
+        const labels = history.map((h) => formatDateOnly(h.date));
+        const data = history.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
+        const trendData = trend.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
+        new Chart(canvas.getContext("2d"), {
+          type: "line",
+          data: {
+            labels,
+            datasets: [
+              {
+                label: "Fitness Score",
+                data,
+                borderColor: "#4b89ff",
+                backgroundColor: "#4b89ff33",
+                fill: false,
+                tension: 0,
+              },
+              {
+                label: "Trend (30d avg)",
+                data: trendData,
+                borderColor: "#f98037",
+                backgroundColor: "#f9803733",
+                fill: false,
+                tension: 0.3,
+              },
+            ],
+          },
+          options: { responsive: true, scales: { y: { min: 0, max: 100 } } },
+        });
+      };
+      renderChart();
+      select?.addEventListener("change", renderChart);
     }
   });
 });

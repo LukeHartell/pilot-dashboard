@@ -215,3 +215,8 @@ main.center {
   margin-top: 10px;
 }
 
+#historyRangeSelect {
+  margin-top: 5px;
+  width: 100%;
+}
+
