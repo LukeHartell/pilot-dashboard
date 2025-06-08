@@ -84,6 +84,25 @@ async function loadFitnessInfo() {
 
     const hours12 = minutes12 / 60;
 
+    // ----- Fitness Score Calculations -----
+    const flightsScore = Math.min(flights12 / 50, 1.0);
+    const hoursScore = Math.min(hours12 / 100, 1.0);
+    const experienceScore = (flightsScore + hoursScore) / 2;
+
+    const daysSince = Math.floor((now - lastFlightDate) / (1000 * 60 * 60 * 24));
+    const baseK = 0.05;
+    const adjustedK = baseK / (0.5 + 0.5 * experienceScore);
+    const rawRecency = Math.exp(-adjustedK * daysSince);
+    const recencyScore = rawRecency * (0.5 + 0.5 * experienceScore);
+    const fitnessScore = 0.5 * recencyScore + 0.5 * experienceScore;
+
+    document.getElementById("fitnessScore").textContent =
+      `Fitness Score: ${fitnessScore.toFixed(3)}`;
+    document.getElementById("experienceScore").textContent =
+      `Experience: ${experienceScore.toFixed(3)}`;
+    document.getElementById("recencyScore").textContent =
+      `Recency: ${recencyScore.toFixed(3)}`;
+
     setStatus(
       "lastFlightDate",
       formatDateOnly(lastFlightDate),

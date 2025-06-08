@@ -164,3 +164,17 @@ main.center {
 .status-green {
   color: darkgreen;
 }
+
+/* Fitness score text sizes */
+#fitnessScores {
+  margin-top: 10px;
+  text-align: center;
+}
+#fitnessScore {
+  font-size: 1.6em;
+  font-weight: 600;
+}
+#experienceScore,
+#recencyScore {
+  font-size: 1em;
+}
