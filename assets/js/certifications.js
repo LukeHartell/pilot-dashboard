@@ -29,7 +29,7 @@ async function loadCertifications() {
     if (!data.success) throw new Error(data.message || "Failed to load");
     const certs = Array.isArray(data.certifications) ? data.certifications : [];
     if (!certs.length) {
-      certListEl.innerHTML = "<p>No certifications added.</p>";
+      certListEl.innerHTML = "<p>No certifications added yet.</p>";
       return;
     }
     certListEl.innerHTML = "";
@@ -131,26 +131,34 @@ async function deleteCertification(id) {
   }
 }
 
-document.getElementById("addCertBtn")?.addEventListener("click", () => {
-  showCertForm();
-});
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("addCertBtn")?.addEventListener("click", () => {
+    showCertForm();
+  });
 
-certListEl?.addEventListener("click", (e) => {
-  const editBtn = e.target.closest(".edit-cert-btn");
-  const delBtn = e.target.closest(".delete-cert-btn");
-  const item = e.target.closest(".cert-item");
-  if (!item) return;
-  const id = item.dataset.id;
-  if (editBtn) {
-    const name = item.querySelector("strong")?.textContent || "";
-    const status = item.querySelector("em")?.textContent.replace(/[()]/g, "") || "";
-    const [issue, valid] = item
-      .querySelector("small")
-      ?.textContent.split(" - ") || ["", ""];
-    showCertForm({ _id: id, name, status, issueDate: issue, validUntilDate: valid });
-  } else if (delBtn) {
-    deleteCertification(id);
-  }
-});
+  certListEl?.addEventListener("click", (e) => {
+    const editBtn = e.target.closest(".edit-cert-btn");
+    const delBtn = e.target.closest(".delete-cert-btn");
+    const item = e.target.closest(".cert-item");
+    if (!item) return;
+    const id = item.dataset.id;
+    if (editBtn) {
+      const name = item.querySelector("strong")?.textContent || "";
+      const status = item
+        .querySelector("em")?.textContent.replace(/[()]/g, "") || "";
+      const [issue, valid] =
+        item.querySelector("small")?.textContent.split(" - ") || ["", ""];
+      showCertForm({
+        _id: id,
+        name,
+        status,
+        issueDate: issue,
+        validUntilDate: valid,
+      });
+    } else if (delBtn) {
+      deleteCertification(id);
+    }
+  });
 
-loadCertifications();
+  loadCertifications();
+});
