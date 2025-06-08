@@ -66,9 +66,16 @@ async function loadCertifications() {
       div.dataset.revoked = !!c.revoked;
       div.dataset.issueDate = c.issueDate || "";
       div.dataset.validUntilDate = c.validUntilDate || "";
+
       const status = determineStatus(c);
+      const base = status.split(",")[0].trim();
+      let cls = base;
+      if (status.includes("expires soon")) {
+        cls += " expires-soon";
+      }
+
       div.innerHTML = `
-        <strong>${c.name}</strong> <em>(${status})</em><br/>
+        <strong>${c.name}</strong> <em class="cert-status ${cls}">(${status})</em><br/>
         <small>${formatDate(c.issueDate)} - ${formatDate(c.validUntilDate)}</small>
         <div class="cert-actions">
           <button class="edit-cert-btn" title="Edit">✏️</button>

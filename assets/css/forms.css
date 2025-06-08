@@ -142,6 +142,11 @@ body.dark-mode .close-btn:hover {
   margin-top: 20px;
 }
 
+/* Ensure hidden fields remain hidden inside edit forms */
+.edit-form .hidden {
+  display: none;
+}
+
 #imageControls {
   display: flex;
   gap: 10px;

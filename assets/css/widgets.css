@@ -203,4 +203,8 @@
   display: flex;
   gap: 6px;
 }
-  
+  .cert-status.revoked { color: #d00; }
+.cert-status.expired { color: gray; }
+.cert-status.pending { color: #4ea5ff; }
+.cert-status.active { color: green; }
+.cert-status.expires-soon { color: orange; }
