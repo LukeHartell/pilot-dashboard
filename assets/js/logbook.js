@@ -9,6 +9,7 @@ let currentPage = 0;
 let totalPages = 0;
 const flightsPerPage = 10;
 let flightNumberBias = 0; // offset added to all displayed flight numbers
+let selectedFlightId = null;
 
 async function loadLogbook() {
   try {
@@ -46,7 +47,11 @@ async function loadLogbook() {
     if (!flightsData.success)
       throw new Error(flightsData.message || "Failed to load flights.");
 
-    flights = flightsData.flights || [];
+    flights = Array.isArray(flightsData.flights)
+      ? flightsData.flights.filter(
+          (f) => f && Object.keys(f).length > 0
+        )
+      : [];
     flights.sort((a, b) => new Date(getEntryDate(a)) - new Date(getEntryDate(b)));
 
     let counter = 1 + flightNumberBias;
@@ -60,9 +65,12 @@ async function loadLogbook() {
     if (flights.length > 0) {
       document.getElementById("pager").style.display = "block";
       currentPage = totalPages - 1;
+      renderPage();
+    } else {
+      document.getElementById("pager").style.display = "none";
+      document.getElementById("flightTableBody").innerHTML =
+        "<tr><td colspan='7'>No flights added yet.</td></tr>";
     }
-
-    renderPage();
   } catch (err) {
     console.error("Error loading logbook:", err);
     document.getElementById("flightTableBody").innerHTML =
@@ -202,6 +210,7 @@ function getEntryDate(flight) {
 function showFlightDetails(flight) {
   const detailBox = document.getElementById("flightDetail");
   const detailContent = document.getElementById("flightDetailContent");
+  selectedFlightId = flight._id;
 
   let planeName = "Unknown Plane";
   if (flight.manualPlane) {
@@ -305,6 +314,40 @@ function showFlightDetails(flight) {
 
 document.getElementById("closeDetailBtn")?.addEventListener("click", () => {
   document.getElementById("flightDetail").style.display = "none";
+  selectedFlightId = null;
+});
+
+document.getElementById("deleteEntryBtn")?.addEventListener("click", async () => {
+  if (!selectedFlightId) return;
+  const confirmed = confirm(
+    "Are you sure you want to permanently delete this entry? This will affect your statistics."
+  );
+  if (!confirmed) return;
+  try {
+    const res = await fetch(
+      "https://n8n.e57.dk/webhook/pilot-dashboard/delete-flight",
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, entry_id: selectedFlightId }),
+      }
+    );
+
+    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+    const text = await res.text();
+    if (text) {
+      const result = JSON.parse(text);
+      if (!result.success) throw new Error(result.message || "Delete failed");
+    }
+
+    document.getElementById("flightDetail").style.display = "none";
+    selectedFlightId = null;
+    await loadLogbook();
+  } catch (err) {
+    console.error(err);
+    alert("Failed to delete entry: " + err.message);
+  }
 });
 
 loadLogbook();

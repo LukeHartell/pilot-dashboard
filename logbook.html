@@ -28,7 +28,10 @@
           <div id="flightDetail" class="detail-panel" style="display: none;">
             <div class="detail-header">
               <h3>Flight Details</h3>
-              <button id="closeDetailBtn" class="close-btn">✕</button>
+              <div style="display:flex; gap:10px;">
+                <button id="deleteEntryBtn" class="delete-btn" title="Delete Entry">🗑 Delete</button>
+                <button id="closeDetailBtn" class="close-btn">✕</button>
+              </div>
             </div>
             <div id="flightDetailContent" class="detail-flex">
               <!-- Sections will be injected dynamically -->
