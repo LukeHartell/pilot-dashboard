@@ -45,6 +45,8 @@ async function loadUserInfo() {
           cachedPlanes[plane._id] = plane;
         }
       });
+      // Refresh stats in case flights loaded first
+      updateStats();
     }
   } catch (err) {
     console.error("Error fetching user info:", err);
