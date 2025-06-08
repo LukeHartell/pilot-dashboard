@@ -53,7 +53,8 @@ async function loadFitnessInfo() {
     if (!response.ok) throw new Error("Failed to fetch flights");
 
     const [data] = await response.json();
-    if (!data.success) throw new Error(data.message || "Failed to load flights.");
+    if (!data.success)
+      throw new Error(data.message || "Failed to load flights.");
 
     const flights = Array.isArray(data.flights) ? data.flights : [];
     if (flights.length === 0) {
@@ -62,7 +63,9 @@ async function loadFitnessInfo() {
       return;
     }
 
-    flights.sort((a, b) => new Date(getEntryDate(b)) - new Date(getEntryDate(a)));
+    flights.sort(
+      (a, b) => new Date(getEntryDate(b)) - new Date(getEntryDate(a))
+    );
 
     const now = new Date();
     const lastFlightDate = new Date(getEntryDate(flights[0]));
@@ -89,19 +92,24 @@ async function loadFitnessInfo() {
     const hoursScore = Math.min(hours12 / 100, 1.0);
     const experienceScore = (flightsScore + hoursScore) / 2;
 
-    const daysSince = Math.floor((now - lastFlightDate) / (1000 * 60 * 60 * 24));
+    const daysSince = Math.floor(
+      (now - lastFlightDate) / (1000 * 60 * 60 * 24)
+    );
     const baseK = 0.05;
     const adjustedK = baseK / (0.5 + 0.5 * experienceScore);
     const rawRecency = Math.exp(-adjustedK * daysSince);
     const recencyScore = rawRecency * (0.5 + 0.5 * experienceScore);
     const fitnessScore = 0.5 * recencyScore + 0.5 * experienceScore;
 
-    document.getElementById("fitnessScore").textContent =
-      `Fitness Score: ${Math.round(fitnessScore * 100)}`;
-    document.getElementById("experienceScore").textContent =
-      `Experience: ${Math.round(experienceScore * 100)}`;
-    document.getElementById("recencyScore").textContent =
-      `Recency: ${Math.round(recencyScore * 100)}`;
+    document.getElementById("fitnessScore").textContent = `${Math.round(
+      fitnessScore * 100
+    )}`;
+    document.getElementById("experienceScore").textContent = `E:${Math.round(
+      experienceScore * 100
+    )}`;
+    document.getElementById("recencyScore").textContent = `R:${Math.round(
+      recencyScore * 100
+    )}`;
 
     setStatus(
       "lastFlightDate",
@@ -194,7 +202,11 @@ function setStatus(id, value, severity) {
   el.textContent = value;
   el.classList.remove("status-red", "status-yellow", "status-green");
   el.classList.add(
-    severity === 2 ? "status-red" : severity === 1 ? "status-yellow" : "status-green"
+    severity === 2
+      ? "status-red"
+      : severity === 1
+      ? "status-yellow"
+      : "status-green"
   );
 }
 
