@@ -247,6 +247,20 @@ function computeFitnessHistory(flights) {
   return history;
 }
 
+function smoothHistory(history, windowSize = 30) {
+  const result = [];
+  for (let i = 0; i < history.length; i++) {
+    let sum = 0;
+    let count = 0;
+    for (let j = Math.max(0, i - windowSize + 1); j <= i; j++) {
+      sum += history[j].fitnessScore;
+      count++;
+    }
+    result.push({ date: history[i].date, fitnessScore: sum / count });
+  }
+  return result;
+}
+
 loadFitnessInfo();
 
 // Edit profile button
@@ -400,12 +414,14 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
       loading.textContent = "Calculating...";
       modalContent.appendChild(loading);
       const history = computeFitnessHistory(userFlights);
+      const trend = smoothHistory(history);
       loading.remove();
       const canvas = document.createElement("canvas");
       canvas.id = "fitnessHistoryChart";
       modalContent.appendChild(canvas);
       const labels = history.map((h) => formatDateOnly(h.date));
-      const data = history.map((h) => Math.round(h.fitnessScore * 100));
+      const data = history.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
+      const trendData = trend.map((h) => Math.min(Math.max(Math.round(h.fitnessScore * 100), 0), 100));
       new Chart(canvas.getContext("2d"), {
         type: "line",
         data: {
@@ -417,10 +433,19 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
               borderColor: "#4b89ff",
               backgroundColor: "#4b89ff33",
               fill: false,
+              tension: 0,
+            },
+            {
+              label: "Trend (30d avg)",
+              data: trendData,
+              borderColor: "#f98037",
+              backgroundColor: "#f9803733",
+              fill: false,
+              tension: 0.3,
             },
           ],
         },
-        options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } },
+        options: { responsive: true, scales: { y: { min: 0, max: 100 } } },
       });
     }
   });
