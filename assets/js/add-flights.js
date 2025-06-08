@@ -142,6 +142,8 @@ addFlightsForm?.addEventListener("submit", async (e) => {
     return;
   }
 
+  // Payload for the batch flight endpoint. Route information is included
+  // so each grouped entry has the correct origin and destination stored.
   const batchData = {
     token,
     manualPlane: isManual,
