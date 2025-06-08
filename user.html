@@ -54,7 +54,14 @@
               <div class="widget-buttons">
                 <button class="fullscreen-btn" title="Fullscreen">⛶</button>
               </div>
-              <h3>🛩️ Fit for flying?</h3>
+              <h3>🛩️ Fit for flying?
+                <button id="scoreHelpBtn" class="help-btn" title="What do these scores mean?">?</button>
+              </h3>
+              <div id="fitnessScores">
+                <p id="fitnessScore" title="Overall flying fitness combining recency and experience">Loading...</p>
+                <p id="experienceScore" title="Measures your flying activity in the last 12 months"></p>
+                <p id="recencyScore" title="Measures how recently you flew, adjusted by experience"></p>
+              </div>
               <p>
                 <strong>Last flight:</strong>
                 <span id="lastFlightDate">-</span>
@@ -69,10 +76,10 @@
                 <span id="airtime12m">-</span>
               </p>
               <p id="fitMessage"></p>
-              <div id="fitnessScores">
-                <p id="fitnessScore">Loading...</p>
-                <p id="experienceScore"></p>
-                <p id="recencyScore"></p>
+              <div id="scoreHelp" class="hidden">
+                <p><strong>Fitness Score</strong> &ndash; your overall flight fitness.</p>
+                <p><strong>Experience Score</strong> &ndash; total flying activity over the past year.</p>
+                <p><strong>Recency Score</strong> &ndash; how recently you flew, scaled by experience.</p>
               </div>
             </div>
 

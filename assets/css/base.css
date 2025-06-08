@@ -178,3 +178,23 @@ main.center {
 #recencyScore {
   font-size: 1em;
 }
+
+/* Fitness score help button */
+.help-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-left: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+#scoreHelp {
+  font-size: 0.9em;
+  margin-top: 5px;
+  text-align: left;
+  color: #555;
+}

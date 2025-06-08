@@ -97,11 +97,11 @@ async function loadFitnessInfo() {
     const fitnessScore = 0.5 * recencyScore + 0.5 * experienceScore;
 
     document.getElementById("fitnessScore").textContent =
-      `Fitness Score: ${fitnessScore.toFixed(3)}`;
+      `Fitness Score: ${Math.round(fitnessScore * 100)}`;
     document.getElementById("experienceScore").textContent =
-      `Experience: ${experienceScore.toFixed(3)}`;
+      `Experience: ${Math.round(experienceScore * 100)}`;
     document.getElementById("recencyScore").textContent =
-      `Recency: ${recencyScore.toFixed(3)}`;
+      `Recency: ${Math.round(recencyScore * 100)}`;
 
     setStatus(
       "lastFlightDate",
@@ -233,6 +233,12 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     modal.style.display = "none";
   }
+});
+
+// Score help toggle
+document.getElementById("scoreHelpBtn")?.addEventListener("click", () => {
+  const help = document.getElementById("scoreHelp");
+  help.classList.toggle("hidden");
 });
 
 // Logout
