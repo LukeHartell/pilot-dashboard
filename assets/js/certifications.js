@@ -149,8 +149,8 @@ function showCertForm(opts = {}) {
       let url;
       let body;
       if (isEdit) {
-        url = "https://n8n.e57.dk/webhook/pilot-dashboard/update-certification";
-        body = JSON.stringify({ token, certification_id: opts._id, updates });
+        url = "https://n8n.e57.dk/webhook/pilot-dashboard/edit-certification";
+        body = JSON.stringify({ token, cert_id: opts._id, updates });
       } else {
         url = "https://n8n.e57.dk/webhook/pilot-dashboard/add-certification";
         const payload = { token, ...updates };
@@ -182,9 +182,9 @@ async function deleteCertification(id) {
     const res = await fetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/delete-certification",
       {
-        method: "POST",
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, certification_id: id }),
+        body: JSON.stringify({ token, cert_id: id }),
       }
     );
     const text = await res.text();
@@ -216,8 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
       validUntilDate: item.dataset.validUntilDate,
     });
   });
-});
 
-  // Immediately load certifications when the script executes
+  // Load certifications once the DOM is ready
   loadCertifications();
+});
 })();
