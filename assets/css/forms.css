@@ -142,6 +142,18 @@ body.dark-mode .close-btn:hover {
   margin-top: 20px;
 }
 
+/* Inline checkbox fields */
+.edit-form .checkbox-field {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.edit-form .checkbox-field input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
 /* Ensure hidden fields remain hidden inside edit forms */
 .edit-form .hidden {
   display: none;

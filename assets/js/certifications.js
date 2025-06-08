@@ -106,11 +106,11 @@ function showCertForm(opts = {}) {
       <label>Name
         <input type="text" id="certName" value="${opts.name || ""}" required>
       </label>
-      <label><input type="checkbox" id="certRevoked" ${revoked ? "checked" : ""}> Revoked</label>
+      <label class="checkbox-field"><input type="checkbox" id="certRevoked" ${revoked ? "checked" : ""}> Revoked</label>
       <label>Issue Date
         <input type="date" id="certIssue" value="${formatDate(opts.issueDate) !== "-" ? formatDate(opts.issueDate) : ""}" required>
       </label>
-      <label><input type="checkbox" id="certExpires" ${expires ? "checked" : ""}> Expires</label>
+      <label class="checkbox-field"><input type="checkbox" id="certExpires" ${expires ? "checked" : ""}> Expires</label>
       <label id="validUntilWrap" ${expires ? "" : "class='hidden'"}>Valid Until
         <input type="date" id="certValid" value="${formatDate(opts.validUntilDate) !== "-" ? formatDate(opts.validUntilDate) : ""}">
       </label>
@@ -132,28 +132,35 @@ function showCertForm(opts = {}) {
     if (opts._id) deleteCertification(opts._id);
   });
 
-  document.getElementById("certForm")?.addEventListener("submit", async (e) => {
+    document.getElementById("certForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const payload = {
-      token,
+    const updates = {
       name: document.getElementById("certName").value.trim(),
       revoked: document.getElementById("certRevoked").checked,
       issueDate: document.getElementById("certIssue").value,
     };
     const expires = document.getElementById("certExpires").checked;
     if (expires) {
-      payload.validUntilDate = document.getElementById("certValid").value;
+      updates.validUntilDate = document.getElementById("certValid").value;
+    } else if (isEdit) {
+      updates.validUntilDate = null;
     }
     try {
-      let url = "https://n8n.e57.dk/webhook/pilot-dashboard/add-certification";
+      let url;
+      let body;
       if (isEdit) {
-        url = "https://n8n.e57.dk/webhook/pilot-dashboard/edit-certification";
-        payload.certification_id = opts._id;
+        url = "https://n8n.e57.dk/webhook/pilot-dashboard/update-certification";
+        body = JSON.stringify({ token, certification_id: opts._id, updates });
+      } else {
+        url = "https://n8n.e57.dk/webhook/pilot-dashboard/add-certification";
+        const payload = { token, ...updates };
+        if (!expires) delete payload.validUntilDate;
+        body = JSON.stringify(payload);
       }
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body,
       });
       const text = await res.text();
       const result = text ? JSON.parse(text) : {};
