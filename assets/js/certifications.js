@@ -1,12 +1,13 @@
 // Manage pilot certifications on the user page
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
-}
+(function () {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) {
+    window.location.href = "/login";
+  }
 
-const certListEl = document.getElementById("certList");
-const modal = document.getElementById("widgetModal");
-const modalContent = document.getElementById("modalContent");
+  const certListEl = document.getElementById("certList");
+  const modal = document.getElementById("widgetModal");
+  const modalContent = document.getElementById("modalContent");
 
 function formatDate(dateStr) {
   if (!dateStr) return "-";
@@ -165,5 +166,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Immediately load certifications when the script executes
-loadCertifications();
+  // Immediately load certifications when the script executes
+  loadCertifications();
+})();
