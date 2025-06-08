@@ -4,6 +4,9 @@ if (!token) {
   window.location.href = "/login";
 }
 
+// Store flights for later calculations
+let userFlights = [];
+
 // Fetch and display user data
 async function loadUserInfo() {
   try {
@@ -57,6 +60,7 @@ async function loadFitnessInfo() {
       throw new Error(data.message || "Failed to load flights.");
 
     const flights = Array.isArray(data.flights) ? data.flights : [];
+    userFlights = flights;
     if (flights.length === 0) {
       document.getElementById("fitMessage").textContent =
         "No flights logged yet.";
@@ -198,6 +202,49 @@ function setStatus(id, value, severity) {
       ? "status-yellow"
       : "status-green"
   );
+}
+
+function computeScoreAtDate(flights, date) {
+  let lastFlight = null;
+  let flights12 = 0;
+  let minutes12 = 0;
+  const yearAgo = new Date(date);
+  yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+  flights.forEach((f) => {
+    const entry = new Date(getEntryDate(f));
+    if (entry <= date) {
+      if (!lastFlight || entry > lastFlight) lastFlight = entry;
+      if (entry >= yearAgo) {
+        flights12 += getFlightCount(f);
+        minutes12 += getFlightMinutes(f);
+      }
+    }
+  });
+
+  const daysSince = lastFlight
+    ? Math.floor((date - lastFlight) / (1000 * 60 * 60 * 24))
+    : Infinity;
+  const hours12 = minutes12 / 60;
+  const flightsScore = Math.min(flights12 / 50, 1.0);
+  const hoursScore = Math.min(hours12 / 100, 1.0);
+  const experienceScore = (flightsScore + hoursScore) / 2;
+  const baseK = 0.05;
+  const adjustedK = baseK / (0.5 + 0.5 * experienceScore);
+  const rawRecency = Math.exp(-adjustedK * (isFinite(daysSince) ? daysSince : 0));
+  const recencyScore = rawRecency * (0.5 + 0.5 * experienceScore);
+  const fitnessScore = 0.5 * recencyScore + 0.5 * experienceScore;
+  return { date, fitnessScore };
+}
+
+function computeFitnessHistory(flights) {
+  const history = [];
+  const today = new Date();
+  for (let i = 364; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    history.push(computeScoreAtDate(flights, d));
+  }
+  return history;
 }
 
 loadFitnessInfo();
@@ -347,6 +394,35 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
     modalContent.innerHTML = widget.innerHTML;
     modalContent.querySelector(".fullscreen-btn")?.remove();
     modal.style.display = "flex";
+
+    if (widget.id === "fitWidget" && userFlights.length) {
+      const loading = document.createElement("p");
+      loading.textContent = "Calculating...";
+      modalContent.appendChild(loading);
+      const history = computeFitnessHistory(userFlights);
+      loading.remove();
+      const canvas = document.createElement("canvas");
+      canvas.id = "fitnessHistoryChart";
+      modalContent.appendChild(canvas);
+      const labels = history.map((h) => formatDateOnly(h.date));
+      const data = history.map((h) => Math.round(h.fitnessScore * 100));
+      new Chart(canvas.getContext("2d"), {
+        type: "line",
+        data: {
+          labels,
+          datasets: [
+            {
+              label: "Fitness Score",
+              data,
+              borderColor: "#4b89ff",
+              backgroundColor: "#4b89ff33",
+              fill: false,
+            },
+          ],
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } },
+      });
+    }
   });
 });
 
