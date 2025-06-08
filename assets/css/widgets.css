@@ -71,6 +71,7 @@
   
   #widgetModal .modal-content {
     width: min(90vw, max(60vw, 500px));
+    max-height: 90vh;
     padding: 30px;
     overflow-y: auto;
     background: white;
@@ -98,6 +99,10 @@
     cursor: pointer;
     background: none;
     border: none;
+  }
+  #widgetModal pre {
+    white-space: pre-wrap;
+    word-break: break-word;
   }
   .dark-mode #closeModalBtn {
     color: white;

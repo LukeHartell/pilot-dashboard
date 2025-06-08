@@ -161,9 +161,13 @@ main.center {
 
 /* Fitness score text sizes */
 #fitDetails p {
-  margin: 5px;
+  margin: 5px 0;
   display: flex;
-  align-items: space-between;
+  justify-content: space-between;
+}
+#fitDetails p span {
+  margin-left: auto;
+  text-align: right;
 }
 
 #fitnessScores {
@@ -205,9 +209,3 @@ main.center {
   display: none;
 }
 
-#scoreHelp {
-  font-size: 0.9em;
-  margin-top: 5px;
-  text-align: left;
-  color: #555;
-}
