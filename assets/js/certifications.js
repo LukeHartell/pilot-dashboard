@@ -16,6 +16,26 @@ function formatDate(dateStr) {
   return d.toISOString().split("T")[0];
 }
 
+function determineStatus(cert) {
+  const now = new Date();
+  const issue = cert.issueDate ? new Date(cert.issueDate) : null;
+  const valid = cert.validUntilDate ? new Date(cert.validUntilDate) : null;
+
+  if (cert.revoked) return "revoked";
+  if (issue && issue > now) return "pending";
+  if (valid && valid < now) return "expired";
+
+  let status = "active";
+  if (valid) {
+    const soon = new Date(now);
+    soon.setMonth(soon.getMonth() + 1);
+    if (valid <= soon && valid > now) {
+      status += ", expires soon";
+    }
+  }
+  return status;
+}
+
 async function loadCertifications() {
   if (!certListEl) return;
   certListEl.innerHTML = "<p>Loading...</p>";
@@ -42,8 +62,13 @@ async function loadCertifications() {
       const div = document.createElement("div");
       div.className = "cert-item";
       div.dataset.id = c._id;
+      div.dataset.name = c.name || "";
+      div.dataset.revoked = !!c.revoked;
+      div.dataset.issueDate = c.issueDate || "";
+      div.dataset.validUntilDate = c.validUntilDate || "";
+      const status = determineStatus(c);
       div.innerHTML = `
-        <strong>${c.name}</strong> <em>(${c.status})</em><br/>
+        <strong>${c.name}</strong> <em>(${status})</em><br/>
         <small>${formatDate(c.issueDate)} - ${formatDate(c.validUntilDate)}</small>
         <div class="cert-actions">
           <button class="edit-cert-btn" title="Edit">✏️</button>
@@ -58,7 +83,7 @@ async function loadCertifications() {
 
 function showCertForm(opts = {}) {
   const isEdit = !!opts._id;
-  const revoked = opts.status === "revoked";
+  const revoked = !!opts.revoked;
   const expires = !!opts.validUntilDate;
   modalContent.innerHTML = `
     <form id="certForm" class="edit-form">
@@ -169,21 +194,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const editBtn = e.target.closest(".edit-cert-btn");
     const item = e.target.closest(".cert-item");
     if (!item || !editBtn) return;
-    const id = item.dataset.id;
-    if (editBtn) {
-      const name = item.querySelector("strong")?.textContent || "";
-      const status =
-        item.querySelector("em")?.textContent.replace(/[()]/g, "") || "";
-      const [issue, valid] =
-        item.querySelector("small")?.textContent.split(" - ") || ["", ""];
-      showCertForm({
-        _id: id,
-        name,
-        status,
-        issueDate: issue,
-        validUntilDate: valid,
-      });
-    }
+    showCertForm({
+      _id: item.dataset.id,
+      name: item.dataset.name,
+      revoked: item.dataset.revoked === "true",
+      issueDate: item.dataset.issueDate,
+      validUntilDate: item.dataset.validUntilDate,
+    });
   });
 });
 
