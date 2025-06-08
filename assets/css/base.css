@@ -153,3 +153,14 @@ main.center {
     max-width: 98vw;
   }
 }
+
+/* Status colors for fitness widget */
+.status-red {
+  color: darkred;
+}
+.status-yellow {
+  color: #d18c00;
+}
+.status-green {
+  color: darkgreen;
+}
