@@ -47,7 +47,6 @@ async function loadCertifications() {
         <small>${formatDate(c.issueDate)} - ${formatDate(c.validUntilDate)}</small>
         <div class="cert-actions">
           <button class="edit-cert-btn" title="Edit">✏️</button>
-          <button class="delete-cert-btn" title="Delete">🗑</button>
         </div>`;
       certListEl.appendChild(div);
     });
@@ -59,35 +58,60 @@ async function loadCertifications() {
 
 function showCertForm(opts = {}) {
   const isEdit = !!opts._id;
+  const revoked = opts.status === "revoked";
+  const expires = !!opts.validUntilDate;
   modalContent.innerHTML = `
     <form id="certForm" class="edit-form">
+      <div class="widget-buttons">
+        ${
+          isEdit
+            ? '<button type="button" id="deleteCertBtn" class="delete-btn" title="Delete">🗑 Delete</button>'
+            : ''
+        }
+      </div>
       <h2 style="text-align:center;">${isEdit ? "Edit" : "Add"} Certification</h2>
       ${isEdit ? `<input type="hidden" id="certId" value="${opts._id}">` : ""}
       <label>Name
         <input type="text" id="certName" value="${opts.name || ""}" required>
       </label>
-      <label>Status
-        <input type="text" id="certStatus" value="${opts.status || ""}" required>
-      </label>
+      <label><input type="checkbox" id="certRevoked" ${revoked ? "checked" : ""}> Revoked</label>
       <label>Issue Date
         <input type="date" id="certIssue" value="${formatDate(opts.issueDate) !== "-" ? formatDate(opts.issueDate) : ""}" required>
       </label>
-      <label>Valid Until
-        <input type="date" id="certValid" value="${formatDate(opts.validUntilDate) !== "-" ? formatDate(opts.validUntilDate) : ""}" required>
+      <label><input type="checkbox" id="certExpires" ${expires ? "checked" : ""}> Expires</label>
+      <label id="validUntilWrap" ${expires ? "" : "class='hidden'"}>Valid Until
+        <input type="date" id="certValid" value="${formatDate(opts.validUntilDate) !== "-" ? formatDate(opts.validUntilDate) : ""}">
       </label>
       <button type="submit">${isEdit ? "Save" : "Add"}</button>
     </form>`;
   modal.style.display = "flex";
+
+  document.getElementById("certExpires")?.addEventListener("change", (e) => {
+    const wrap = document.getElementById("validUntilWrap");
+    if (e.target.checked) {
+      wrap.classList.remove("hidden");
+    } else {
+      wrap.classList.add("hidden");
+      document.getElementById("certValid").value = "";
+    }
+  });
+
+  document.getElementById("deleteCertBtn")?.addEventListener("click", () => {
+    if (opts._id) deleteCertification(opts._id);
+  });
 
   document.getElementById("certForm")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const payload = {
       token,
       name: document.getElementById("certName").value.trim(),
-      status: document.getElementById("certStatus").value.trim(),
+      revoked: document.getElementById("certRevoked").checked,
       issueDate: document.getElementById("certIssue").value,
-      validUntilDate: document.getElementById("certValid").value,
     };
+    const expires = document.getElementById("certExpires").checked;
+    if (expires) {
+      payload.validUntilDate = document.getElementById("certValid").value;
+    }
     try {
       let url = "https://n8n.e57.dk/webhook/pilot-dashboard/add-certification";
       if (isEdit) {
@@ -143,9 +167,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   certListEl?.addEventListener("click", (e) => {
     const editBtn = e.target.closest(".edit-cert-btn");
-    const delBtn = e.target.closest(".delete-cert-btn");
     const item = e.target.closest(".cert-item");
-    if (!item) return;
+    if (!item || !editBtn) return;
     const id = item.dataset.id;
     if (editBtn) {
       const name = item.querySelector("strong")?.textContent || "";
@@ -160,8 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
         issueDate: issue,
         validUntilDate: valid,
       });
-    } else if (delBtn) {
-      deleteCertification(id);
     }
   });
 });
