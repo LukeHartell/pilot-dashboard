@@ -6,6 +6,8 @@ if (!token) {
 
 // Store flights for later calculations
 let userFlights = [];
+// Cache plane display names by id
+let cachedPlanes = {};
 
 // Fetch and display user data
 async function loadUserInfo() {
@@ -35,6 +37,15 @@ async function loadUserInfo() {
     const firstName = data.name || "";
     const header = document.getElementById("userInfoHeader");
     if (header) header.textContent = `👤 ${firstName}`;
+
+    // Cache planes for later lookup
+    if (Array.isArray(data.planes)) {
+      data.planes.forEach((plane) => {
+        if (plane && plane._id) {
+          cachedPlanes[plane._id] = plane;
+        }
+      });
+    }
   } catch (err) {
     console.error("Error fetching user info:", err);
     document.getElementById("userName").textContent = "Guest";
@@ -307,6 +318,19 @@ function smoothHistory(history, windowSize = 60) {
 }
 
 function planeLabel(flight) {
+  // If manual plane entry, prefer the name or registration
+  if (flight.manualPlane) {
+    if (flight.displayName) return flight.displayName;
+    if (flight.registration) return flight.registration;
+  }
+
+  // Lookup cached planes by id
+  if (flight.plane_id && cachedPlanes[flight.plane_id]) {
+    const plane = cachedPlanes[flight.plane_id];
+    if (plane.displayName) return plane.displayName;
+    if (plane.registration) return plane.registration;
+  }
+
   if (flight.displayName) return flight.displayName;
   if (flight.registration) return flight.registration;
   if (flight.plane_id) return flight.plane_id.substring(0, 6);
