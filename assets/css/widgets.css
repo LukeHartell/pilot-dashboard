@@ -181,7 +181,37 @@
   /* ICAO form locking when disabled */
   /* ─────────────────────────────────────────────────────────────── */
   #icaoForm input[disabled],
-  #icaoForm button[disabled] {
-    display: none;
-  }
-  
+#icaoForm button[disabled] {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/* Certification list styling                                       */
+/* ─────────────────────────────────────────────────────────────── */
+.cert-item {
+  padding: 6px 0;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.cert-item:last-child {
+  border-bottom: none;
+}
+.cert-actions {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: flex;
+  gap: 6px;
+}
+.cert-actions .edit-cert-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+}
+.cert-status.revoked { color: #d00; }
+.cert-status.expired { color: gray; }
+.cert-status.pending { color: #4ea5ff; }
+.cert-status.active { color: green; }
+.cert-status.expires-soon { color: orange; }
