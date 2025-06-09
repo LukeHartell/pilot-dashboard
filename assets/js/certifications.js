@@ -192,6 +192,7 @@ async function deleteCertification(id) {
     if (!res.ok || result.success === false) {
       throw new Error(result.message || "Delete failed");
     }
+    modal.style.display = "none";
     await loadCertifications();
   } catch (err) {
     console.error(err);
