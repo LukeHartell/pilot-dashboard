@@ -149,7 +149,7 @@ function showCertForm(opts = {}) {
       let url;
       let body;
       if (isEdit) {
-        url = "https://n8n.e57.dk/webhook/pilot-dashboard/edit-certification";
+        url = "https://n8n.e57.dk/webhook/pilot-dashboard/update-certification";
         body = JSON.stringify({ token, cert_id: opts._id, updates });
       } else {
         url = "https://n8n.e57.dk/webhook/pilot-dashboard/add-certification";
