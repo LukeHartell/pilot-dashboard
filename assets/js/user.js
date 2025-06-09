@@ -174,13 +174,27 @@ function getFlightCount(flight) {
 }
 
 function getFlightMinutes(flight) {
-  if (flight.airTimeMinutes != null) return flight.airTimeMinutes;
   if (flight.takeoffTime && flight.landingTime) {
-    const start = new Date(flight.takeoffTime);
-    const end = new Date(flight.landingTime);
-    const diff = end - start;
-    return diff > 0 ? Math.floor(diff / 60000) : 0;
+    const diff = new Date(flight.landingTime) - new Date(flight.takeoffTime);
+    if (diff > 0) return Math.floor(diff / 60000);
   }
+
+  if (flight.airTimeMinutes != null || flight.engineTimeMinutes != null) {
+    let total = 0;
+    if (flight.airTimeMinutes != null) total += flight.airTimeMinutes;
+    if (flight.engineTimeMinutes != null) {
+      if (
+        flight.category === "Glider (SSG)" ||
+        flight.category === "Glider (SLG)"
+      ) {
+        total += flight.engineTimeMinutes;
+      } else if (flight.airTimeMinutes == null) {
+        total += flight.engineTimeMinutes;
+      }
+    }
+    return total;
+  }
+
   return 0;
 }
 
