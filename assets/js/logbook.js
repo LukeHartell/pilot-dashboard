@@ -99,8 +99,20 @@ function renderPage() {
     const takeoffDateFormatted = entryDate ? formatDateOnly(entryDate) : "-";
     const duration =
       flight.logType === "batch"
-        ? computeDuration(null, null, flight.airTimeMinutes)
-        : computeDuration(flight.takeoffTime, flight.landingTime);
+        ? computeDuration(
+            null,
+            null,
+            flight.airTimeMinutes,
+            flight.engineTimeMinutes,
+            flight.category
+          )
+        : computeDuration(
+            flight.takeoffTime,
+            flight.landingTime,
+            flight.airTimeMinutes,
+            flight.engineTimeMinutes,
+            flight.category
+          );
 
     let planeName = "Unknown Plane";
     if (flight.manualPlane) {
@@ -166,16 +178,26 @@ function formatDateOnly(datetimeStr) {
   return new Date(datetimeStr).toLocaleDateString(undefined, options);
 }
 
-function computeDuration(start, end, minutes) {
-  if (minutes != null) return formatMinutes(minutes);
+function computeDuration(start, end, airMinutes, engineMinutes, category) {
+  if (start && end) {
+    const diffMs = new Date(end) - new Date(start);
+    if (diffMs > 0) return formatMinutes(Math.floor(diffMs / 60000));
+  }
 
-  const startTime = new Date(start);
-  const endTime = new Date(end);
-  const diffMs = endTime - startTime;
-  if (diffMs <= 0) return "-";
+  if (airMinutes != null || engineMinutes != null) {
+    let total = 0;
+    if (airMinutes != null) total += airMinutes;
+    if (engineMinutes != null) {
+      if (category === "Glider (SSG)" || category === "Glider (SLG)") {
+        total += engineMinutes;
+      } else if (airMinutes == null) {
+        total += engineMinutes;
+      }
+    }
+    if (total > 0) return formatMinutes(total);
+  }
 
-  const totalMinutes = Math.floor(diffMs / 60000);
-  return formatMinutes(totalMinutes);
+  return "-";
 }
 
 function formatMinutes(min) {
@@ -226,8 +248,20 @@ function showFlightDetails(flight) {
   const landingFormatted = flight.landingTime ? formatDate(flight.landingTime) : "-";
   const duration =
     flight.logType === "batch"
-      ? computeDuration(null, null, flight.airTimeMinutes)
-      : computeDuration(flight.takeoffTime, flight.landingTime);
+      ? computeDuration(
+          null,
+          null,
+          flight.airTimeMinutes,
+          flight.engineTimeMinutes,
+          flight.category
+        )
+      : computeDuration(
+          flight.takeoffTime,
+          flight.landingTime,
+          flight.airTimeMinutes,
+          flight.engineTimeMinutes,
+          flight.category
+        );
 
   const startNum = flight.flightNumber;
   const endNum =
