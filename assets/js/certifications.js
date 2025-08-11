@@ -9,6 +9,38 @@
   const modal = document.getElementById("widgetModal");
   const modalContent = document.getElementById("modalContent");
 
+function sanitizeNode(root) {
+  if (!root) return;
+  const dangerousAttrs = [
+    'onload',
+    'onerror',
+    'onclick',
+    'onmouseover',
+    'onfocus',
+    'onauxclick',
+    'onmouseenter',
+    'onmouseleave',
+    'onanimationstart',
+    'ontransitionend'
+  ];
+  root.querySelectorAll('*').forEach((n) => {
+    dangerousAttrs.forEach((a) => n.hasAttribute(a) && n.removeAttribute(a));
+    if (n.tagName === 'A' && /^javascript:/i.test(n.getAttribute('href') || '')) {
+      n.setAttribute('href', '#');
+    }
+  });
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  })[c]);
+}
+
 function formatDate(dateStr) {
   if (!dateStr) return "-";
   const d = new Date(dateStr);
@@ -75,13 +107,14 @@ async function loadCertifications() {
       }
 
       div.innerHTML = `
-        <strong>${c.name}</strong> <em class="cert-status ${cls}">(${status})</em><br/>
-        <small>${formatDate(c.issueDate)} - ${formatDate(c.validUntilDate)}</small>
+        <strong>${escapeHtml(c.name)}</strong> <em class="cert-status ${cls}">(${status})</em><br/>
+        <small>${escapeHtml(formatDate(c.issueDate))} - ${escapeHtml(formatDate(c.validUntilDate))}</small>
         <div class="cert-actions">
           <button class="edit-cert-btn" title="Edit">✏️</button>
         </div>`;
       certListEl.appendChild(div);
     });
+    sanitizeNode(certListEl);
   } catch (err) {
     console.error(err);
     certListEl.innerHTML = "<p style='color:red;'>Could not load certifications.</p>";
@@ -102,20 +135,21 @@ function showCertForm(opts = {}) {
         }
       </div>
       <h2 style="text-align:center;">${isEdit ? "Edit" : "Add"} Certification</h2>
-      ${isEdit ? `<input type="hidden" id="certId" value="${opts._id}">` : ""}
+      ${isEdit ? `<input type="hidden" id="certId" value="${escapeHtml(opts._id)}">` : ""}
       <label>Name
-        <input type="text" id="certName" value="${opts.name || ""}" required>
+        <input type="text" id="certName" value="${escapeHtml(opts.name || "")}" required>
       </label>
       <label class="checkbox-field"><input type="checkbox" id="certRevoked" ${revoked ? "checked" : ""}> Revoked</label>
       <label>Issue Date
-        <input type="date" id="certIssue" value="${formatDate(opts.issueDate) !== "-" ? formatDate(opts.issueDate) : ""}" required>
+        <input type="date" id="certIssue" value="${formatDate(opts.issueDate) !== "-" ? escapeHtml(formatDate(opts.issueDate)) : ""}" required>
       </label>
       <label class="checkbox-field"><input type="checkbox" id="certExpires" ${expires ? "checked" : ""}> Expires</label>
       <label id="validUntilWrap" ${expires ? "" : "class='hidden'"}>Valid Until
-        <input type="date" id="certValid" value="${formatDate(opts.validUntilDate) !== "-" ? formatDate(opts.validUntilDate) : ""}">
+        <input type="date" id="certValid" value="${formatDate(opts.validUntilDate) !== "-" ? escapeHtml(formatDate(opts.validUntilDate)) : ""}">
       </label>
       <button type="submit">${isEdit ? "Save" : "Add"}</button>
     </form>`;
+  sanitizeNode(modalContent);
   modal.style.display = "flex";
 
   document.getElementById("certExpires")?.addEventListener("change", (e) => {

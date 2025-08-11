@@ -1,5 +1,37 @@
 let activeIcao = null;
 
+function sanitizeNode(root) {
+  if (!root) return;
+  const dangerousAttrs = [
+    'onload',
+    'onerror',
+    'onclick',
+    'onmouseover',
+    'onfocus',
+    'onauxclick',
+    'onmouseenter',
+    'onmouseleave',
+    'onanimationstart',
+    'ontransitionend'
+  ];
+  root.querySelectorAll('*').forEach((n) => {
+    dangerousAttrs.forEach((a) => n.hasAttribute(a) && n.removeAttribute(a));
+    if (n.tagName === 'A' && /^javascript:/i.test(n.getAttribute('href') || '')) {
+      n.setAttribute('href', '#');
+    }
+  });
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  })[c]);
+}
+
 // Auto-load saved ICAO from localStorage (run only once per load)
 let alreadyAutoSubmitted = false;
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,11 +72,12 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
     flightBtn.disabled = false;
     flightBtn.style.display = "inline-block";
   }
-  document.getElementById("assistantOutput").innerHTML = "";
+  const assistantOutput = document.getElementById("assistantOutput");
+  if (assistantOutput) assistantOutput.textContent = "";
 
-  airbaseInfo.innerHTML = "Loading...";
-  mapContainer.innerHTML = "";
-  metarResult.innerHTML = "";
+  airbaseInfo.textContent = "Loading...";
+  mapContainer.textContent = "";
+  metarResult.textContent = "";
   metarWidget.style.display = "none";
 
   try {
@@ -56,35 +89,48 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
     const data = await response.json();
     const info = data[0];
 
-    airbaseInfo.innerHTML = `
-      <p><strong>${info.fullName}</strong> (${info.icao})</p>
-      <p>${info.municipalityName}, ${info.country.name}</p>
-    `;
+    airbaseInfo.textContent = "";
+    const nameP = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = info.fullName;
+    nameP.appendChild(strong);
+    nameP.append(` (${info.icao})`);
+    const locP = document.createElement("p");
+    locP.textContent = `${info.municipalityName}, ${info.country.name}`;
+    airbaseInfo.append(nameP, locP);
 
-    mapContainer.innerHTML = `
-      <div class="map-lock">
-        <iframe
-          id="airbaseMap"
-          width="100%"
-          height="100%"
-          frameborder="0"
-          scrolling="no"
-          style="border-radius: 6px;"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=${
-            info.location.lon - 0.02
-          },${info.location.lat - 0.01},${info.location.lon + 0.02},${
+    mapContainer.textContent = "";
+    const mapLock = document.createElement("div");
+    mapLock.className = "map-lock";
+    const iframe = document.createElement("iframe");
+    iframe.id = "airbaseMap";
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.frameBorder = "0";
+    iframe.scrolling = "no";
+    iframe.style.borderRadius = "6px";
+    iframe.src = `https://www.openstreetmap.org/export/embed.html?bbox=${
+      info.location.lon - 0.02
+    },${info.location.lat - 0.01},${info.location.lon + 0.02},${
       info.location.lat + 0.01
-    }&layer=mapnik&marker=${info.location.lat},${info.location.lon}">
-        </iframe>
-      </div>
-    `;
+    }&layer=mapnik&marker=${info.location.lat},${info.location.lon}`;
+    mapLock.appendChild(iframe);
+    mapContainer.appendChild(mapLock);
 
     setupMapLocks();
 
-    metarResult.innerHTML = `
-      <p><strong>METAR:</strong> ${info.rawOb}</p>
-      <p><strong>TAF:</strong> ${info.rawTaf}</p>
-    `;
+    metarResult.textContent = "";
+    const metarP = document.createElement("p");
+    const metarStrong = document.createElement("strong");
+    metarStrong.textContent = "METAR:";
+    metarP.appendChild(metarStrong);
+    metarP.append(` ${info.rawOb}`);
+    const tafP = document.createElement("p");
+    const tafStrong = document.createElement("strong");
+    tafStrong.textContent = "TAF:";
+    tafP.appendChild(tafStrong);
+    tafP.append(` ${info.rawTaf}`);
+    metarResult.append(metarP, tafP);
 
     metarWidget.style.display = "block";
 
@@ -109,7 +155,11 @@ document.getElementById("icaoForm")?.addEventListener("submit", async (e) => {
     newScript.src = `https://metar-taf.com/embed-js/${icao}?layout=landscape&qnh=hPa&rh=rh&target=v7exxgfd`;
     document.body.appendChild(newScript);
   } catch (err) {
-    airbaseInfo.innerHTML = `<p style="color: red;">Failed to fetch data for ICAO: ${icao}</p>`;
+    airbaseInfo.textContent = "";
+    const errP = document.createElement("p");
+    errP.style.color = "red";
+    errP.textContent = `Failed to fetch data for ICAO: ${icao}`;
+    airbaseInfo.appendChild(errP);
     console.error(err);
   }
 });
@@ -139,6 +189,7 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
 
     // Inject widget content
     modalContent.innerHTML = widget.innerHTML;
+    sanitizeNode(modalContent);
     modalContent.querySelector(".fullscreen-btn")?.remove();
 
     // Apply fullscreen mode to both modal AND modalContent
@@ -209,7 +260,7 @@ document
     if (!activeIcao || !btn || !output) return;
 
     btn.style.display = "none";
-    output.innerHTML = "Loading...";
+    output.textContent = "Loading...";
 
     try {
       const response = await fetch(
@@ -218,7 +269,7 @@ document
       if (!response.ok) throw new Error("Failed to fetch summary");
 
       const text = await response.text();
-      const html = text
+      const html = escapeHtml(text)
         .replace(/^### (.*$)/gim, "<h3>$1</h3>")
         .replace(/^## (.*$)/gim, "<h2>$1</h2>")
         .replace(/^# (.*$)/gim, "<h1>$1</h1>")
@@ -226,10 +277,14 @@ document
         .replace(/\*(.*?)\*/gim, "<em>$1</em>")
         .replace(/`([^`]+)`/g, "<code>$1</code>")
         .replace(/\n/g, "<br />");
-
       output.innerHTML = html;
+      sanitizeNode(output);
     } catch (err) {
-      output.innerHTML = `<p style="color: red;">Error fetching summary</p>`;
+      output.textContent = "";
+      const errP = document.createElement("p");
+      errP.style.color = "red";
+      errP.textContent = "Error fetching summary";
+      output.appendChild(errP);
       console.error(err);
     }
   });
