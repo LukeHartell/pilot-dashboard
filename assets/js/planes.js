@@ -10,6 +10,42 @@ let planesList = [];
 let uploadedImageBase64 = null;
 let removeImage = false;
 
+// Remove dangerous attributes or javascript: URLs from nodes inside the planes grid
+function sanitizePlanesGrid() {
+  const root = document.querySelector('#planesGrid');
+  if (root) {
+    const dangerousAttrs = [
+      'onload',
+      'onerror',
+      'onclick',
+      'onmouseover',
+      'onfocus',
+      'onauxclick',
+      'onmouseenter',
+      'onmouseleave',
+      'onanimationstart',
+      'ontransitionend'
+    ];
+    root.querySelectorAll('*').forEach((n) => {
+      dangerousAttrs.forEach((a) => n.hasAttribute(a) && n.removeAttribute(a));
+      if (n.tagName === 'A' && /^javascript:/i.test(n.getAttribute('href') || '')) {
+        n.setAttribute('href', '#');
+      }
+    });
+  }
+}
+
+// Basic HTML escape for user-supplied text
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;",
+  })[c]);
+}
+
 // Helper to crop and resize an image to 1000x500 (2:1) and return base64
 async function processPlaneImage(file) {
   return new Promise((resolve, reject) => {
@@ -102,27 +138,33 @@ async function loadPlanes() {
             }
           </div>
           <div class="plane-info" data-id="${plane._id}" data-note="${plane.note ? encodeURIComponent(plane.note) : ''}">
-            <h3 class="plane-title">${plane.displayName}</h3>
-            <p><strong>Registration:</strong> ${
+            <h3 class="plane-title"></h3>
+            <p><strong>Registration:</strong> ${escapeHtml(
               plane.registration || "Unknown"
-            }</p>
+            )}</p>
             ${
               plane.competitionNumber
-                ? `<p><strong>Comp No:</strong> ${plane.competitionNumber}</p>`
+                ? `<p><strong>Comp No:</strong> ${escapeHtml(plane.competitionNumber)}</p>`
                 : ""
             }
-            ${plane.type ? `<p><strong>Type:</strong> ${plane.type}</p>` : ""}
             ${
-              plane.seats ? `<p><strong>Seats:</strong> ${plane.seats}</p>` : ""
+              plane.type ? `<p><strong>Type:</strong> ${escapeHtml(plane.type)}</p>` : ""
+            }
+            ${
+              plane.seats
+                ? `<p><strong>Seats:</strong> ${escapeHtml(plane.seats)}</p>`
+                : ""
             }
           </div>
         `;
 
+        widget.querySelector('.plane-title').textContent = plane.displayName;
         planesGrid.appendChild(widget);
       });
     } else {
       planesGrid.innerHTML = "<p>No planes added yet.</p>";
     }
+    sanitizePlanesGrid();
   } catch (err) {
     console.error("Error fetching planes:", err);
     document.getElementById("planesGrid").innerHTML =
@@ -153,7 +195,7 @@ document.addEventListener("click", (e) => {
 
     modalContent.innerHTML = `
       <div class="plane-widget-content fullscreen-layout">
-        <h2 class="plane-title">${planeName}</h2>
+        <h2 class="plane-title"></h2>
         <div class="plane-photo">
           ${
             img
@@ -162,27 +204,29 @@ document.addEventListener("click", (e) => {
           }
         </div>
         <div class="plane-details">
-          <table>
-            <tbody>
-              ${detailLines
-                .map((line) => {
-                  const parts = line.split(":");
-                  if (parts.length >= 2) {
-                    const label = parts[0].trim();
-                    const value = parts.slice(1).join(":").trim();
-                    return `<tr><td>${label}</td><td>${value}</td></tr>`;
-                  }
-                  return "";
-                })
-                .join("")}
-            </tbody>
-          </table>
+          <table><tbody></tbody></table>
           ${planeNote ? '<p class="plane-note"></p>' : ''}
         </div>
       </div>
     `;
+    modalContent.querySelector('.plane-title').textContent = planeName;
+    const tbody = modalContent.querySelector('tbody');
+    detailLines.forEach((line) => {
+      const parts = line.split(":");
+      if (parts.length >= 2) {
+        const label = parts[0].trim();
+        const value = parts.slice(1).join(":").trim();
+        const tr = document.createElement('tr');
+        const tdLabel = document.createElement('td');
+        tdLabel.textContent = label;
+        const tdValue = document.createElement('td');
+        tdValue.textContent = value;
+        tr.append(tdLabel, tdValue);
+        tbody.appendChild(tr);
+      }
+    });
     if (planeNote) {
-      modalContent.querySelector(".plane-note").textContent = planeNote;
+      modalContent.querySelector('.plane-note').textContent = planeNote;
     }
 
     modal.style.display = "flex";
@@ -215,26 +259,26 @@ document.addEventListener("click", (e) => {
       <button type="button" id="deletePlaneBtn" class="delete-btn" title="Delete Plane">🗑 Delete Plane</button>
     </div>
     <h2 style="text-align:center;">Edit Plane</h2>
-    <input type="hidden" id="editPlaneId" value="${planeId}" />
+    <input type="hidden" id="editPlaneId" value="${escapeHtml(planeId)}" />
 
     <label>Display Name
-      <input type="text" id="editPlaneName" value="${planeName}" required />
+      <input type="text" id="editPlaneName" value="${escapeHtml(planeName)}" required />
     </label>
 
     <label>Registration
-      <input type="text" id="editPlaneReg" value="${registration}" required />
+      <input type="text" id="editPlaneReg" value="${escapeHtml(registration)}" required />
     </label>
 
     <label>Competition Number
-      <input type="text" id="editPlaneComp" value="${compNo}" />
+      <input type="text" id="editPlaneComp" value="${escapeHtml(compNo)}" />
     </label>
 
     <label>Type
-      <input type="text" id="editPlaneType" value="${type}" />
+      <input type="text" id="editPlaneType" value="${escapeHtml(type)}" />
     </label>
 
     <label>Seats
-      <input type="number" id="editPlaneSeats" value="${seats}" />
+      <input type="number" id="editPlaneSeats" value="${escapeHtml(seats)}" />
     </label>
 
     <div id="imageControls">
@@ -281,7 +325,7 @@ document.addEventListener("click", (e) => {
           uploadedImageBase64 = await processPlaneImage(file);
           document.getElementById(
             "imgPreview"
-          ).innerHTML = `<img src="${uploadedImageBase64}" alt="Preview" /><span>${file.name}</span>`;
+          ).innerHTML = `<img src="${uploadedImageBase64}" alt="Preview" /><span>${escapeHtml(file.name)}</span>`;
         } catch (err) {
           console.error(err);
         }
