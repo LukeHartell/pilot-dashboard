@@ -9,6 +9,28 @@ let userFlights = [];
 // Cache plane display names by id
 let cachedPlanes = {};
 
+function sanitizeNode(root) {
+  if (!root) return;
+  const dangerousAttrs = [
+    'onload',
+    'onerror',
+    'onclick',
+    'onmouseover',
+    'onfocus',
+    'onauxclick',
+    'onmouseenter',
+    'onmouseleave',
+    'onanimationstart',
+    'ontransitionend'
+  ];
+  root.querySelectorAll('*').forEach((n) => {
+    dangerousAttrs.forEach((a) => n.hasAttribute(a) && n.removeAttribute(a));
+    if (n.tagName === 'A' && /^javascript:/i.test(n.getAttribute('href') || '')) {
+      n.setAttribute('href', '#');
+    }
+  });
+}
+
 // Fetch and display user data
 async function loadUserInfo() {
   try {
@@ -549,6 +571,7 @@ document.querySelectorAll(".fullscreen-btn").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const widget = e.target.closest(".widget");
     modalContent.innerHTML = widget.innerHTML;
+    sanitizeNode(modalContent);
     modalContent.querySelector(".fullscreen-btn")?.remove();
     modalContent.querySelector(".help-btn")?.remove();
     modal.style.display = "flex";
@@ -682,6 +705,7 @@ document.addEventListener("keydown", (e) => {
 // Score help toggle
 document.getElementById("scoreHelpBtn")?.addEventListener("click", () => {
   modalContent.innerHTML = scoreHelpHTML;
+  sanitizeNode(modalContent);
   modal.style.display = "flex";
 });
 

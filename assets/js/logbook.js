@@ -11,6 +11,39 @@ const flightsPerPage = 10;
 let flightNumberBias = 0; // offset added to all displayed flight numbers
 let selectedFlightId = null;
 
+// Remove dangerous attributes or javascript: URLs from a container
+function sanitizeNode(root) {
+  if (!root) return;
+  const dangerousAttrs = [
+    'onload',
+    'onerror',
+    'onclick',
+    'onmouseover',
+    'onfocus',
+    'onauxclick',
+    'onmouseenter',
+    'onmouseleave',
+    'onanimationstart',
+    'ontransitionend'
+  ];
+  root.querySelectorAll('*').forEach((n) => {
+    dangerousAttrs.forEach((a) => n.hasAttribute(a) && n.removeAttribute(a));
+    if (n.tagName === 'A' && /^javascript:/i.test(n.getAttribute('href') || '')) {
+      n.setAttribute('href', '#');
+    }
+  });
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  })[c]);
+}
+
 async function loadLogbook() {
   try {
     const profileResponse = await fetch(
@@ -132,15 +165,15 @@ function renderPage() {
     const numberDisplay = endNum !== startNum ? `${startNum}-${endNum}` : startNum;
 
     row.innerHTML = `
-      <td>${numberDisplay}</td>
-      <td>${takeoffDateFormatted}</td>
-      <td>${planeName}</td>
-      <td>${flight.startLocation || "-"}</td>
-      <td>${flight.endLocation || "-"}</td>
-      <td>${duration}</td>
+      <td>${escapeHtml(numberDisplay)}</td>
+      <td>${escapeHtml(takeoffDateFormatted)}</td>
+      <td>${escapeHtml(planeName)}</td>
+      <td>${escapeHtml(flight.startLocation || "-")}</td>
+      <td>${escapeHtml(flight.endLocation || "-")}</td>
+      <td>${escapeHtml(duration)}</td>
       <td>${flight.notes ? escapeHtml(flight.notes) : "-"}</td>
     `;
-
+    
     row.addEventListener("click", () => showFlightDetails(flight));
 
     flightTableBody.appendChild(row);
@@ -151,6 +184,8 @@ function renderPage() {
     emptyRow.innerHTML = "<td colspan='7'>&nbsp;</td>";
     flightTableBody.appendChild(emptyRow);
   }
+
+  sanitizeNode(flightTableBody);
 }
 
 // Pager controls
@@ -275,28 +310,28 @@ function showFlightDetails(flight) {
     detailContent.innerHTML = `
       <section class="detail-section">
         <h4>General</h4>
-        <p><strong>Flights #:</strong> ${numberDisplay}</p>
-        <p><strong>Plane:</strong> ${planeName}</p>
-        <p><strong>Category:</strong> ${flight.category || "-"}</p>
+        <p><strong>Flights #:</strong> ${escapeHtml(numberDisplay)}</p>
+        <p><strong>Plane:</strong> ${escapeHtml(planeName)}</p>
+        <p><strong>Category:</strong> ${escapeHtml(flight.category || "-")}</p>
       </section>
 
       <section class="detail-section">
         <h4>Date</h4>
-        <p><strong>Date:</strong> ${dateFormatted}</p>
+        <p><strong>Date:</strong> ${escapeHtml(dateFormatted)}</p>
       </section>
 
       <section class="detail-section">
         <h4>Route</h4>
-        <p><strong>From:</strong> ${flight.startLocation || "-"}</p>
-        <p><strong>To:</strong> ${flight.endLocation || "-"}</p>
+        <p><strong>From:</strong> ${escapeHtml(flight.startLocation || "-")}</p>
+        <p><strong>To:</strong> ${escapeHtml(flight.endLocation || "-")}</p>
       </section>
 
       <section class="detail-section">
         <h4>Extra</h4>
-        <p><strong>Total Flights:</strong> ${flight.numberFlights}</p>
-        <p><strong>Air Time:</strong> ${duration}</p>
+        <p><strong>Total Flights:</strong> ${escapeHtml(flight.numberFlights)}</p>
+        <p><strong>Air Time:</strong> ${escapeHtml(duration)}</p>
         <p><strong>Engine Time:</strong> ${
-          flight.engineTimeMinutes != null ? flight.engineTimeMinutes + " min" : "-"
+          flight.engineTimeMinutes != null ? escapeHtml(flight.engineTimeMinutes + " min") : "-"
         }</p>
         <p><strong>Notes:</strong> ${
           flight.notes ? escapeHtml(flight.notes) : "-"
@@ -307,33 +342,33 @@ function showFlightDetails(flight) {
     detailContent.innerHTML = `
       <section class="detail-section">
         <h4>General</h4>
-        <p><strong>Flight #:</strong> ${numberDisplay}</p>
-        <p><strong>Plane:</strong> ${planeName}</p>
-        <p><strong>Category:</strong> ${flight.category || "-"}</p>
-        <p><strong>Launch Type:</strong> ${flight.launchType || "-"}</p>
+        <p><strong>Flight #:</strong> ${escapeHtml(numberDisplay)}</p>
+        <p><strong>Plane:</strong> ${escapeHtml(planeName)}</p>
+        <p><strong>Category:</strong> ${escapeHtml(flight.category || "-")}</p>
+        <p><strong>Launch Type:</strong> ${escapeHtml(flight.launchType || "-")}</p>
       </section>
 
       <section class="detail-section">
         <h4>Start</h4>
-        <p><strong>Start Location:</strong> ${flight.startLocation}</p>
-        <p><strong>Takeoff:</strong> ${takeoffFormatted}</p>
+        <p><strong>Start Location:</strong> ${escapeHtml(flight.startLocation)}</p>
+        <p><strong>Takeoff:</strong> ${escapeHtml(takeoffFormatted)}</p>
       </section>
 
       <section class="detail-section">
         <h4>End</h4>
-        <p><strong>End Location:</strong> ${flight.endLocation}</p>
-        <p><strong>Landing:</strong> ${landingFormatted}</p>
+        <p><strong>End Location:</strong> ${escapeHtml(flight.endLocation)}</p>
+        <p><strong>Landing:</strong> ${escapeHtml(landingFormatted)}</p>
       </section>
 
       <section class="detail-section">
         <h4>Extra</h4>
-        <p><strong>Duration:</strong> ${duration}</p>
+        <p><strong>Duration:</strong> ${escapeHtml(duration)}</p>
         <p><strong>Engine Time:</strong> ${
-          flight.engineTimeMinutes != null ? flight.engineTimeMinutes + " min" : "-"
+          flight.engineTimeMinutes != null ? escapeHtml(flight.engineTimeMinutes + " min") : "-"
         }</p>
         <p><strong>Cross-country Distance:</strong> ${
           flight.crossCountryDistanceKm != null
-            ? flight.crossCountryDistanceKm + " km"
+            ? escapeHtml(flight.crossCountryDistanceKm + " km")
             : "-"
         }</p>
         <p><strong>Notes:</strong> ${
@@ -342,7 +377,7 @@ function showFlightDetails(flight) {
       </section>
     `;
   }
-
+  sanitizeNode(detailContent);
   detailBox.style.display = "block";
 }
 
