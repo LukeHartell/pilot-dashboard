@@ -32,9 +32,11 @@
           .map((s) => s.trim())
           .filter(Boolean);
 
+        const basePath = window.location.pathname.replace(/[^/]*$/, "");
+
         // Root -> preflight
         if (segments.length === 0 || segments[segments.length - 1] === "index.html") {
-          window.location.replace("/preflight");
+          window.location.replace(`${basePath}preflight`);
           return;
         }
 
@@ -42,7 +44,7 @@
         const target = segments.find((s) => pages.has(s.replace(/\.html$/i, "")));
         if (target) {
           const slug = target.replace(/\.html$/i, "");
-          window.location.replace(`/${slug}.html`);
+          window.location.replace(`${basePath}${slug}.html`);
         }
       })();
     </script>
