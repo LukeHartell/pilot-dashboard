@@ -1,6 +1,5 @@
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 const planeSelect = document.getElementById("plane");
@@ -12,10 +11,8 @@ const addFlightsForm = document.getElementById("addFlightsForm");
 
 async function loadPlanes() {
   try {
-    const response = await fetch("https://n8n.e57.dk/webhook/pilot-dashboard/me", {
+    const response = await authFetch("https://n8n.e57.dk/webhook/pilot-dashboard/me", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
     });
 
     if (!response.ok) throw new Error("Failed to fetch user planes");
@@ -145,7 +142,6 @@ addFlightsForm?.addEventListener("submit", async (e) => {
   // Payload for the batch flight endpoint. Route information is included
   // so each grouped entry has the correct origin and destination stored.
   const batchData = {
-    token,
     manualPlane: isManual,
     date,
     numberFlights: numFlights,
@@ -165,12 +161,11 @@ addFlightsForm?.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/add-flights",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(batchData),
+        body: batchData,
       }
     );
 

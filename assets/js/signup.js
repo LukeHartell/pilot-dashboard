@@ -14,6 +14,9 @@ const lengthCheck = document.getElementById("lengthCheck");
 const caseCheck = document.getElementById("caseCheck");
 const numberCheck = document.getElementById("numberCheck");
 const specialCheck = document.getElementById("specialCheck");
+const signupSpinner = document.getElementById("signupLoading");
+const signupButton = signupForm?.querySelector("button[type='submit']");
+const defaultSignupText = signupButton?.textContent?.trim() || "Sign Up";
 
 // Validation Regexes
 const nameRegex = /^[A-Za-zÆØÅæøå\s\-]{2,}$/;
@@ -37,6 +40,15 @@ function updatePasswordChecklist() {
     (specialCharRegex.test(password) ? "✅" : "☐") +
     " Contains a special character";
 }
+
+const setSignupLoading = (isLoading) => {
+  signupSpinner?.classList.toggle("active", isLoading);
+
+  if (signupButton) {
+    signupButton.disabled = isLoading;
+    signupButton.textContent = isLoading ? "Creating account..." : defaultSignupText;
+  }
+};
 
 // Validate confirm password
 function validateConfirmPasswordField() {
@@ -128,6 +140,8 @@ signupForm?.addEventListener("submit", async (e) => {
     return;
   }
 
+  setSignupLoading(true);
+
   try {
     const response = await fetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/sign-up",
@@ -154,5 +168,7 @@ signupForm?.addEventListener("submit", async (e) => {
   } catch (err) {
     console.error(err);
     alert("Failed to create account. Please try again later.");
+  } finally {
+    setSignupLoading(false);
   }
 });

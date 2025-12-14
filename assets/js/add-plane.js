@@ -1,5 +1,9 @@
 const addPlaneForm = document.getElementById("addPlaneForm");
 
+if (!getAccessToken()) {
+  redirectToLogin();
+}
+
 addPlaneForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -21,18 +25,9 @@ addPlaneForm?.addEventListener("submit", async (e) => {
   }
 
   try {
-    const token = localStorage.getItem("jwtToken");
-    if (!token) {
-      alert("You must be logged in to add a plane.");
-      window.location.href = "/login";
-      return;
-    }
-
     // Load existing planes to prevent duplicates (ignore deleted)
-    const meRes = await fetch("https://n8n.e57.dk/webhook/pilot-dashboard/me", {
+    const meRes = await authFetch("https://n8n.e57.dk/webhook/pilot-dashboard/me", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token }),
     });
 
     if (meRes.ok) {
@@ -49,15 +44,11 @@ addPlaneForm?.addEventListener("submit", async (e) => {
       }
     }
 
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/add-plane",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token,
+        body: {
           displayName,
           registration,
           type,
@@ -65,7 +56,7 @@ addPlaneForm?.addEventListener("submit", async (e) => {
           category,
           seats,
           note: note || null, // Optional field
-        }),
+        },
       }
     );
 

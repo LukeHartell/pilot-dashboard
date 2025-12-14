@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/css/darkmode.css" />
     <link rel="stylesheet" href="assets/css/forms.css" />
 
+    <script defer src="assets/js/auth.js"></script>
     <script defer src="assets/js/header.js"></script>
     <script defer src="assets/js/user-menu.js"></script>
     <script defer src="assets/js/signup.js"></script>
@@ -80,6 +81,16 @@
             <div class="link">
               Already have an account?
               <a href="/login">Log in</a>
+            </div>
+
+            <div
+              id="signupLoading"
+              class="form-loading"
+              aria-live="polite"
+              aria-busy="true"
+              role="status">
+              <div class="spinner"></div>
+              <p style="margin: 0">Creating your account...</p>
             </div>
           </form>
         </section>

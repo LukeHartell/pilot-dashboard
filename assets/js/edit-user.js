@@ -1,7 +1,6 @@
 // Redirect to login if no token
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 // Get elements
@@ -30,12 +29,10 @@ const specialCheck = document.getElementById("specialCheck");
 // Fetch current user info to pre-fill fields
 async function loadUserInfo() {
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/me",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
 
@@ -180,12 +177,11 @@ editUserForm?.addEventListener("submit", async (e) => {
 
   try {
     if (Object.keys(updates).length > 0) {
-      const respUser = await fetch(
+      const respUser = await authFetch(
         "https://n8n.e57.dk/webhook/pilot-dashboard/update-user",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token, updates }),
+          body: { updates },
         }
       );
 
@@ -197,12 +193,11 @@ editUserForm?.addEventListener("submit", async (e) => {
     }
 
     if (wantsPasswordChange) {
-      const respPass = await fetch(
+      const respPass = await authFetch(
         "https://n8n.e57.dk/webhook/pilot-dashboard/update-password",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token, currentPassword, password }),
+          body: { currentPassword, password },
         }
       );
 

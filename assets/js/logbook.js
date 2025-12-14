@@ -1,6 +1,5 @@
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 let cachedPlanes = {};
@@ -46,12 +45,10 @@ function escapeHtml(str) {
 
 async function loadLogbook() {
   try {
-    const profileResponse = await fetch(
+    const profileResponse = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/me",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
     if (!profileResponse.ok) throw new Error("Failed to fetch user info");
@@ -66,12 +63,10 @@ async function loadLogbook() {
       });
     }
 
-    const flightsResponse = await fetch(
+    const flightsResponse = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/my-flights",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
     if (!flightsResponse.ok) throw new Error("Failed to fetch flights");
@@ -393,12 +388,11 @@ document.getElementById("deleteEntryBtn")?.addEventListener("click", async () =>
   );
   if (!confirmed) return;
   try {
-    const res = await fetch(
+    const res = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/delete-flight",
       {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, entry_id: selectedFlightId }),
+        body: { entry_id: selectedFlightId },
       }
     );
 

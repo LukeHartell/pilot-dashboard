@@ -1,20 +1,16 @@
 // Redirect to login if no token
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 const requestBtn = document.getElementById("requestDataButton");
 requestBtn?.addEventListener("click", async () => {
-  if (!token) return;
   requestBtn.disabled = true;
   try {
-    const resp = await fetch(
+    const resp = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/request-all-data",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
 

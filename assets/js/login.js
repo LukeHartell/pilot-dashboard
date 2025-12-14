@@ -1,4 +1,18 @@
-document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
+const loginForm = document.getElementById("loginForm");
+const loginSpinner = document.getElementById("loginLoading");
+const loginButton = loginForm?.querySelector("button[type='submit']");
+const defaultLoginText = loginButton?.textContent?.trim() || "Log In";
+
+const setLoginLoading = (isLoading) => {
+  loginSpinner?.classList.toggle("active", isLoading);
+
+  if (loginButton) {
+    loginButton.disabled = isLoading;
+    loginButton.textContent = isLoading ? "Logging in..." : defaultLoginText;
+  }
+};
+
+loginForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const email = document.getElementById("email").value.trim();
@@ -9,14 +23,17 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     return;
   }
 
+  setLoginLoading(true);
+
   try {
     const response = await fetch(
-      "https://n8n.e57.dk/webhook/pilot-dashboard/log-in",
+      "https://n8n.e57.dk/webhook/pilot-dashboard/v2/log-in",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email,
           password,
@@ -26,11 +43,11 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
 
     const data = await response.json();
 
-    if (response.ok && data.success) {
+    if (response.ok && data.success && data.token) {
       // Login success!
 
       // Save JWT token to localStorage
-      localStorage.setItem("jwtToken", data.token);
+      setAccessToken(data.token);
 
       //   alert("Login successful!");
       window.location.href = "/index"; // Go to main dashboard
@@ -41,5 +58,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
   } catch (err) {
     console.error(err);
     alert("Login error. Please try again later.");
+  } finally {
+    setLoginLoading(false);
   }
 });

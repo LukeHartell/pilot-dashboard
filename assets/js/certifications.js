@@ -1,8 +1,7 @@
 // Manage pilot certifications on the user page
 (function () {
-  const token = localStorage.getItem("jwtToken");
-  if (!token) {
-    window.location.href = "/login";
+  if (!getAccessToken()) {
+    redirectToLogin();
   }
 
   const certListEl = document.getElementById("certList");
@@ -72,10 +71,10 @@ async function loadCertifications() {
   if (!certListEl) return;
   certListEl.innerHTML = "<p>Loading...</p>";
   try {
-    const url =
-      "https://n8n.e57.dk/webhook/pilot-dashboard/get-certification?token=" +
-      encodeURIComponent(token);
-    const res = await fetch(url);
+    const res = await authFetch(
+      "https://n8n.e57.dk/webhook/pilot-dashboard/get-certification",
+      { method: "GET" }
+    );
     if (!res.ok) throw new Error("Failed to fetch");
     const [data] = await res.json();
     if (!data.success) throw new Error(data.message || "Failed to load");
@@ -184,16 +183,15 @@ function showCertForm(opts = {}) {
       let body;
       if (isEdit) {
         url = "https://n8n.e57.dk/webhook/pilot-dashboard/update-certification";
-        body = JSON.stringify({ token, cert_id: opts._id, updates });
+        body = { cert_id: opts._id, updates };
       } else {
         url = "https://n8n.e57.dk/webhook/pilot-dashboard/add-certification";
-        const payload = { token, ...updates };
+        const payload = { ...updates };
         if (!expires) delete payload.validUntilDate;
-        body = JSON.stringify(payload);
+        body = payload;
       }
-      const res = await fetch(url, {
+      const res = await authFetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body,
       });
       const text = await res.text();
@@ -213,12 +211,11 @@ function showCertForm(opts = {}) {
 async function deleteCertification(id) {
   if (!confirm("Delete this certification?")) return;
   try {
-    const res = await fetch(
+    const res = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/delete-certification",
       {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, cert_id: id }),
+        body: { cert_id: id },
       }
     );
     const text = await res.text();

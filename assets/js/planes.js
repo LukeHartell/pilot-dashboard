@@ -1,7 +1,6 @@
 // Redirect to login if no token
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 // Store loaded planes for later lookups
@@ -91,12 +90,10 @@ async function processPlaneImage(file) {
 // Fetch and display user's planes
 async function loadPlanes() {
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/me",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
 
@@ -351,12 +348,11 @@ document.addEventListener("click", (e) => {
         }
 
         try {
-          const res = await fetch(
+          const res = await authFetch(
             "https://n8n.e57.dk/webhook/pilot-dashboard/update-plane",
             {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ token, plane_id: planeId, updates }),
+              body: { plane_id: planeId, updates },
             }
           );
 
@@ -391,13 +387,11 @@ document.addEventListener("click", (e) => {
           if (!confirmed) return;
 
           try {
-            const res = await fetch(
+            const res = await authFetch(
               "https://n8n.e57.dk/webhook/pilot-dashboard/update-plane",
               {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  token,
+                body: {
                   plane_id: planeId,
                   updates: {
                     status: "deleted",
@@ -410,7 +404,7 @@ document.addEventListener("click", (e) => {
                     last_flight: null,
                     photo: null,
                   },
-                }),
+                },
               }
             );
 

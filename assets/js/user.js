@@ -1,7 +1,6 @@
 // Redirect to login if no token
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 // Store flights for later calculations
@@ -34,12 +33,10 @@ function sanitizeNode(root) {
 // Fetch and display user data
 async function loadUserInfo() {
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/me",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
 
@@ -82,12 +79,10 @@ loadUserInfo();
 // Load "Fit for flying?" data
 async function loadFitnessInfo() {
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/my-flights",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
 

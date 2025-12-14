@@ -15,7 +15,7 @@ function parseJwt(token) {
 }
 
 function updateUserMenu() {
-  const token = localStorage.getItem("jwtToken");
+  const token = getAccessToken();
   const userMenuLink = document.getElementById("userMenuLink");
 
   if (!userMenuLink) return;

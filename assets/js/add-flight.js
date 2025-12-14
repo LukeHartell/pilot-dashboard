@@ -1,6 +1,5 @@
-const token = localStorage.getItem("jwtToken");
-if (!token) {
-  window.location.href = "/login";
+if (!getAccessToken()) {
+  redirectToLogin();
 }
 
 // Elements
@@ -15,12 +14,10 @@ const engineTimeFields = document.getElementById("engineTimeFields");
 // Load planes into dropdown
 async function loadPlanes() {
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/me",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
       }
     );
 
@@ -168,7 +165,6 @@ addFlightForm?.addEventListener("submit", async (e) => {
   // Build final flight data. Include locations in the payload so the
   // backend can store them along with the rest of the entry.
   let flightData = {
-    token,
     manualPlane: isManual,
     startLocation,
     endLocation,
@@ -190,12 +186,11 @@ addFlightForm?.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch(
+    const response = await authFetch(
       "https://n8n.e57.dk/webhook/pilot-dashboard/add-flight",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(flightData),
+        body: flightData,
       }
     );
 
