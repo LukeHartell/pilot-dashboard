@@ -9,15 +9,6 @@
   <body>
     <script>
       (function () {
-        const slug = window.location.pathname.replace(/^\/+|\/+$/g, "");
-
-        // Root -> preflight
-        if (!slug || slug === "index.html") {
-          window.location.replace("/preflight");
-          return;
-        }
-
-        // Known routes that should map to corresponding .html file
         const pages = new Set([
           "preflight",
           "flight",
@@ -36,7 +27,21 @@
           "request-all-data",
         ]);
 
-        if (pages.has(slug)) {
+        const segments = window.location.pathname
+          .split("/")
+          .map((s) => s.trim())
+          .filter(Boolean);
+
+        // Root -> preflight
+        if (segments.length === 0 || segments[segments.length - 1] === "index.html") {
+          window.location.replace("/preflight");
+          return;
+        }
+
+        // Find the first segment that matches a known page
+        const target = segments.find((s) => pages.has(s.replace(/\.html$/i, "")));
+        if (target) {
+          const slug = target.replace(/\.html$/i, "");
           window.location.replace(`/${slug}.html`);
         }
       })();
