@@ -2,16 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=preflight" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting | Pilot Dashboard</title>
     <link rel="icon" href="assets/img/favicon.ico" />
   </head>
   <body>
-    <p>
-      Redirecting to
-      <a href="/preflight">Preflight Page</a>
-      ...
-    </p>
+    <script>
+      (function () {
+        const slug = window.location.pathname.replace(/^\/+|\/+$/g, "");
+
+        // Root -> preflight
+        if (!slug || slug === "index.html") {
+          window.location.replace("/preflight");
+          return;
+        }
+
+        // Known routes that should map to corresponding .html file
+        const pages = new Set([
+          "preflight",
+          "flight",
+          "logbook",
+          "planes",
+          "user",
+          "edit-user",
+          "login",
+          "signup",
+          "add-flight",
+          "add-flights",
+          "add-plane",
+          "about",
+          "privacy-notice",
+          "terms-of-service",
+          "request-all-data",
+        ]);
+
+        if (pages.has(slug)) {
+          window.location.replace(`/${slug}.html`);
+        }
+      })();
+    </script>
   </body>
 </html>
